@@ -2,13 +2,15 @@ package com.javaweb.request;
 
 public class AddItemRequest {
 
-	private Long productId;
-
-	private String size;
+	private String product_id;
 
 	private int quantity;
 
 	private Integer price;
+	
+	private String size;
+	
+	private String topping;
 	
 	public AddItemRequest() {
 		
@@ -16,18 +18,13 @@ public class AddItemRequest {
 
 	//getter and setter
 
-	public Long getProductId() {
-		return productId;
+	public String getProduct_id() {
+		return product_id;
 	}
-	public void setProductId(Long productId) {
-		this.productId = productId;
+	public void setProduct_id(String product_id) {
+		this.product_id = product_id;
 	}
-	public String getSize() {
-		return size;
-	}
-	public void setSize(String size) {
-		this.size = size;
-	}
+
 	public int getQuantity() {
 		return quantity;
 	}
@@ -40,6 +37,24 @@ public class AddItemRequest {
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public String getTopping() {
+		return topping;
+	}
+
+	public void setTopping(String topping) {
+		this.topping = topping;
+	}
+	
+	
 
 }
 

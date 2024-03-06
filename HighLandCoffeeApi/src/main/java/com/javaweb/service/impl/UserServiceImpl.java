@@ -3,6 +3,7 @@ package com.javaweb.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.aop.ThrowsAdvice;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.config.JwtTokenProvider;
@@ -133,6 +134,15 @@ public class UserServiceImpl implements UserService{
 		return userRepo.findAll();
 	}
 	
+	@Override
+	public User findUserByJwt(String jwt) throws UserException{
+		String username = jwtTokenProvider.getUsernameFromJwtToken(jwt);
+		User user = userRepo.findByUsername(username);
+		if(user == null) {
+			throw new UserException("user not exist with username " + username);
+		}
+		return user;
+	}
 	
 
 }

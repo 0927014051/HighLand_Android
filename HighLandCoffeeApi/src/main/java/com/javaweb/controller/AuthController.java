@@ -19,14 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaweb.config.JwtTokenProvider;
 import com.javaweb.entity.Cart;
 import com.javaweb.entity.Customer;
+import com.javaweb.entity.Staff;
 import com.javaweb.entity.User;
 import com.javaweb.exception.UserException;
+import com.javaweb.reponsitory.StaffRepo;
 import com.javaweb.reponsitory.UserRepo;
 import com.javaweb.request.LoginRequest;
+import com.javaweb.response.ApiResponse;
 import com.javaweb.response.AuthResponse;
 import com.javaweb.service.CartService;
 import com.javaweb.service.CustomerService;
 import com.javaweb.service.CustomerUserDetails;
+import com.javaweb.service.StaffService;
+import com.javaweb.service.UserService;
 
 import jakarta.validation.Valid;
 
@@ -40,50 +45,39 @@ public class AuthController {
 	private CustomerUserDetails customUserDetails;
 	private CartService cartService;
 	private CustomerService customerService;
+	private StaffService staffService;
 	
-	public AuthController(UserRepo userRepository,PasswordEncoder passwordEncoder,JwtTokenProvider jwtTokenProvider,CustomerUserDetails customUserDetails,CartService cartService,CustomerService customerService) {
+	public AuthController(UserRepo userRepository,PasswordEncoder passwordEncoder,JwtTokenProvider jwtTokenProvider,CustomerUserDetails customUserDetails,CartService cartService,CustomerService customerService,StaffService staffService) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.jwtTokenProvider = jwtTokenProvider;
 		this.customUserDetails = customUserDetails;
 		this.cartService = cartService;
 		this.customerService = customerService;
+		this.staffService = staffService;
 	}
 	@RequestMapping(value = "/signup",method = RequestMethod.POST)
-	public ResponseEntity<AuthResponse> createUserHandler(@Valid @RequestBody User user) throws UserException{
+	public ResponseEntity<ApiResponse> createUserHandler(@Valid @RequestBody User user) throws UserException{
 		  	String username = user.getUsername();
 	        String password = user.getPassword();
 	        Long role_id = user.getRole_id();
-	        Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
-	        SecurityContextHolder.getContext().setAuthentication(authentication);        
-	        String token = jwtTokenProvider.generateToken(authentication);
-	        AuthResponse authResponse = new AuthResponse(token,true);
-	        User isEmailExist = userRepository.findByUsername(username);
+	        User isUserExist = userRepository.findByUsername(username);
+	        ApiResponse apiResponse = new ApiResponse(username + " :signup success",true);
 	        // Check email exists
-	        if (isEmailExist != null) {
+	        if (isUserExist != null) {
 	        // System.out.println("--------- exist "+isEmailExist).getEmail());
-	            throw new UserException("Email Is Already Used With Another Account");
+	            throw new UserException("Username Is Already Used With Another Account");
 	        }
 	        // Lấy ngày và giờ hiện tại
-	        LocalDateTime currentTime = LocalDateTime.now();
-	        // Cộng thêm 7 ngày
-	        LocalDateTime expiredAccressToken = currentTime.plus(7, ChronoUnit.DAYS);
-	        LocalDateTime expiredRefreshToken = currentTime.plus(30, ChronoUnit.DAYS);
-	        // Chuyển LocalDateTime thành Timestamp
-	        Timestamp expiredAccressTokenTimestamp = Timestamp.valueOf(expiredAccressToken);
-	        Timestamp expiredRefreshTokenTimestamp = Timestamp.valueOf(expiredRefreshToken);
-	        // Create new user
+	       
 			User createdUser = new User();
 			createdUser.setUsername(username);
 	        createdUser.setPassword(passwordEncoder.encode(password));
 	        createdUser.setRole_id(role_id);
 	        createdUser.setCreated_at(LocalDateTime.now());
 	        createdUser.setUpdated_at(LocalDateTime.now());
-	        createdUser.setAccessToken(token);
-	        createdUser.setRefreshToken(token);
-	        createdUser.setExpiredAccessToken(expiredAccressTokenTimestamp);
-	        createdUser.setExpiredRefreshToken(expiredRefreshTokenTimestamp);
 	        User savedUser= userRepository.save(createdUser);
+	        if(role_id == 3) {
 	        if(savedUser != null) {
 	        	Customer customer = new Customer();
 		        customer.setCreated_at(LocalDateTime.now());
@@ -98,19 +92,42 @@ public class AuthController {
 		 	        Cart createdCart = cartService.createCart(cart);
 		        }
 	        }
-	        return new ResponseEntity<AuthResponse>(authResponse,HttpStatus.OK);	
+	        }if(role_id == 2) {
+	        	Staff staff = new Staff();
+	        	staff.setCreated_at(LocalDateTime.now());
+	        	staff.setUpdated_at(LocalDateTime.now());
+	        	staff.setUser_id(createdUser.getUser_id());
+	        	Staff createdStaff = staffService.createStaff(staff);
+	        	
+	        }
+	        return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.OK);	
 	}
 
 	@PostMapping("/signin")
     public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();        
-        Authentication authentication = authenticate(username, password);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtTokenProvider.generateToken(authentication);
-        AuthResponse authResponse = new AuthResponse();	
+        Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+        SecurityContextHolder.getContext().setAuthentication(authentication);        
+        String tokenSevenday = jwtTokenProvider.generateAccessToken(authentication);
+        String tokenThirtyDay = jwtTokenProvider.generateRefreshToken(authentication);
+        LocalDateTime currentTime = LocalDateTime.now();
+        // Cộng thêm 7 ngày
+        LocalDateTime expiredAccressToken = currentTime.plus(7, ChronoUnit.DAYS);
+        LocalDateTime expiredRefreshToken = currentTime.plus(30, ChronoUnit.DAYS);
+        // Chuyển LocalDateTime thành Timestamp
+        Timestamp expiredAccressTokenTimestamp = Timestamp.valueOf(expiredAccressToken);
+        Timestamp expiredRefreshTokenTimestamp = Timestamp.valueOf(expiredRefreshToken);
+        // Create new user
+        AuthResponse authResponse = new AuthResponse(tokenSevenday,true);
 		authResponse.setStatus(true);
-		authResponse.setToken(token);
+		authResponse.setToken(tokenSevenday);
+		User user = userRepository.findByUsername(username);
+		user.setAccessToken(tokenThirtyDay);
+		user.setRefreshToken(tokenThirtyDay);
+		user.setExpiredAccessToken(expiredAccressTokenTimestamp);
+		user.setExpiredRefreshToken(expiredRefreshTokenTimestamp);
+		userRepository.save(user);
 		System.err.println(authentication);
         return new ResponseEntity<AuthResponse>(authResponse,HttpStatus.OK);
     }

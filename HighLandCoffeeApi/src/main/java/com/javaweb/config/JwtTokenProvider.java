@@ -20,11 +20,22 @@ public class JwtTokenProvider {
 	
 	private SecretKey key=Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 	
-	public String generateToken(Authentication auth) {
+	public String generateAccessToken(Authentication auth) {
 
 		String jwt=Jwts.builder()
 				.setIssuedAt(new Date())
-				.setExpiration(new Date(new Date().getTime()+86400000))
+				.setExpiration(new Date(new Date().getTime()+604800000))
+				.claim("username",auth.getName())
+				.signWith(key)
+				.compact();
+		
+		return jwt;	
+	}
+	public String generateRefreshToken(Authentication auth) {
+
+		String jwt=Jwts.builder()
+				.setIssuedAt(new Date())
+				.setExpiration(new Date(new Date().getTime()+259200000))
 				.claim("username",auth.getName())
 				.signWith(key)
 				.compact();
@@ -33,7 +44,7 @@ public class JwtTokenProvider {
 	}
 
 	public String getUsernameFromJwtToken(String jwt) {
-	//	jwt = jwt.substring(8);
+		jwt = jwt.substring(7);
 	
 		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
 		String email = String.valueOf(claims.get("username"));

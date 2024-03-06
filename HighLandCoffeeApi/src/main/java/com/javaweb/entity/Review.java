@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "review")
 public class Review {
@@ -21,9 +23,6 @@ public class Review {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Long review_id;
-	
-	@Column
-	private Date date;
 	
 	@Column
 	private int star;
@@ -44,18 +43,21 @@ public class Review {
 	private String product_id;
 	
 	@Column
-	private Long customer_id;
+	private Long created_by;
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "order_detail_id",insertable = false,updatable = false)
 	private OrderDetail order_detail;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "product_id", insertable = false, updatable = false)
 	private Product product;
 	
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "customer_id", insertable = false, updatable = false)
+	@JoinColumn(name = "created_by", insertable = false, updatable = false)
 	private Customer customer;
 
 	public Long getReview_id() {
@@ -64,14 +66,6 @@ public class Review {
 
 	public void setReview_id(Long review_id) {
 		this.review_id = review_id;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public int getStar() {
@@ -122,14 +116,6 @@ public class Review {
 		this.product_id = product_id;
 	}
 
-	public Long getCustomer_id() {
-		return customer_id;
-	}
-
-	public void setCustomer_id(Long customer_id) {
-		this.customer_id = customer_id;
-	}
-
 	public OrderDetail getOrder_detail() {
 		return order_detail;
 	}
@@ -154,24 +140,36 @@ public class Review {
 		this.customer = customer;
 	}
 
-	public Review(Long review_id, Date date, int star, String content, LocalDateTime created_at, LocalDateTime updated_at,
-			Long order_detail_id, String product_id, Long customer_id, com.javaweb.entity.OrderDetail order_detail,
-			com.javaweb.entity.Product product, com.javaweb.entity.Customer customer) {
+	public Long getCreated_by() {
+		return created_by;
+	}
+
+	public void setCreated_by(Long created_by) {
+		this.created_by = created_by;
+	}
+
+	public Review(Long review_id, int star, String content, LocalDateTime created_at, LocalDateTime updated_at,
+			Long order_detail_id, String product_id, Long created_by, OrderDetail order_detail, Product product,
+			Customer customer) {
 		super();
 		this.review_id = review_id;
-		this.date = date;
 		this.star = star;
 		this.content = content;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.order_detail_id = order_detail_id;
 		this.product_id = product_id;
-		this.customer_id = customer_id;
+		this.created_by = created_by;
 		this.order_detail = order_detail;
 		this.product = product;
 		this.customer = customer;
 	}
-	
+
+	public Review() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	
 
 }

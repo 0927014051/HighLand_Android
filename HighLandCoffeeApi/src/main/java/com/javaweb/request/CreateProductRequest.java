@@ -8,12 +8,19 @@ public class CreateProductRequest {
 	private String product_name;
 	private String image;
 	private int price;
-	private int quantity;
 	private String description;
 	private int status;
 	private LocalDateTime created_at;
 	private LocalDateTime updated_at;
 	private Long category_id;
+	private Long staff_id;
+	
+	public Long getStaff_id() {
+		return staff_id;
+	}
+	public void setStaff_id(Long staff_id) {
+		this.staff_id = staff_id;
+	}
 	public String getProduct_id() {
 		return product_id;
 	}
@@ -37,12 +44,6 @@ public class CreateProductRequest {
 	}
 	public void setPrice(int price) {
 		this.price = price;
-	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 	public String getDescription() {
 		return description;
@@ -74,20 +75,7 @@ public class CreateProductRequest {
 	public void setCategory_id(Long category_id) {
 		this.category_id = category_id;
 	}
-	public CreateProductRequest(String product_id, String product_name, String image, int price, int quantity,
-			String description, int status, LocalDateTime created_at, LocalDateTime updated_at, Long category_id) {
-		super();
-		this.product_id = product_id;
-		this.product_name = product_name;
-		this.image = image;
-		this.price = price;
-		this.quantity = quantity;
-		this.description = description;
-		this.status = status;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
-		this.category_id = category_id;
-	}
+	
 	public CreateProductRequest() {
 		super();
 		// TODO Auto-generated constructor stub

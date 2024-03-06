@@ -11,7 +11,7 @@ import com.javaweb.entity.Product;
 
 @Repository
 public interface CartDetailRepo extends JpaRepository<CartDetail, Long>{
-//	@Query("SELECT ci From CartItem ci Where ci.cart=:cart And ci.product=:product And ci.size=:size And ci.userId=:userId")
-//	public CartDetail isCartItemExist(@Param("cart")Cart cart,@Param("product")Product product,@Param("size")String size, @Param("userId")Long userId);
+	@Query("SELECT ci From CartDetail ci Where ci.cart=:cart And ci.product=:product And ci.cart.customer_id=:customerId")
+	public CartDetail isCartItemExist(@Param("cart")Cart cart,@Param("product")Product product, @Param("customerId")Long customerId);
 
 }

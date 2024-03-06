@@ -1,8 +1,11 @@
 package com.javaweb.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.javaweb.entity.Customer;
+import com.javaweb.exception.UserException;
 import com.javaweb.reponsitory.CustomerRepo;
 import com.javaweb.service.CustomerService;
 
@@ -30,4 +33,15 @@ public class CustomerServiceImpl implements CustomerService{
 		return customerRepo.findCustomerByEmail(email);
 	}
 	
+	@Override
+	public Customer findCustomerById(Long customer_id) throws UserException{
+		
+		Optional<Customer> customer = customerRepo.findById(customer_id);
+		
+		if(customer.isPresent()) {
+			return customer.get();
+		}
+		throw new UserException("Customer not found with id " + customer_id);
+		
+	}
 }

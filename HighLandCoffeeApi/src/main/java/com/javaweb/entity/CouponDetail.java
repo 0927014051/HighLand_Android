@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "coupon_detail")
 public class CouponDetail {
@@ -30,10 +32,12 @@ public class CouponDetail {
 	@Column
 	private int value;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "customer_id", updatable = false, insertable = false)
 	private Customer customer;
 	
+	@JsonIgnore
 	@ManyToOne 
 	@JoinColumn(name = "coupon_id",insertable =  false, updatable = false)
 	private Coupon coupon;

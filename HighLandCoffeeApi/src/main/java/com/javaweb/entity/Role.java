@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -24,6 +25,7 @@ public class Role {
 	@Column
 	private String role_name;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "role")
 	private List<User> user;
 

@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name =  "cart_detail")
 public class CartDetail {
@@ -26,15 +28,23 @@ public class CartDetail {
 	private int price;
 	
 	@Column
+	private String size;
+	
+	@Column
+	private String topping;
+	
+	@Column
 	private String product_id;
 	
 	@Column
 	private Long cart_id;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name =  "product_id",updatable =  false, insertable =  false)
 	private Product product;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "cart_id", insertable = false, updatable = false)
 	private Cart cart;
@@ -95,16 +105,40 @@ public class CartDetail {
 		this.cart = cart;
 	}
 
-	public CartDetail(Long cart_detail_id, int quantity, int price, String product_id, Long cart_id,
-			com.javaweb.entity.Product product, com.javaweb.entity.Cart cart) {
+	
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public String getTopping() {
+		return topping;
+	}
+
+	public void setTopping(String topping) {
+		this.topping = topping;
+	}
+
+	public CartDetail(Long cart_detail_id, int quantity, int price, String size, String topping, String product_id,
+			Long cart_id, Product product, Cart cart) {
 		super();
 		this.cart_detail_id = cart_detail_id;
 		this.quantity = quantity;
 		this.price = price;
+		this.size = size;
+		this.topping = topping;
 		this.product_id = product_id;
 		this.cart_id = cart_id;
 		this.product = product;
 		this.cart = cart;
+	}	
+	
+	public CartDetail() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 	

@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "price_update_detail")
 public class PriceUpdateDetail {
@@ -35,15 +37,20 @@ public class PriceUpdateDetail {
 	private LocalDateTime updated_at;
 	
 	@Column
-	private Long staff_id;
+	private Long created_by;
+	
+	@Column
+	private Long updated_by;
 	
 	@Column
 	private String product_id;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name = "staff_id",insertable = false, updatable = false)
+	@JoinColumn(name = "created_by",insertable = false, updatable = false)
 	private Staff staff;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "product_id", insertable = false, updatable = false)
 	private Product product;
@@ -88,14 +95,6 @@ public class PriceUpdateDetail {
 		this.updated_at = updated_at;
 	}
 
-	public Long getStaff_id() {
-		return staff_id;
-	}
-
-	public void setStaff_id(Long staff_id) {
-		this.staff_id = staff_id;
-	}
-
 	public String getProduct_id() {
 		return product_id;
 	}
@@ -120,20 +119,44 @@ public class PriceUpdateDetail {
 		this.product = product;
 	}
 
+	public Long getCreated_by() {
+		return created_by;
+	}
+
+	public void setCreated_by(Long created_by) {
+		this.created_by = created_by;
+	}
+
+	public Long getUpdated_by() {
+		return updated_by;
+	}
+
+	public void setUpdated_by(Long updated_by) {
+		this.updated_by = updated_by;
+	}
+
 	public PriceUpdateDetail(Long price_update_detail_id, int price_new, int price_old, LocalDateTime created_at,
-			LocalDateTime updated_at, Long staff_id, String product_id, com.javaweb.entity.Staff staff,
-			com.javaweb.entity.Product product) {
+			LocalDateTime updated_at, Long created_by, Long updated_by, String product_id, Staff staff,
+			Product product) {
 		super();
 		this.price_update_detail_id = price_update_detail_id;
 		this.price_new = price_new;
 		this.price_old = price_old;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
-		this.staff_id = staff_id;
+		this.created_by = created_by;
+		this.updated_by = updated_by;
 		this.product_id = product_id;
 		this.staff = staff;
 		this.product = product;
 	}
+
+	public PriceUpdateDetail() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
 	
 
 }

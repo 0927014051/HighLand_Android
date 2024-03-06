@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "coupon")
 public class Coupon {
@@ -45,14 +47,24 @@ public class Coupon {
 	private LocalDateTime updated_at;
 	
 	@Column
-	private Long staff_id;
+	private Long created_by;
 	
+	@Column
+	private Long updated_by;
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "coupon")
 	private List<CouponDetail> coupon_detail;
 	
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "staff_id",updatable = false, insertable = false)
-	private Staff staff;
+	@JoinColumn(name = "created_by",updatable = false, insertable = false)
+	private Staff staff_created;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "updated_by",updatable = false, insertable = false)
+	private Staff staff_updated;
 
 	public Long getCoupon_id() {
 		return coupon_id;
@@ -118,14 +130,6 @@ public class Coupon {
 		this.updated_at = updated_at;
 	}
 
-	public Long getStaff_id() {
-		return staff_id;
-	}
-
-	public void setStaff_id(Long staff_id) {
-		this.staff_id = staff_id;
-	}
-
 	public List<CouponDetail> getCoupon_detail() {
 		return coupon_detail;
 	}
@@ -134,17 +138,41 @@ public class Coupon {
 		this.coupon_detail = coupon_detail;
 	}
 
-	public Staff getStaff() {
-		return staff;
+	public Long getCreated_by() {
+		return created_by;
 	}
 
-	public void setStaff(Staff staff) {
-		this.staff = staff;
+	public void setCreated_by(Long created_by) {
+		this.created_by = created_by;
+	}
+
+	public Long getUpdated_by() {
+		return updated_by;
+	}
+
+	public void setUpdated_by(Long updated_by) {
+		this.updated_by = updated_by;
+	}
+
+	public Staff getStaff_created() {
+		return staff_created;
+	}
+
+	public void setStaff_created(Staff staff_created) {
+		this.staff_created = staff_created;
+	}
+
+	public Staff getStaff_updated() {
+		return staff_updated;
+	}
+
+	public void setStaff_updated(Staff staff_updated) {
+		this.staff_updated = staff_updated;
 	}
 
 	public Coupon(Long coupon_id, Date start_date, Date end_date, String type, String content, int quantity,
-			LocalDateTime created_at, LocalDateTime updated_at, Long staff_id, List<com.javaweb.entity.CouponDetail> coupon_detail,
-			com.javaweb.entity.Staff staff) {
+			LocalDateTime created_at, LocalDateTime updated_at, Long created_by, Long updated_by,
+			List<CouponDetail> coupon_detail, Staff staff_created, Staff staff_updated) {
 		super();
 		this.coupon_id = coupon_id;
 		this.start_date = start_date;
@@ -154,9 +182,11 @@ public class Coupon {
 		this.quantity = quantity;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
-		this.staff_id = staff_id;
+		this.created_by = created_by;
+		this.updated_by = updated_by;
 		this.coupon_detail = coupon_detail;
-		this.staff = staff;
+		this.staff_created = staff_created;
+		this.staff_updated = staff_updated;
 	}
 
 	public Coupon() {

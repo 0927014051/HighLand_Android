@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "bill")
 public class Bill {
@@ -24,32 +26,22 @@ public class Bill {
 	private Long bill_id;
 	
 	@Column
-	private Date date;
-	
-	@Column
-	private int total_quantity;
-	
-	@Column
-	private int total_price;
-	
-	@Column
-	private LocalDateTime updated_at;
-	
-	@Column
 	private LocalDateTime created_at;
 
 	@Column
 	private Long order_id;
 	
 	@Column
-	private Long staff_id;
+	private Long created_by;
 	
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id",insertable = false, updatable = false)
 	private Orders order;
 	
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "staff_id",insertable = false, updatable =  false)
+	@JoinColumn(name = "created_by",insertable = false, updatable =  false)
 	private Staff staff;
 
 	public Long getBill_id() {
@@ -60,41 +52,6 @@ public class Bill {
 		this.bill_id = bill_id;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public int getTotal_quantity() {
-		return total_quantity;
-	}
-
-	public void setTotal_quantity(int total_quantity) {
-		this.total_quantity = total_quantity;
-	}
-
-	public int getTotal_price() {
-		return total_price;
-	}
-
-	public void setTotal_price(int total_price) {
-		this.total_price = total_price;
-	}
-
-	public LocalDateTime getUpdated_at() {
-		return updated_at;
-	}
-
-	public void setUpdated_at(LocalDateTime updated_at) {
-		this.updated_at = updated_at;
-	}
-
-	public LocalDateTime getCreated_at() {
-		return created_at;
-	}
 
 	public void setCreated_at(LocalDateTime created_at) {
 		this.created_at = created_at;
@@ -106,14 +63,6 @@ public class Bill {
 
 	public void setOrder_id(Long order_id) {
 		this.order_id = order_id;
-	}
-
-	public Long getStaff_id() {
-		return staff_id;
-	}
-
-	public void setStaff_id(Long staff_id) {
-		this.staff_id = staff_id;
 	}
 
 	public Orders getOrder() {
@@ -132,20 +81,33 @@ public class Bill {
 		this.staff = staff;
 	}
 
-	public Bill(Long bill_id, Date date, int total_quantity, int total_price, LocalDateTime updated_at, LocalDateTime created_at,
-			Long order_id, Long staff_id, com.javaweb.entity.Orders order, com.javaweb.entity.Staff staff) {
+	public Long getCreated_by() {
+		return created_by;
+	}
+
+	public void setCreated_by(Long created_by) {
+		this.created_by = created_by;
+	}
+
+	public LocalDateTime getCreated_at() {
+		return created_at;
+	}
+
+	public Bill(Long bill_id, LocalDateTime created_at, Long order_id, Long created_by, Orders order, Staff staff) {
 		super();
 		this.bill_id = bill_id;
-		this.date = date;
-		this.total_quantity = total_quantity;
-		this.total_price = total_price;
-		this.updated_at = updated_at;
 		this.created_at = created_at;
 		this.order_id = order_id;
-		this.staff_id = staff_id;
+		this.created_by = created_by;
 		this.order = order;
 		this.staff = staff;
 	}
+
+	public Bill() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
+
 }

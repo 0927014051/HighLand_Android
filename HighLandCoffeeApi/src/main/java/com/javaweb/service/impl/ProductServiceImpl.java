@@ -8,9 +8,11 @@ import java.util.Random;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.entity.Category;
+import com.javaweb.entity.PriceUpdateDetail;
 import com.javaweb.entity.Product;
 import com.javaweb.exception.ProductException;
 import com.javaweb.reponsitory.CategoryRepo;
+import com.javaweb.reponsitory.PriceUpdateRepo;
 import com.javaweb.reponsitory.ProductRepo;
 import com.javaweb.request.CreateProductRequest;
 import com.javaweb.service.ProductService;
@@ -21,9 +23,11 @@ public class ProductServiceImpl implements ProductService{
 	private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	private static final int CODE_LENGTH = 6;
 	private ProductRepo productRepo;
+	private PriceUpdateRepo priceUpdateRepo;
 
-	public ProductServiceImpl(ProductRepo productRepo) {
+	public ProductServiceImpl(ProductRepo productRepo,PriceUpdateRepo priceUpdateRepo) {
 		this.productRepo = productRepo;
+		this.priceUpdateRepo = priceUpdateRepo;
 		
 	}
 	
@@ -40,13 +44,23 @@ public class ProductServiceImpl implements ProductService{
 		product.setCreated_at(LocalDateTime.now());
 		product.setDescription(req.getDescription());
 		product.setImage(req.getImage());
-		product.setPrice(req.getPrice());
 		product.setProduct_name(req.getProduct_name());
-		product.setQuantity(req.getQuantity());
-		product.setStatus(0);
+		product.setStatus(req.getStatus());
 		product.setUpdated_at(LocalDateTime.now());	
+		product.setCreated_by(req.getStaff_id());
+		product.setUpdated_by(req.getStaff_id());
 		Product savedProduct = productRepo.save(product);
-		System.err.println("products - " + product);
+		if(savedProduct != null) {
+			PriceUpdateDetail priceUpdateDetail = new PriceUpdateDetail();
+			priceUpdateDetail.setCreated_at(LocalDateTime.now());
+			priceUpdateDetail.setCreated_by(req.getStaff_id());
+			priceUpdateDetail.setUpdated_by(req.getStaff_id());
+			priceUpdateDetail.setPrice_new(req.getPrice());
+			priceUpdateDetail.setPrice_old(req.getPrice());
+			priceUpdateDetail.setProduct_id(savedProduct.getProduct_id());
+			priceUpdateDetail.setUpdated_at(LocalDateTime.now());
+			PriceUpdateDetail savePriceUpdateDetail = priceUpdateRepo.save(priceUpdateDetail);
+		}
 		return savedProduct;
 	}
 	
@@ -64,7 +78,7 @@ public class ProductServiceImpl implements ProductService{
 	    }
 	  
 	  @Override
-	  public Product updateProduct(String productId,Product rq)throws ProductException{
+	  public Product updateProduct(String productId,Product rq,Long staff_id)throws ProductException{
 		  Product product = findProductById(productId);
 		  if(!rq.getDescription().equals(null)) {
 			  product.setDescription(rq.getDescription());
@@ -75,14 +89,11 @@ public class ProductServiceImpl implements ProductService{
 		  if(rq.getCategory_id() != null) {
 			  product.setCategory_id(rq.getCategory_id());
 		  }
-		  if(rq.getPrice() != 0 ) {
-			  product.setPrice(rq.getPrice());
-		  }
-		  if(rq.getQuantity() != 0) {
-			  product.setQuantity(rq.getQuantity());
-		  }
 		  if(!rq.getProduct_name().equals(null)) {
 			  product.setProduct_name(rq.getProduct_name());
+		  }
+		  if(staff_id != null) {
+			  product.setUpdated_by(staff_id);
 		  }
 		  product.setUpdated_at(LocalDateTime.now());
 		  return productRepo.save(product);
@@ -99,10 +110,11 @@ public class ProductServiceImpl implements ProductService{
 	  }
 	  
 	  @Override
-	  public String deleteProduct(String productId) throws ProductException{
+	  public String deleteProduct(String productId,Long staff_id) throws ProductException{
 		  Product product = findProductById(productId);
 		  System.err.println("delete product " + product.getProduct_id() + " - " + productId);
 		  product.setStatus(1);
+		  product.setUpdated_by(staff_id);
 		  productRepo.save(product);
 		  return "Stopped Selling Success";
 	  }

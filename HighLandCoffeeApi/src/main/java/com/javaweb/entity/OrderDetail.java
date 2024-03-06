@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "order_detail")
@@ -29,19 +30,28 @@ public class OrderDetail {
 	private int price;
 	
 	@Column
+	private String size;
+	
+	@Column
+	private String topping;
+	
+	@Column
 	private Long oder_id;
 
 	@Column
 	private String product_id;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "order_id",insertable = false, updatable = false)
 	private Orders order;
 	
+	@JsonIgnore
 	@ManyToOne (fetch=FetchType.LAZY)
 	@JoinColumn(name = "product_id",insertable = false, updatable = false)
 	private Product product;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy = "order_detail")
 	@JsonBackReference
 	private Review review;
@@ -110,12 +120,30 @@ public class OrderDetail {
 		this.review = review;
 	}
 
-	public OrderDetail(Long order_detail_id, int quantity, int price, Long oder_id, String product_id,
-			com.javaweb.entity.Orders order, com.javaweb.entity.Product product, com.javaweb.entity.Review review) {
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public String getTopping() {
+		return topping;
+	}
+
+	public void setTopping(String topping) {
+		this.topping = topping;
+	}
+
+	public OrderDetail(Long order_detail_id, int quantity, int price, String size, String topping, Long oder_id,
+			String product_id, Orders order, Product product, Review review) {
 		super();
 		this.order_detail_id = order_detail_id;
 		this.quantity = quantity;
 		this.price = price;
+		this.size = size;
+		this.topping = topping;
 		this.oder_id = oder_id;
 		this.product_id = product_id;
 		this.order = order;

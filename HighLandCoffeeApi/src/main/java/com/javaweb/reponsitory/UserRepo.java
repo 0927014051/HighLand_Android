@@ -12,4 +12,4 @@ import com.javaweb.entity.User;
 public interface UserRepo extends JpaRepository<User,Long>{
 	@Query(value = "SELECT * FROM user WHERE username = ?1  ", nativeQuery = true)
     User findByUsername(String username);
-}
+	}

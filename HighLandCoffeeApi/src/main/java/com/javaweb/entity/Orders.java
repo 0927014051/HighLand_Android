@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "orders")
@@ -44,6 +45,7 @@ public class Orders {
 	@Column
 	private Long customer_id;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "customer_id",updatable = false, insertable = false)
 	private Customer customer;
@@ -52,6 +54,7 @@ public class Orders {
 	@JsonBackReference
 	private Bill bill;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> order_detail;
 

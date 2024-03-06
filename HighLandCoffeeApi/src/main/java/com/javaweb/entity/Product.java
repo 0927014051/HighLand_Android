@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "product")
@@ -28,12 +29,6 @@ public class Product {
 	
 	@Column
 	private String image;
-	
-	@Column
-	private int price;
-	
-	@Column
-	private int quantity;
 	
 	@Column(length = 500)
 	private String description;
@@ -50,19 +45,40 @@ public class Product {
 	@Column
 	private Long category_id;
 	
+	@Column
+	private Long created_by;
+	
+	@Column
+	private Long updated_by;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "created_by",insertable = false,updatable = false)
+	private Staff staff_created;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "updated_by",insertable = false, updatable = false)
+	private Staff staff_updated;
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<CartDetail> cart_detail;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<OrderDetail> order_detail;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<PriceUpdateDetail> price_update_detail;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "category_id", insertable = false, updatable = false)
 	private Category category;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<Review> review;
 
@@ -81,23 +97,6 @@ public class Product {
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
 	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
 
 	public LocalDateTime getCreated_at() {
 		return created_at;
@@ -190,23 +189,55 @@ public class Product {
 		this.image = image;
 	}
 
-	
-	
+	public Long getCreated_by() {
+		return created_by;
+	}
 
-	public Product(String product_id, String product_name, String image, int price, int quantity, String description,
-			int status, LocalDateTime created_at, LocalDateTime updated_at, Long category_id,
-			List<CartDetail> cart_detail, List<OrderDetail> order_detail, List<PriceUpdateDetail> price_update_detail,
-			Category category, List<Review> review) {
+	public void setCreated_by(Long created_by) {
+		this.created_by = created_by;
+	}
+
+	public Long getUpdated_by() {
+		return updated_by;
+	}
+
+	public void setUpdated_by(Long updated_by) {
+		this.updated_by = updated_by;
+	}
+
+	public Staff getStaff_created() {
+		return staff_created;
+	}
+
+	public void setStaff_created(Staff staff_created) {
+		this.staff_created = staff_created;
+	}
+
+	public Staff getStaff_updated() {
+		return staff_updated;
+	}
+
+	public void setStaff_updated(Staff staff_updated) {
+		this.staff_updated = staff_updated;
+	}
+
+	public Product(String product_id, String product_name, String image, String description, int status,
+			LocalDateTime created_at, LocalDateTime updated_at, Long category_id, Long created_by, Long updated_by,
+			Staff staff_created, Staff staff_updated, List<CartDetail> cart_detail, List<OrderDetail> order_detail,
+			List<PriceUpdateDetail> price_update_detail, Category category, List<Review> review) {
+		super();
 		this.product_id = product_id;
 		this.product_name = product_name;
 		this.image = image;
-		this.price = price;
-		this.quantity = quantity;
 		this.description = description;
 		this.status = status;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.category_id = category_id;
+		this.created_by = created_by;
+		this.updated_by = updated_by;
+		this.staff_created = staff_created;
+		this.staff_updated = staff_updated;
 		this.cart_detail = cart_detail;
 		this.order_detail = order_detail;
 		this.price_update_detail = price_update_detail;

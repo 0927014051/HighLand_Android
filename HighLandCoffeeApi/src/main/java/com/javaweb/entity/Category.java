@@ -1,5 +1,6 @@
 package com.javaweb.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -7,10 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "category")
@@ -24,9 +28,40 @@ public class Category {
 	@Column
 	private String category_name;
 	
+	@Column
+	private Long created_by;
+	
+	@Column
+	private Long updated_by;
+	
+	@Column
+	private LocalDateTime created_at;
+	
+	@Column
+	private LocalDateTime updated_at;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "created_by", insertable = false, updatable = false)
+	private Staff staff_created;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "updated_by",insertable = false, updatable = false)
+	private Staff staff_updated;
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "category")
 	@JsonBackReference
 	private List<Product> product;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "category")
+	private List<Topping_Category> topping_category;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "category")
+	private List<Category_Size> category_size;
 
 	public Long getCategory_id() {
 		return category_id;
@@ -52,14 +87,95 @@ public class Category {
 		this.product = product;
 	}
 
-	public Category(Long category_id, String category_name) {
-		this.category_id = category_id;
-		this.category_name = category_name;
+	
+
+	public Long getCreated_by() {
+		return created_by;
 	}
 
-	public Category() {
-		// TODO Auto-generated constructor stub
+	public void setCreated_by(Long created_by) {
+		this.created_by = created_by;
 	}
+
+	public Long getUpdated_by() {
+		return updated_by;
+	}
+
+	public void setUpdated_by(Long updated_by) {
+		this.updated_by = updated_by;
+	}
+
+	public LocalDateTime getCreated_at() {
+		return created_at;
+	}
+
+	public void setCreated_at(LocalDateTime created_at) {
+		this.created_at = created_at;
+	}
+
+	public LocalDateTime getUpdated_at() {
+		return updated_at;
+	}
+
+	public void setUpdated_at(LocalDateTime updated_at) {
+		this.updated_at = updated_at;
+	}
+
+	public Staff getStaff_created() {
+		return staff_created;
+	}
+
+	public void setStaff_created(Staff staff_created) {
+		this.staff_created = staff_created;
+	}
+
+	public Staff getStaff_updated() {
+		return staff_updated;
+	}
+
+	public void setStaff_updated(Staff staff_updated) {
+		this.staff_updated = staff_updated;
+	}
+
+	public List<Topping_Category> getTopping_category() {
+		return topping_category;
+	}
+
+	public void setTopping_category(List<Topping_Category> topping_category) {
+		this.topping_category = topping_category;
+	}
+
+	public List<Category_Size> getCategory_size() {
+		return category_size;
+	}
+
+	public void setCategory_size(List<Category_Size> category_size) {
+		this.category_size = category_size;
+	}
+
+	public Category(Long category_id, String category_name, Long created_by, Long updated_by, LocalDateTime created_at,
+			LocalDateTime updated_at, Staff staff_created, Staff staff_updated, List<Product> product,
+			List<Topping_Category> topping_category, List<Category_Size> category_size) {
+		super();
+		this.category_id = category_id;
+		this.category_name = category_name;
+		this.created_by = created_by;
+		this.updated_by = updated_by;
+		this.created_at = created_at;
+		this.updated_at = updated_at;
+		this.staff_created = staff_created;
+		this.staff_updated = staff_updated;
+		this.product = product;
+		this.topping_category = topping_category;
+		this.category_size = category_size;
+	}
+	
+
+	public Category() {
+		
+	}
+
+
 	
 	
 	
