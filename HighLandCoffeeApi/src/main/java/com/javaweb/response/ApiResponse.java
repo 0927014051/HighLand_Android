@@ -4,11 +4,13 @@ public class ApiResponse {
 
 	private String message;
 	private boolean status;
+	private int stt;
 	
-	public ApiResponse(String message, boolean status) {
+	public ApiResponse(String message, boolean status,int stt) {
 		super();
 		this.message = message;
 		this.status = status;
+		this.stt = stt;
 	}
 	
 	public ApiResponse() {
@@ -32,5 +34,14 @@ public class ApiResponse {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
+
+	public int getStt() {
+		return stt;
+	}
+
+	public void setStt(int stt) {
+		this.stt = stt;
+	}
+	
 	
 }

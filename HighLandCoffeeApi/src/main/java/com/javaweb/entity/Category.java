@@ -3,8 +3,10 @@ package com.javaweb.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -50,9 +54,7 @@ public class Category {
 	@JoinColumn(name = "updated_by",insertable = false, updatable = false)
 	private Staff staff_updated;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "category")
-	@JsonBackReference
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<Product> product;
 	
 	@JsonIgnore
@@ -63,6 +65,7 @@ public class Category {
 	@OneToMany(mappedBy = "category")
 	private List<Category_Size> category_size;
 
+	@JsonIgnore
 	public Long getCategory_id() {
 		return category_id;
 	}
@@ -79,6 +82,7 @@ public class Category {
 		this.category_name = category_name;
 	}
 
+	@JsonIgnore
 	public List<Product> getProduct() {
 		return product;
 	}
@@ -89,6 +93,7 @@ public class Category {
 
 	
 
+	@JsonIgnore
 	public Long getCreated_by() {
 		return created_by;
 	}
@@ -97,6 +102,7 @@ public class Category {
 		this.created_by = created_by;
 	}
 
+	@JsonIgnore
 	public Long getUpdated_by() {
 		return updated_by;
 	}
@@ -105,6 +111,7 @@ public class Category {
 		this.updated_by = updated_by;
 	}
 
+	@JsonIgnore
 	public LocalDateTime getCreated_at() {
 		return created_at;
 	}
@@ -113,6 +120,7 @@ public class Category {
 		this.created_at = created_at;
 	}
 
+	@JsonIgnore
 	public LocalDateTime getUpdated_at() {
 		return updated_at;
 	}

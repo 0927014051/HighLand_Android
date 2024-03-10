@@ -6,78 +6,88 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import net.bytebuddy.dynamic.TypeResolutionStrategy.Lazy;
 
 @Entity
 @Table(name = "product")
 public class Product {
-	
+
 	@Id
 	@Column
-	private String product_id; 
-	
+	private String product_id;
+
 	@Column(length = 50)
 	private String product_name;
-	
+
 	@Column
 	private String image;
-	
+
 	@Column(length = 500)
 	private String description;
-	
+
 	@Column
-	private int status;
-	
+	private String status;
+
 	@Column(name = "created_at")
 	private LocalDateTime created_at;
-	
+
 	@Column(name = "updated_at")
 	private LocalDateTime updated_at;
-	
+
 	@Column
 	private Long category_id;
-	
+
 	@Column
 	private Long created_by;
-	
+
 	@Column
 	private Long updated_by;
-	
-	@JsonIgnore
+
 	@ManyToOne
-	@JoinColumn(name = "created_by",insertable = false,updatable = false)
+	@MapsId("category_id")
+	@JoinColumn(name = "category_id")
+	private Category category;
+	
+	@ManyToOne
+	@JoinColumn(name = "created_by", insertable = false, updatable = false)
 	private Staff staff_created;
-	
-	@JsonIgnore
+
 	@ManyToOne
-	@JoinColumn(name = "updated_by",insertable = false, updatable = false)
+	@JoinColumn(name = "updated_by", insertable = false, updatable = false)
 	private Staff staff_updated;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<CartDetail> cart_detail;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<OrderDetail> order_detail;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<PriceUpdateDetail> price_update_detail;
-	
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "category_id", insertable = false, updatable = false)
-	private Category category;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<Review> review;
@@ -98,7 +108,8 @@ public class Product {
 		this.product_name = product_name;
 	}
 
-	public LocalDateTime getCreated_at() {
+	@JsonFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)	public LocalDateTime getCreated_at() {
 		return created_at;
 	}
 
@@ -106,6 +117,8 @@ public class Product {
 		this.created_at = created_at;
 	}
 
+	@JsonFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
 	public LocalDateTime getUpdated_at() {
 		return updated_at;
 	}
@@ -146,7 +159,6 @@ public class Product {
 		this.price_update_detail = price_update_detail;
 	}
 
-	@JsonBackReference(value="user-movement")
 	public Category getCategory() {
 		return category;
 	}
@@ -154,24 +166,22 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
+
 	public List<Review> getReview() {
 		return review;
 	}
-	
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
 	public void setReview(List<Review> review) {
 		this.review = review;
 	}
-	
 
 	public String getDescription() {
 		return description;
@@ -221,7 +231,7 @@ public class Product {
 		this.staff_updated = staff_updated;
 	}
 
-	public Product(String product_id, String product_name, String image, String description, int status,
+	public Product(String product_id, String product_name, String image, String description, String status,
 			LocalDateTime created_at, LocalDateTime updated_at, Long category_id, Long created_by, Long updated_by,
 			Staff staff_created, Staff staff_updated, List<CartDetail> cart_detail, List<OrderDetail> order_detail,
 			List<PriceUpdateDetail> price_update_detail, Category category, List<Review> review) {
@@ -246,9 +256,8 @@ public class Product {
 	}
 
 	public Product() {
-		
-	}
-	
-	
 
+	}
+
+	
 }

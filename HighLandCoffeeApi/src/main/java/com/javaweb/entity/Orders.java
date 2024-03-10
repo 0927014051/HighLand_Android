@@ -157,6 +157,11 @@ public class Orders {
 		this.order_detail = order_detail;
 	}
 
+	public Orders() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	
 
 

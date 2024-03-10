@@ -1,5 +1,6 @@
 package com.javaweb.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.javaweb.entity.Cart;
 import com.javaweb.entity.CartDetail;
 import com.javaweb.entity.Customer;
+import com.javaweb.entity.PriceUpdateDetail;
 import com.javaweb.entity.Product;
 import com.javaweb.entity.User;
 import com.javaweb.exception.CartDetailException;
@@ -16,6 +18,7 @@ import com.javaweb.reponsitory.CartRepo;
 import com.javaweb.reponsitory.CustomerRepo;
 import com.javaweb.service.CartDetailService;
 import com.javaweb.service.CustomerService;
+import com.javaweb.service.PriceUpdateService;
 import com.javaweb.service.UserService;
 
 @Service
@@ -25,18 +28,21 @@ public class CartDetailServiceImpl implements CartDetailService{
 	private UserService userService;
 	private CartRepo cartRepo;
 	private CustomerService customerService;
-	public CartDetailServiceImpl(CartDetailRepo cartDetailRepo, UserService userService, CartRepo cartRepo, CustomerService customerService) {
+	private PriceUpdateService priceUpdateService;
+	public CartDetailServiceImpl(CartDetailRepo cartDetailRepo, UserService userService, CartRepo cartRepo, CustomerService customerService,PriceUpdateService priceUpdateService) {
 		super();
 		this.cartDetailRepo = cartDetailRepo;
 		this.userService = userService;
 		this.cartRepo = cartRepo;
 		this.customerService = customerService;
+		this.priceUpdateService = priceUpdateService;
 	}
 	
 	@Override
 	public CartDetail createCartDetail(CartDetail cartDetail) {
+		PriceUpdateDetail priceUpdateDetail = priceUpdateService.findPriceUpdateByProductId(cartDetail.getProduct().getProduct_id());
 		cartDetail.setQuantity(1);
-		//cartDetail.setPrice(cartDetail.getProduct().getPrice()*cartDetail.getQuantity());
+		cartDetail.setPrice(priceUpdateDetail.getPrice_new()*cartDetail.getQuantity());
 		CartDetail createdCartDetail = cartDetailRepo.save(cartDetail);
 		return createdCartDetail;
 	}
@@ -77,9 +83,10 @@ public class CartDetailServiceImpl implements CartDetailService{
 			throws CartDetailException, UserException {
 		CartDetail item = findCartDetailById(cartDetailId);
 		Customer customer = customerService.findCustomerById(item.getCart().getCustomer_id());
+		
 		if(customer.getCustomer_id().equals(customerId)) {
 			item.setQuantity(cartDetail.getQuantity());
-		//	item.setPrice(item.getQuantity();
+			item.setPrice(item.getQuantity());
 			return cartDetailRepo.save(item);
 		}
 		else {
@@ -87,5 +94,18 @@ public class CartDetailServiceImpl implements CartDetailService{
 		}
 	}
 	
+	@Override
+	public CartDetail findCartDetailByCartIdAndProductId(Long cart_id, String proudct_id,String size, String topping) {
+		return cartDetailRepo.findCartDetailByCartIdAndProductId(cart_id, proudct_id,size,topping);
+	}
 	
+	@Override
+	public List<CartDetail> findCartDetailByCartId(Long cart_id) {
+		return cartDetailRepo.findCartDetailByCartId(cart_id);
+	}
+	
+	@Override
+	public void deleteCartDetail(Long cart_id){
+		cartDetailRepo.deleteCartDetail(cart_id);
+	}
 }

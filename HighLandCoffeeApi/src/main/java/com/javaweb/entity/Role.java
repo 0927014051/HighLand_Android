@@ -29,6 +29,7 @@ public class Role {
 	@OneToMany(mappedBy = "role")
 	private List<User> user;
 
+	@JsonIgnore
 	public Long getRole_id() {
 		return role_id;
 	}

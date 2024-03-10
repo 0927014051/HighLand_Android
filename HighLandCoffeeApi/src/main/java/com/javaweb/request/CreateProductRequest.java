@@ -9,10 +9,10 @@ public class CreateProductRequest {
 	private String image;
 	private int price;
 	private String description;
-	private int status;
+	private String status;
 	private LocalDateTime created_at;
 	private LocalDateTime updated_at;
-	private Long category_id;
+	private String category_name;
 	private Long staff_id;
 	
 	public Long getStaff_id() {
@@ -51,10 +51,10 @@ public class CreateProductRequest {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public LocalDateTime getCreated_at() {
@@ -69,13 +69,13 @@ public class CreateProductRequest {
 	public void setUpdated_at(LocalDateTime updated_at) {
 		this.updated_at = updated_at;
 	}
-	public Long getCategory_id() {
-		return category_id;
+		
+	public String getCategory_name() {
+		return category_name;
 	}
-	public void setCategory_id(Long category_id) {
-		this.category_id = category_id;
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
 	}
-	
 	public CreateProductRequest() {
 		super();
 		// TODO Auto-generated constructor stub

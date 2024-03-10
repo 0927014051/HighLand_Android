@@ -17,7 +17,7 @@ public interface ProductService {
 		
 		public String deleteProduct(String productId, Long staff_id) throws ProductException;
 //		
-		public Product updateProduct(String productId,Product product,Long staff_id)throws ProductException;
+		public Product updateProduct(String productId,CreateProductRequest product,Long staff_id)throws ProductException;
 //		
 		
 //		

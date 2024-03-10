@@ -11,5 +11,5 @@ import com.javaweb.entity.Role;
 @Repository
 public interface RoleRepo extends JpaRepository<Role, Long>{
 	@Query(value = "SELECT * FROM role WHERE role_name = ?1  ", nativeQuery = true)
-    Optional<Role> findByName(String name);
+    Role findByName(String name);
 }

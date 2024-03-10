@@ -114,6 +114,7 @@ public class Staff {
 	@OneToMany(mappedBy = "staff_updated")
 	private List<Coupon> coupon_updated;
 
+	@JsonIgnore
 	public Long getStaff_id() {
 		return staff_id;
 	}
@@ -138,6 +139,7 @@ public class Staff {
 		this.lastname = lastname;
 	}
 
+	@JsonIgnore
 	public Date getBirthday() {
 		return birthday;
 	}
@@ -146,6 +148,7 @@ public class Staff {
 		this.birthday = birthday;
 	}
 
+	@JsonIgnore
 	public String getEmail() {
 		return email;
 	}
@@ -154,6 +157,7 @@ public class Staff {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	public String getPhone() {
 		return phone;
 	}
@@ -162,6 +166,7 @@ public class Staff {
 		this.phone = phone;
 	}
 
+	@JsonIgnore
 	public String getAddress() {
 		return address;
 	}
@@ -170,6 +175,7 @@ public class Staff {
 		this.address = address;
 	}
 
+	@JsonIgnore
 	public LocalDateTime getCreated_at() {
 		return created_at;
 	}
@@ -178,6 +184,7 @@ public class Staff {
 		this.created_at = created_at;
 	}
 
+	@JsonIgnore
 	public LocalDateTime getUpdated_at() {
 		return updated_at;
 	}
@@ -186,6 +193,7 @@ public class Staff {
 		this.updated_at = updated_at;
 	}
 
+	@JsonIgnore
 	public String getCccd() {
 		return cccd;
 	}
@@ -194,6 +202,7 @@ public class Staff {
 		this.cccd = cccd;
 	}
 
+	@JsonIgnore
 	public String getTax_id() {
 		return tax_id;
 	}
@@ -202,6 +211,7 @@ public class Staff {
 		this.tax_id = tax_id;
 	}
 
+	@JsonIgnore
 	public long getSalary() {
 		return salary;
 	}
@@ -210,6 +220,7 @@ public class Staff {
 		this.salary = salary;
 	}
 
+	@JsonIgnore
 	public Long getUser_id() {
 		return user_id;
 	}

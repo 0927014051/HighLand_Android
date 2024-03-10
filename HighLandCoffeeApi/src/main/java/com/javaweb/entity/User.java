@@ -58,7 +58,6 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<Customer> customer;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "role_id", insertable = false, updatable = false)
 	private Role role;
@@ -115,6 +114,7 @@ public class User {
 		this.updated_at = updated_at;
 	}
 
+	@JsonIgnore
 	public Long getRole_id() {
 		return role_id;
 	}

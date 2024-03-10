@@ -10,7 +10,7 @@ import com.javaweb.exception.OrdersException;
 
 public interface OrderService {
 
-//	public Orders createOrders(Customer customer);
+	public Orders createOrder(Customer customer);
 	
 //	public Orders findOrdersById(Long orderId) throws OrdersException;
 //	

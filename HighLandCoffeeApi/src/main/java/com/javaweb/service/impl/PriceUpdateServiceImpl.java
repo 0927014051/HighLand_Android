@@ -5,8 +5,12 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.entity.PriceUpdateDetail;
+import com.javaweb.entity.Product;
+import com.javaweb.exception.ProductException;
+import com.javaweb.exception.UserException;
 import com.javaweb.reponsitory.PriceUpdateRepo;
 import com.javaweb.service.PriceUpdateService;
+import com.javaweb.service.ProductService;
 
 @Service
 public class PriceUpdateServiceImpl implements PriceUpdateService{
@@ -29,4 +33,24 @@ public class PriceUpdateServiceImpl implements PriceUpdateService{
 		priceUpdateDetail.setUpdated_at(LocalDateTime.now());
 		return priceUpdateRepo.save(priceUpdateDetail);
 	}
+	
+	@Override
+	public PriceUpdateDetail updatePrice(String productId,PriceUpdateDetail rq, Long staff_id) throws ProductException, UserException {
+		PriceUpdateDetail priceUpdateDetail = priceUpdateRepo.findPriceByProductId(productId);
+		priceUpdateDetail.setPrice_old(priceUpdateDetail.getPrice_new());
+		if(rq.getPrice_new() != 0) {
+			priceUpdateDetail.setPrice_new(rq.getPrice_new());
+			priceUpdateDetail.setUpdated_by(staff_id);
+			priceUpdateDetail.setUpdated_at(LocalDateTime.now());
+		}
+		return priceUpdateRepo.save(priceUpdateDetail);
+	}
+	
+	@Override
+	public PriceUpdateDetail findPriceUpdateByProductId(String productId) {
+		return priceUpdateRepo.findPriceByProductId(productId);
+	}
+
+	
+	
 }

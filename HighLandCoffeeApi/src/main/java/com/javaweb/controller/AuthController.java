@@ -19,17 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaweb.config.JwtTokenProvider;
 import com.javaweb.entity.Cart;
 import com.javaweb.entity.Customer;
+import com.javaweb.entity.Role;
 import com.javaweb.entity.Staff;
 import com.javaweb.entity.User;
 import com.javaweb.exception.UserException;
 import com.javaweb.reponsitory.StaffRepo;
 import com.javaweb.reponsitory.UserRepo;
 import com.javaweb.request.LoginRequest;
+import com.javaweb.request.SignupRequest;
 import com.javaweb.response.ApiResponse;
 import com.javaweb.response.AuthResponse;
 import com.javaweb.service.CartService;
 import com.javaweb.service.CustomerService;
 import com.javaweb.service.CustomerUserDetails;
+import com.javaweb.service.RoleService;
 import com.javaweb.service.StaffService;
 import com.javaweb.service.UserService;
 
@@ -46,8 +49,9 @@ public class AuthController {
 	private CartService cartService;
 	private CustomerService customerService;
 	private StaffService staffService;
+	private RoleService roleService;
 	
-	public AuthController(UserRepo userRepository,PasswordEncoder passwordEncoder,JwtTokenProvider jwtTokenProvider,CustomerUserDetails customUserDetails,CartService cartService,CustomerService customerService,StaffService staffService) {
+	public AuthController(UserRepo userRepository,PasswordEncoder passwordEncoder,JwtTokenProvider jwtTokenProvider,CustomerUserDetails customUserDetails,CartService cartService,CustomerService customerService,StaffService staffService,RoleService roleService) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.jwtTokenProvider = jwtTokenProvider;
@@ -55,14 +59,17 @@ public class AuthController {
 		this.cartService = cartService;
 		this.customerService = customerService;
 		this.staffService = staffService;
+		this.roleService = roleService;
 	}
 	@RequestMapping(value = "/signup",method = RequestMethod.POST)
-	public ResponseEntity<ApiResponse> createUserHandler(@Valid @RequestBody User user) throws UserException{
+	public ResponseEntity<ApiResponse> createUserHandler(@Valid @RequestBody SignupRequest user) throws UserException{
 		  	String username = user.getUsername();
 	        String password = user.getPassword();
-	        Long role_id = user.getRole_id();
+	        String role_name = user.getRole_name();
+	        System.err.println("roleName = " + role_name);
 	        User isUserExist = userRepository.findByUsername(username);
-	        ApiResponse apiResponse = new ApiResponse(username + " :signup success",true);
+	        Role role = roleService.findRoleByName(role_name);
+	        ApiResponse apiResponse = new ApiResponse(username + " :signup success",true,HttpStatus.OK.value());
 	        // Check email exists
 	        if (isUserExist != null) {
 	        // System.out.println("--------- exist "+isEmailExist).getEmail());
@@ -73,11 +80,11 @@ public class AuthController {
 			User createdUser = new User();
 			createdUser.setUsername(username);
 	        createdUser.setPassword(passwordEncoder.encode(password));
-	        createdUser.setRole_id(role_id);
+	        createdUser.setRole_id(role.getRole_id());
 	        createdUser.setCreated_at(LocalDateTime.now());
 	        createdUser.setUpdated_at(LocalDateTime.now());
 	        User savedUser= userRepository.save(createdUser);
-	        if(role_id == 3) {
+	        if(role.getRole_id() == 3) {
 	        if(savedUser != null) {
 	        	Customer customer = new Customer();
 		        customer.setCreated_at(LocalDateTime.now());
@@ -92,7 +99,7 @@ public class AuthController {
 		 	        Cart createdCart = cartService.createCart(cart);
 		        }
 	        }
-	        }if(role_id == 2) {
+	        }if(role.getRole_id() == 2) {
 	        	Staff staff = new Staff();
 	        	staff.setCreated_at(LocalDateTime.now());
 	        	staff.setUpdated_at(LocalDateTime.now());

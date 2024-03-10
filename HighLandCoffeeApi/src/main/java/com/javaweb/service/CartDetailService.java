@@ -5,7 +5,7 @@ import com.javaweb.entity.CartDetail;
 import com.javaweb.entity.Product;
 import com.javaweb.exception.CartDetailException;
 import com.javaweb.exception.UserException;
-
+import java.util.List;
 public interface CartDetailService {
 public CartDetail createCartDetail(CartDetail cartItem);
 	
@@ -16,4 +16,12 @@ public CartDetail createCartDetail(CartDetail cartItem);
 	public void removeCartDetail(Long userId,Long cartItemId) throws CartDetailException, UserException;
 	
 	public CartDetail findCartDetailById(Long cartItemId) throws CartDetailException;
+	
+	public CartDetail findCartDetailByCartIdAndProductId(Long cart_id, String proudct_id,String size,String topping);
+	
+	public List<CartDetail> findCartDetailByCartId(Long cart_id);
+	
+	public void deleteCartDetail(Long cart_id);
+
+
 }

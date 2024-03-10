@@ -12,7 +12,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public ResponseEntity<ApiResponse> homeController(){
-		ApiResponse res = new ApiResponse("Welcome",true);
+		ApiResponse res = new ApiResponse("Welcome",true,HttpStatus.OK.value());
 		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
 	}
 }
