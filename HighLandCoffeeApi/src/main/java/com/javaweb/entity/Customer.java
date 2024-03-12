@@ -80,6 +80,7 @@ public class Customer {
 	@OneToMany(mappedBy = "customer")
 	private List<Review> review;
 
+	@JsonIgnore
 	public Long getCustomer_id() {
 		return customer_id;
 	}
@@ -104,6 +105,7 @@ public class Customer {
 		this.lastname = lastname;
 	}
 
+	@JsonIgnore
 	public Date getBirthday() {
 		return birthday;
 	}
@@ -112,6 +114,7 @@ public class Customer {
 		this.birthday = birthday;
 	}
 
+	@JsonIgnore
 	public String getEmail() {
 		return email;
 	}
@@ -120,6 +123,7 @@ public class Customer {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	public String getPhone() {
 		return phone;
 	}
@@ -152,6 +156,7 @@ public class Customer {
 		this.updated_at = updated_at;
 	}
 
+	@JsonIgnore
 	public String getCccd() {
 		return cccd;
 	}
@@ -160,6 +165,7 @@ public class Customer {
 		this.cccd = cccd;
 	}
 
+	@JsonIgnore
 	public String getTax_id() {
 		return tax_id;
 	}
@@ -168,6 +174,7 @@ public class Customer {
 		this.tax_id = tax_id;
 	}
 
+	@JsonIgnore
 	public Long getUser_id() {
 		return user_id;
 	}

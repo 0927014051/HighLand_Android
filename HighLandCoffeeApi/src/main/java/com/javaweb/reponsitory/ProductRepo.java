@@ -12,13 +12,15 @@ import com.javaweb.entity.Product;
 @Repository
 public interface ProductRepo extends JpaRepository<Product, String>{
 	
-//	@Query("SELECT p From product p where LOWER(p.product_name) Like %:query% OR LOWER(p.description) Like %:query% OR LOWER(p.category.category_name) LIKE %:query%")
-//	public List<Product> searchProduct(@Param("query")String query);
+	@Query("SELECT p From Product p where LOWER(p.product_name) Like %:query% OR LOWER(p.description) Like %:query% OR LOWER(p.category.category_name) LIKE %:query%")
+	public List<Product> searchProduct(@Param("query")String query);
+	
 	@Query("SELECT p From Product p Where LOWER(p.category.category_name)=:category")
 	public List<Product> findByCategory(@Param("category") String category);
 	
 	@Query("SELECT p From Product p Where LOWER(p.product_name)=:name")
 	public Product findProductByName(String name);
+	
 //	@Query(
 //			"SELECT p FROM product p " +
 //	        "WHERE (p.category.name = :category OR :category = '') " +

@@ -2,6 +2,7 @@ package com.javaweb.entity;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -34,10 +35,16 @@ public class User {
 	private int points;
 	
 	@Column
+	private String status;
+	
+	@Column
 	private LocalDateTime created_at;
 	
 	@Column
 	private LocalDateTime updated_at;
+	
+	@Column
+	private Long updated_by;
 	
 	@Column
 	private String accessToken;
@@ -179,19 +186,36 @@ public class User {
 	public void setExpiredRefreshToken(Timestamp expiredRefreshToken) {
 		this.expiredRefreshToken = expiredRefreshToken;
 	}
-	
-	
 
-	public User(Long user_id, String username, String password, int points, LocalDateTime created_at,
-			LocalDateTime updated_at, String accessToken, String refreshToken, Timestamp expiredAccessToken,
-			Timestamp expiredRefreshToken, Long role_id, List<Customer> customer, Role role, List<Staff> staff) {
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Long getUpdated_by() {
+		return updated_by;
+	}
+
+	public void setUpdated_by(Long updated_by) {
+		this.updated_by = updated_by;
+	}
+
+	public User(Long user_id, String username, String password, int points, String status, LocalDateTime created_at,
+			LocalDateTime updated_at, Long updated_by, String accessToken, String refreshToken,
+			Timestamp expiredAccessToken, Timestamp expiredRefreshToken, Long role_id, List<Customer> customer,
+			Role role, List<Staff> staff) {
 		super();
 		this.user_id = user_id;
 		this.username = username;
 		this.password = password;
 		this.points = points;
+		this.status = status;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
+		this.updated_by = updated_by;
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
 		this.expiredAccessToken = expiredAccessToken;

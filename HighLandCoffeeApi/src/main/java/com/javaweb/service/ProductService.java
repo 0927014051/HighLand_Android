@@ -19,11 +19,11 @@ public interface ProductService {
 //		
 		public Product updateProduct(String productId,CreateProductRequest product,Long staff_id)throws ProductException;
 //		
-		
-//		
 //		// for user and admin both
 		public Product findProductById(String id) throws ProductException;
 		
 		public List<Product> findProductByCategory(String category);
+		
+		public List<Product> searchProduct(String query);
 	
 }

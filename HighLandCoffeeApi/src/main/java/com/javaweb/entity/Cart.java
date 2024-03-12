@@ -41,7 +41,7 @@ public class Cart {
 	@Column
 	private Long customer_id;
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "cart")
 	private List<CartDetail> cart_detail;
 	
@@ -50,6 +50,7 @@ public class Cart {
 	@JoinColumn(name = "customer_id",insertable = false, updatable = false)
 	private Customer customer;
 	
+	@JsonIgnore
 	public Long getCart_id() {
 		return cart_id;
 	}

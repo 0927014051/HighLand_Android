@@ -127,6 +127,7 @@ public class Product {
 		this.updated_at = updated_at;
 	}
 
+	@JsonIgnore
 	public Long getCategory_id() {
 		return category_id;
 	}
@@ -170,7 +171,8 @@ public class Product {
 	public List<Review> getReview() {
 		return review;
 	}
-
+	
+	@JsonIgnore
 	public String getStatus() {
 		return status;
 	}
@@ -198,7 +200,7 @@ public class Product {
 	public void setImage(String image) {
 		this.image = image;
 	}
-
+	@JsonIgnore
 	public Long getCreated_by() {
 		return created_by;
 	}
@@ -206,7 +208,7 @@ public class Product {
 	public void setCreated_by(Long created_by) {
 		this.created_by = created_by;
 	}
-
+	@JsonIgnore
 	public Long getUpdated_by() {
 		return updated_by;
 	}

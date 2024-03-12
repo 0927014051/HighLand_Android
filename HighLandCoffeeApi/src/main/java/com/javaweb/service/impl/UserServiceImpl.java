@@ -1,5 +1,6 @@
 package com.javaweb.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -144,5 +145,19 @@ public class UserServiceImpl implements UserService{
 		return user;
 	}
 	
+	@Override
+	public User findUserByUserName(String username) {
+		return userRepo.findByUsername(username);
+	}
+	
+	@Override
+	public User updateStatusByUsername(String username,Long staff_id) throws UserException{
+		User user = new User();
+		user.setStatus("Unactive");
+		user.setUpdated_at(LocalDateTime.now());
+		user.setUpdated_by(staff_id);
+		User savedUser =  userRepo.save(user);
+		return savedUser;
+	}
 
 }

@@ -34,16 +34,17 @@ public class Bill {
 	@Column
 	private Long created_by;
 	
-	@JsonIgnore
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id",insertable = false, updatable = false)
 	private Orders order;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "created_by",insertable = false, updatable =  false)
 	private Staff staff;
 
+	@JsonIgnore
 	public Long getBill_id() {
 		return bill_id;
 	}
@@ -57,6 +58,7 @@ public class Bill {
 		this.created_at = created_at;
 	}
 
+	@JsonIgnore
 	public Long getOrder_id() {
 		return order_id;
 	}
@@ -80,7 +82,8 @@ public class Bill {
 	public void setStaff(Staff staff) {
 		this.staff = staff;
 	}
-
+	
+	@JsonIgnore
 	public Long getCreated_by() {
 		return created_by;
 	}

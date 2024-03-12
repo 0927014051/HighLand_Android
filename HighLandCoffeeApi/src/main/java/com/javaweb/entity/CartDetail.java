@@ -49,6 +49,7 @@ public class CartDetail {
 	@JoinColumn(name = "cart_id", insertable = false, updatable = false)
 	private Cart cart;
 
+	@JsonIgnore
 	public Long getCart_detail_id() {
 		return cart_detail_id;
 	}
@@ -80,7 +81,8 @@ public class CartDetail {
 	public void setProduct_id(String product_id) {
 		this.product_id = product_id;
 	}
-
+	 
+	@JsonIgnore
 	public Long getCart_id() {
 		return cart_id;
 	}

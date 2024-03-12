@@ -153,6 +153,12 @@ public class ProductServiceImpl implements ProductService {
 		return products;
 	}
 
+	@Override
+	public List<Product> searchProduct(String query){
+		List<Product> products = productRepo.searchProduct(query);
+		return products;
+	}
+
 	public static String generateProductCode() {
 		Random random = new Random();
 		StringBuilder codeBuilder = new StringBuilder();

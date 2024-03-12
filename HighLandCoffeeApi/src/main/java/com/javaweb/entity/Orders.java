@@ -45,19 +45,19 @@ public class Orders {
 	@Column
 	private Long customer_id;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "customer_id",updatable = false, insertable = false)
 	private Customer customer;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy = "order")
-	@JsonBackReference
 	private Bill bill;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> order_detail;
 
+	@JsonIgnore
 	public Long getOrder_id() {
 		return order_id;
 	}
@@ -90,9 +90,8 @@ public class Orders {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
 	
-
+	@JsonIgnore
 	public Long getCustomer_id() {
 		return customer_id;
 	}

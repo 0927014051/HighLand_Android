@@ -46,8 +46,8 @@ public class OrderDetail {
 	@JoinColumn(name = "order_id",insertable = false, updatable = false)
 	private Orders order;
 	
-	@JsonIgnore
-	@ManyToOne (fetch=FetchType.LAZY)
+	
+	@ManyToOne
 	@JoinColumn(name = "product_id",insertable = false, updatable = false)
 	private Product product;
 	
@@ -56,6 +56,7 @@ public class OrderDetail {
 	@JsonBackReference
 	private Review review;
 
+	@JsonIgnore
 	public Long getOrder_detail_id() {
 		return order_detail_id;
 	}
@@ -80,7 +81,7 @@ public class OrderDetail {
 		this.price = price;
 	}
 
-	
+	@JsonIgnore	
 	public Long getOrder_id() {
 		return order_id;
 	}
@@ -89,6 +90,7 @@ public class OrderDetail {
 		this.order_id = order_id;
 	}
 
+	@JsonIgnore
 	public String getProduct_id() {
 		return product_id;
 	}

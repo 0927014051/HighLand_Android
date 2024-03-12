@@ -10,12 +10,16 @@ import com.javaweb.response.ProfileUserAndCustomerResponse;
 public interface UserService {
 
 	public List<User> getAllUsers() throws UserException;
+	
+	public User findUserByUserName(String username);
 
 	public User findUserById(Long userId) throws UserException;
 
 	public ProfileUserRequest findUserProfileByJwt(String jwt) throws UserException;
 	
 	public User findUserByJwt(String jwt) throws UserException;
+	
+	public User updateStatusByUsername(String username,Long staff_id) throws UserException;
 
 	public ProfileUserAndCustomerResponse updateUserAndCustomerProfileByJwt(String jwt, ProfileUserRequest update) throws UserException;
 	}

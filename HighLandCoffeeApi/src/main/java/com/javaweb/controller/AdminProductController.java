@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.event.PublicInvocationEvent;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -100,6 +101,12 @@ public class AdminProductController {
 		
 		ApiResponse res = new ApiResponse("product created successfully", true,HttpStatus.ACCEPTED.value());
 		return new ResponseEntity<ApiResponse>(res,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/find/{productId}")
+	public ResponseEntity<Product> findProductById(@PathVariable String productId) throws ProductException{
+		Product findProduct  = productService.findProductById(productId);
+		return new ResponseEntity<Product>(findProduct,HttpStatus.OK);
 	}
 	
 	
