@@ -8,11 +8,12 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.UUID;
+import com.google.cloud.storage.Storage;
 
 public interface IImageService {
 
     String getImageUrl(String name);
-
+    
     String save(MultipartFile file) throws IOException;
 
     String save(BufferedImage bufferedImage, String originalFileName) throws IOException;

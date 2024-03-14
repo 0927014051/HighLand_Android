@@ -18,6 +18,7 @@ import com.javaweb.entity.Staff;
 import com.javaweb.entity.User;
 import com.javaweb.exception.UserException;
 import com.javaweb.response.ApiResponse;
+import com.javaweb.response.ListEntityStatusResponse;
 import com.javaweb.service.BillService;
 import com.javaweb.service.StaffService;
 import com.javaweb.service.UserService;
@@ -52,9 +53,11 @@ public class AdminBillController {
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<Bill>> getAllBill(){
-		List<Bill> findAll = billService.findAll();
-		return new ResponseEntity<List<Bill>>(findAll,HttpStatus.OK);
+	@SuppressWarnings("rawtypes")
+	public ResponseEntity<ListEntityStatusResponse> getAllBill(){
+		List<Bill> findAll = billService.findAll();		
+		ListEntityStatusResponse response = new ListEntityStatusResponse<>(findAll, HttpStatus.OK.value(), "success");
+		return new ResponseEntity<ListEntityStatusResponse>(response,HttpStatus.OK);
 	}
 
 }

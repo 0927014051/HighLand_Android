@@ -49,22 +49,19 @@ public class UserController {
 	}
 	
 	@GetMapping("/profile")
-	public ResponseEntity<ProfileUserRequest> getUserProfileAndCustomerProfileHandler(@RequestHeader("Authorization") String jwt) throws UserException{
+	public ResponseEntity<EntityStatusResponse> getUserProfileAndCustomerProfileHandler(@RequestHeader("Authorization") String jwt) throws UserException{
 		System.err.println("/api/users/profile");
 		System.err.println("println jwt: " + jwt);
 		ProfileUserRequest profileUserResponse = userService.findUserProfileByJwt(jwt);
-		return new ResponseEntity<ProfileUserRequest>(profileUserResponse,HttpStatus.ACCEPTED);	
+		EntityStatusResponse res = new EntityStatusResponse(profileUserResponse, HttpStatus.OK.value(), "success");
+		return new ResponseEntity<EntityStatusResponse>(res,HttpStatus.ACCEPTED);	
 	}
 	
 	  @PutMapping("/profile/update")
 	    public ResponseEntity<ProfileUserAndCustomerResponse> updateUserAndCustomerProfileHandler  (
 	            @RequestHeader("Authorization") String jwt, @RequestBody ProfileUserRequest update) throws UserException{
 	        try {
-	            // Update user and customer profile using userService
 	        	ProfileUserAndCustomerResponse res =   userService.updateUserAndCustomerProfileByJwt(jwt, update);
-
-
-	            // Return ResponseEntity with success message and updated profile
 	            return new ResponseEntity<ProfileUserAndCustomerResponse>(res, HttpStatus.OK);
 	        } catch (UserException e) {
 	            // Return ResponseEntity with error message if UserException is thrown

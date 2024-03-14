@@ -10,6 +10,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.google.api.services.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import com.javaweb.entity.Category;
 import com.javaweb.entity.PriceUpdateDetail;
 import com.javaweb.entity.Product;
@@ -20,6 +22,8 @@ import com.javaweb.reponsitory.ProductRepo;
 import com.javaweb.request.CreateProductRequest;
 import com.javaweb.service.ProductService;
 import com.javaweb.service.UserService;
+
+import io.jsonwebtoken.io.IOException;
 
 @Service
 public class ProductServiceImpl implements ProductService {

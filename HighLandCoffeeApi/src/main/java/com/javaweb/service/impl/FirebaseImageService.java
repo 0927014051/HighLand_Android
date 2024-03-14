@@ -3,6 +3,8 @@ package com.javaweb.service.impl;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
@@ -27,7 +29,6 @@ public class FirebaseImageService implements IImageService {
 
     @Autowired
     Properties properties;
-
     @EventListener
     public void init(ApplicationReadyEvent event) {
     	
@@ -51,11 +52,6 @@ public class FirebaseImageService implements IImageService {
 
 
     @Override
-    public String getImageUrl(String name) {
-        return String.format(properties.imageUrl, name);
-    }
-
-    @Override
     public String save(MultipartFile file) throws IOException {
 
         Bucket bucket = StorageClient.getInstance().bucket();
@@ -63,8 +59,8 @@ public class FirebaseImageService implements IImageService {
         String name = generateFileName(file.getOriginalFilename());
 
         bucket.create(name, file.getBytes(), file.getContentType());
-
-        return name;
+        String linkString = getDownloadUrl(name);
+        return linkString;
     }
 
     @Override
@@ -79,8 +75,15 @@ public class FirebaseImageService implements IImageService {
         bucket.create(name, bytes);
 
         return name;
+    
     }
-
+    @Override
+    public String getImageUrl(String name) {
+    	return String.format(properties.imageUrl, name);
+    }
+    private String getDownloadUrl(String fileName) {
+        return String.format("https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media", properties.getBucketName(), fileName);
+    }
     @Override
     public void delete(String name) throws IOException {
 
@@ -98,7 +101,7 @@ public class FirebaseImageService implements IImageService {
 
         blob.delete();
     }
-
+ 
     @Configuration
     @ConfigurationProperties(prefix = "firebase")
     public class Properties {

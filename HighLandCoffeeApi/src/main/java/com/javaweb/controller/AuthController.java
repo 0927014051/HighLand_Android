@@ -114,7 +114,7 @@ public class AuthController {
     public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();        
-        Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);        
         String tokenSevenday = jwtTokenProvider.generateAccessToken(authentication);
         String tokenThirtyDay = jwtTokenProvider.generateRefreshToken(authentication);

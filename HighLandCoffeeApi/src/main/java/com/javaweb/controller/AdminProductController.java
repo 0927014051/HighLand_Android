@@ -1,5 +1,6 @@
 package com.javaweb.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,13 +11,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.event.PublicInvocationEvent;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.javaweb.entity.PriceUpdateDetail;
 import com.javaweb.entity.Product;
@@ -24,90 +28,129 @@ import com.javaweb.entity.Staff;
 import com.javaweb.entity.User;
 import com.javaweb.exception.ProductException;
 import com.javaweb.exception.UserException;
+import com.javaweb.request.AddProductRequest;
 import com.javaweb.request.CreateProductRequest;
 import com.javaweb.response.ApiResponse;
+import com.javaweb.response.EntityStatusResponse;
+import com.javaweb.response.ListEntityStatusResponse;
+import com.javaweb.service.IImageService;
 import com.javaweb.service.PriceUpdateService;
 import com.javaweb.service.ProductService;
 import com.javaweb.service.StaffService;
 import com.javaweb.service.UserService;
 
-
 @RestController
 @RequestMapping("/api/admin/product")
+@SuppressWarnings("unchecked")
 public class AdminProductController {
 
 	private ProductService productService;
 	private UserService userService;
 	private StaffService staffService;
 	private PriceUpdateService priceUpdateService;
+	private IImageService imageService;
 
-
-	public AdminProductController(ProductService productService,UserService userService, StaffService staffService, PriceUpdateService priceUpdateService) {
+	public AdminProductController(ProductService productService, UserService userService, StaffService staffService,
+			PriceUpdateService priceUpdateService, IImageService imageService) {
 		this.productService = productService;
 		this.userService = userService;
 		this.staffService = staffService;
 		this.priceUpdateService = priceUpdateService;
+		this.imageService = imageService;
 	}
-	
+
+	@SuppressWarnings("rawtypes")
 	@PostMapping("/add")
-	public ResponseEntity<Product> createProductHandler(@RequestBody CreateProductRequest rq,@RequestHeader("Authorization") String jwt) throws ProductException, UserException{
+	public ResponseEntity<EntityStatusResponse> createProductHandler(@RequestParam(name = "file") MultipartFile[] files,@ModelAttribute CreateProductRequest data,@RequestHeader("Authorization") String jwt) throws ProductException, UserException{
 		User user = userService.findUserByJwt(jwt);
 		Staff staff = staffService.findStaffByUserId(user.getUser_id());
-		rq.setStaff_id(staff.getStaff_id());
-		Product createProduct = productService.createProduct(rq);
-		return new ResponseEntity<Product>(createProduct,HttpStatus.ACCEPTED);
+		data.setStaff_id(staff.getStaff_id());
+		System.err.println("category_name: " + data.getCategory_name() + data.getProduct_name());
+		for (MultipartFile file : files) {
+            try {	
+                String fileName = imageService.save(file);
+
+                String imageUrl = imageService.getImageUrl(fileName);
+                data.setImage(fileName);
+                // do whatever you want with that	                    
+            } catch (Exception e) {
+            System.err.println(e);
+            }
+        }	
+		Product createProduct = productService.createProduct(data);	
+
+		EntityStatusResponse response = new EntityStatusResponse(createProduct, HttpStatus.ACCEPTED.value(), "success");
+		return new ResponseEntity<EntityStatusResponse>(response,HttpStatus.CREATED);
 	}
-	
+//	@PostMapping("/add")
+//	public ResponseEntity<EntityStatusResponse> createProductHandler(@RequestParam("file") MultipartFile[] files,
+//			@ModelAttribute CreateProductRequest rq) throws ProductException, UserException {
+//		
+//		return new ResponseEntity<>(HttpStatus.CREATED);
+//
+//	}
+
 	@GetMapping("/all")
-	public ResponseEntity<List<Product>> findAllProduct(){
+	@SuppressWarnings("rawtypes")
+	public ResponseEntity<ListEntityStatusResponse> findAllProduct() {
 		List<Product> listProducts = productService.getAllProducts();
-		return new ResponseEntity<List<Product>>(listProducts,HttpStatus.OK);
+		ListEntityStatusResponse response = new ListEntityStatusResponse<>(listProducts, HttpStatus.OK.value(),
+				"success");
+		return new ResponseEntity<ListEntityStatusResponse>(response, HttpStatus.OK);
 	}
-	
+
 	@PutMapping("{productId}/update")
-	public ResponseEntity<Product> updatePoroductHandler(@RequestBody CreateProductRequest rq, @PathVariable String productId,@RequestHeader("Authorization") String jwt) throws ProductException, UserException{
+	@SuppressWarnings("rawtypes")
+	public ResponseEntity<EntityStatusResponse> updatePoroductHandler(@RequestBody CreateProductRequest rq,
+			@PathVariable String productId, @RequestHeader("Authorization") String jwt)
+			throws ProductException, UserException {
 		User user = userService.findUserByJwt(jwt);
 		Staff staff = staffService.findStaffByUserId(user.getUser_id());
-		Product updatedProduct = productService.updateProduct(productId, rq,staff.getStaff_id());
-		System.err.println(updatedProduct.getCategory().getCategory_name());
-		return new ResponseEntity<Product>(updatedProduct,HttpStatus.OK);
+		Product updatedProduct = productService.updateProduct(productId, rq, staff.getStaff_id());
+		EntityStatusResponse response = new EntityStatusResponse(updatedProduct, HttpStatus.OK.value(), "success");
+		return new ResponseEntity<EntityStatusResponse>(response, HttpStatus.OK);
 	}
-	
+
 	@PutMapping("{productId}/updatePrice")
-	public ResponseEntity<PriceUpdateDetail> updatePriceHandler(@RequestBody PriceUpdateDetail rq, @PathVariable String productId, @RequestHeader("Authorization") String jwt ) throws ProductException, UserException{
+	@SuppressWarnings("rawtypes")
+	public ResponseEntity<EntityStatusResponse> updatePriceHandler(@RequestBody PriceUpdateDetail rq,
+			@PathVariable String productId, @RequestHeader("Authorization") String jwt)
+			throws ProductException, UserException {
 		User user = userService.findUserByJwt(jwt);
 		Staff staff = staffService.findStaffByUserId(user.getUser_id());
 		PriceUpdateDetail updatePrice = priceUpdateService.updatePrice(productId, rq, staff.getStaff_id());
-		return new ResponseEntity<PriceUpdateDetail>(updatePrice,HttpStatus.OK);
+		EntityStatusResponse response = new EntityStatusResponse(updatePrice, HttpStatus.OK.value(), "success");
+		return new ResponseEntity<EntityStatusResponse>(response, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/{productId}/delete")
-	public ResponseEntity<ApiResponse> deleteProductHandler(@PathVariable String productId,@RequestHeader("Authorization") String jwt) throws ProductException, UserException{
+	public ResponseEntity<ApiResponse> deleteProductHandler(@PathVariable String productId,
+			@RequestHeader("Authorization") String jwt) throws ProductException, UserException {
 		System.err.println("delete product controller ....");
 		User user = userService.findUserByJwt(jwt);
 		Staff staff = staffService.findStaffByUserId(user.getUser_id());
-		String msg = productService.deleteProduct(productId,staff.getStaff_id());
+		String msg = productService.deleteProduct(productId, staff.getStaff_id());
 		System.err.println("delete product controller .... msg " + msg);
-		ApiResponse res = new ApiResponse(msg,true,HttpStatus.ACCEPTED.value());
-		return new ResponseEntity<ApiResponse>(res,HttpStatus.ACCEPTED);
+		ApiResponse res = new ApiResponse(msg, true, HttpStatus.OK.value());
+		return new ResponseEntity<ApiResponse>(res, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/creates")
-	public ResponseEntity<ApiResponse> createMultipleProduct(@RequestBody CreateProductRequest[] rqs) throws ProductException{
-		
-		for(CreateProductRequest productRequest : rqs) {
+	public ResponseEntity<ApiResponse> createMultipleProduct(@RequestBody CreateProductRequest[] rqs)
+			throws ProductException {
+
+		for (CreateProductRequest productRequest : rqs) {
 			productService.createProduct(productRequest);
 		}
-		
-		ApiResponse res = new ApiResponse("product created successfully", true,HttpStatus.ACCEPTED.value());
-		return new ResponseEntity<ApiResponse>(res,HttpStatus.ACCEPTED);
+
+		ApiResponse res = new ApiResponse("product created successfully", true, HttpStatus.ACCEPTED.value());
+		return new ResponseEntity<ApiResponse>(res, HttpStatus.ACCEPTED);
 	}
-	
+
 	@GetMapping("/find/{productId}")
-	public ResponseEntity<Product> findProductById(@PathVariable String productId) throws ProductException{
-		Product findProduct  = productService.findProductById(productId);
-		return new ResponseEntity<Product>(findProduct,HttpStatus.OK);
+	public ResponseEntity<Product> findProductById(@PathVariable String productId) throws ProductException {
+		Product findProduct = productService.findProductById(productId);
+		return new ResponseEntity<Product>(findProduct, HttpStatus.OK);
 	}
-	
-	
+
 }
