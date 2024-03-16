@@ -28,6 +28,9 @@ public class Topping {
 	private String topping_name;
 	
 	@Column
+	private String image;
+	
+	@Column
 	private Long created_by;
 	
 	@Column
@@ -125,12 +128,21 @@ public class Topping {
 		this.staff_updated = staff_updated;
 	}
 
-	public Topping(Long topping_id, String topping_name, Long created_by, Long updated_by, LocalDateTime created_at,
-			LocalDateTime updated_at, List<Topping_Category> topping_category, Staff staff_created,
-			Staff staff_updated) {
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public Topping(Long topping_id, String topping_name, String image, Long created_by, Long updated_by,
+			LocalDateTime created_at, LocalDateTime updated_at, List<Topping_Category> topping_category,
+			Staff staff_created, Staff staff_updated) {
 		super();
 		this.topping_id = topping_id;
 		this.topping_name = topping_name;
+		this.image = image;
 		this.created_by = created_by;
 		this.updated_by = updated_by;
 		this.created_at = created_at;

@@ -1,4 +1,5 @@
 package com.javaweb.controller;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -10,7 +11,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,83 +53,106 @@ public class AuthController {
 	private CustomerService customerService;
 	private StaffService staffService;
 	private RoleService roleService;
-	
-	public AuthController(UserRepo userRepository,PasswordEncoder passwordEncoder,JwtTokenProvider jwtTokenProvider,CustomerUserDetails customUserDetails,CartService cartService,CustomerService customerService,StaffService staffService,RoleService roleService) {
+	private UserService userService;
+
+	public AuthController(UserRepo userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider,
+			CustomerUserDetails customUserDetails, CartService cartService, CustomerService customerService,
+			StaffService staffService, RoleService roleService, UserService userService) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.jwtTokenProvider = jwtTokenProvider;
 		this.customUserDetails = customUserDetails;
 		this.cartService = cartService;
 		this.customerService = customerService;
+		this.userService = userService;
 		this.staffService = staffService;
 		this.roleService = roleService;
 	}
-	@RequestMapping(value = "/signup",method = RequestMethod.POST)
-	public ResponseEntity<ApiResponse> createUserHandler(@Valid @RequestBody SignupRequest user) throws UserException{
-		  	String username = user.getUsername();
-	        String password = user.getPassword();
-	        String role_name = user.getRole_name();
-	        System.err.println("roleName = " + role_name);
-	        User isUserExist = userRepository.findByUsername(username);
-	        Role role = roleService.findRoleByName(role_name);
-	        ApiResponse apiResponse = new ApiResponse(username + " :signup success",true,HttpStatus.OK.value());
-	        // Check email exists
-	        if (isUserExist != null) {
-	        // System.out.println("--------- exist "+isEmailExist).getEmail());
-	            throw new UserException("Username Is Already Used With Another Account");
-	        }
-	        // Lấy ngày và giờ hiện tại
-	       
-			User createdUser = new User();
-			createdUser.setUsername(username);
-	        createdUser.setPassword(passwordEncoder.encode(password));
-	        createdUser.setRole_id(role.getRole_id());
-	        createdUser.setCreated_at(LocalDateTime.now());
-	        createdUser.setUpdated_at(LocalDateTime.now());
-	        User savedUser= userRepository.save(createdUser);
-	        if(role.getRole_id() == 3) {
-	        if(savedUser != null) {
-	        	Customer customer = new Customer();
-		        customer.setCreated_at(LocalDateTime.now());
-		        customer.setUpdated_at(LocalDateTime.now());
-		        customer.setUser_id(createdUser.getUser_id());
-		        Customer createdCustomer = customerService.createCustomer(customer);
-		        if(createdCustomer != null) {
-		        	 Cart cart = new Cart();
-		 	        cart.setCreated_at(LocalDateTime.now());
-		 	        cart.setCustomer_id(customer.getCustomer_id());
-		 	        cart.setUpdated_at(LocalDateTime.now());
-		 	        Cart createdCart = cartService.createCart(cart);
-		        }
-	        }
-	        }if(role.getRole_id() == 2) {
-	        	Staff staff = new Staff();
-	        	staff.setCreated_at(LocalDateTime.now());
-	        	staff.setUpdated_at(LocalDateTime.now());
-	        	staff.setUser_id(createdUser.getUser_id());
-	        	Staff createdStaff = staffService.createStaff(staff);
-	        	
-	        }
-	        return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.OK);	
+
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public ResponseEntity<ApiResponse> createUserHandler(@Valid @RequestBody SignupRequest user) throws UserException {
+		String username = user.getUsername();
+		String password = user.getPassword();
+		String role_name = user.getRole_name();
+		System.err.println("roleName = " + role_name);
+		User isUserExist = userRepository.findByUsername(username);
+		Role role = roleService.findRoleByName(role_name);
+		// ApiResponse apiResponse = new ApiResponse(username + " :signup
+		// success",true,HttpStatus.CREATED.value());
+		// Check email exists
+		if (isUserExist != null) {
+			// System.out.println("--------- exist "+isEmailExist).getEmail());
+			ApiResponse apiResponse = new ApiResponse(username + " :signup fail", false, HttpStatus.CONFLICT.value());
+			return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.CONFLICT);
+		}
+
+		User createdUser = new User();
+		createdUser.setUsername(username);
+		createdUser.setPassword(passwordEncoder.encode(password));
+		createdUser.setRole_id(role.getRole_id());
+		createdUser.setCreated_at(LocalDateTime.now());
+		createdUser.setUpdated_at(LocalDateTime.now());
+		User savedUser = userRepository.save(createdUser);
+		ApiResponse apiResponse = new ApiResponse();
+		if (savedUser != null) {
+			if (role.getRole_id() == 3) {
+
+				Customer customer = new Customer();
+				customer.setCreated_at(LocalDateTime.now());
+				customer.setUpdated_at(LocalDateTime.now());
+				customer.setUser_id(createdUser.getUser_id());
+				customer.setPhone(username);
+				Customer createdCustomer = customerService.createCustomer(customer);
+				if (createdCustomer != null) {
+					Cart cart = new Cart();
+					cart.setCreated_at(LocalDateTime.now());
+					cart.setCustomer_id(customer.getCustomer_id());
+					cart.setUpdated_at(LocalDateTime.now());
+					Cart createdCart = cartService.createCart(cart);
+					apiResponse.setCode(HttpStatus.CREATED.value());
+					apiResponse.setMessage( username + " sigup success");
+					apiResponse.setStatus(true);					
+				}
+			}
+			if (role.getRole_id() == 2) {
+				if (savedUser != null) {
+					Staff staff = new Staff();
+					staff.setCreated_at(LocalDateTime.now());
+					staff.setUpdated_at(LocalDateTime.now());
+					staff.setUser_id(createdUser.getUser_id());
+					staff.setPhone(username);
+					Staff createdStaff = staffService.createStaff(staff);
+					apiResponse.setCode(HttpStatus.CREATED.value());
+					apiResponse.setMessage( username + " sigup success");
+					apiResponse.setStatus(true);	
+				}
+			}
+
+		} else {
+			apiResponse.setCode(HttpStatus.BAD_REQUEST.value());
+			apiResponse.setMessage( username + " sigup fail");
+			apiResponse.setStatus(false);	
+		}
+		return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.OK);
 	}
 
 	@PostMapping("/signin")
-    public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
-        String password = loginRequest.getPassword();        
-        Authentication authentication = authenticate(username, password);
-        SecurityContextHolder.getContext().setAuthentication(authentication);        
-        String tokenSevenday = jwtTokenProvider.generateAccessToken(authentication);
-        String tokenThirtyDay = jwtTokenProvider.generateRefreshToken(authentication);
-        LocalDateTime currentTime = LocalDateTime.now();
-        // Cộng thêm 7 ngày
-        LocalDateTime expiredAccressToken = currentTime.plus(7, ChronoUnit.DAYS);
-        LocalDateTime expiredRefreshToken = currentTime.plus(30, ChronoUnit.DAYS);
-        // Chuyển LocalDateTime thành Timestamp
-        Timestamp expiredAccressTokenTimestamp = Timestamp.valueOf(expiredAccressToken);
-        Timestamp expiredRefreshTokenTimestamp = Timestamp.valueOf(expiredRefreshToken);
-        // Create new user
-        AuthResponse authResponse = new AuthResponse(tokenSevenday,true);
+	public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest) {
+		String username = loginRequest.getUsername();
+		String password = loginRequest.getPassword();
+		Authentication authentication = authenticate(username, password);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String tokenSevenday = jwtTokenProvider.generateAccessToken(authentication);
+		String tokenThirtyDay = jwtTokenProvider.generateRefreshToken(authentication);
+		LocalDateTime currentTime = LocalDateTime.now();
+		// Cộng thêm 7 ngày
+		LocalDateTime expiredAccressToken = currentTime.plus(7, ChronoUnit.DAYS);
+		LocalDateTime expiredRefreshToken = currentTime.plus(30, ChronoUnit.DAYS);
+		// Chuyển LocalDateTime thành Timestamp
+		Timestamp expiredAccressTokenTimestamp = Timestamp.valueOf(expiredAccressToken);
+		Timestamp expiredRefreshTokenTimestamp = Timestamp.valueOf(expiredRefreshToken);
+		// Create new user
+		AuthResponse authResponse = new AuthResponse(tokenSevenday, true);
 		authResponse.setStatus(true);
 		authResponse.setToken(tokenSevenday);
 		User user = userRepository.findByUsername(username);
@@ -136,19 +162,37 @@ public class AuthController {
 		user.setExpiredRefreshToken(expiredRefreshTokenTimestamp);
 		userRepository.save(user);
 		System.err.println(authentication);
-        return new ResponseEntity<AuthResponse>(authResponse,HttpStatus.OK);
-    }
+		return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
+	}
 	
+	@PutMapping("/change/{username}")
+	public ResponseEntity<ApiResponse> changePasswordUser(@PathVariable String username, @RequestBody User user){
+		String password = passwordEncoder.encode(user.getPassword());
+		User savedUser = userService.changePassword(username, password);
+		ApiResponse res = new ApiResponse();
+		
+		if(savedUser != null) {
+			res.setCode(HttpStatus.OK.value());
+			res.setMessage("change password success");
+			res.setStatus(true);
+		}else {
+			res.setCode(HttpStatus.BAD_REQUEST.value());
+			res.setMessage("change password fail");
+			res.setStatus(false);
+		}
+		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
+	}
+
 	private Authentication authenticate(String username, String password) {
-        UserDetails userDetails = customUserDetails.loadUserByUsername(username);        
-        if (userDetails == null) {
-        	System.out.println("sign in userDetails - null " + userDetails);
-            throw new BadCredentialsException("Invalid username or password");
-        }
-        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-        	System.out.println("sign in userDetails - password not match " + userDetails);
-            throw new BadCredentialsException("Invalid username or password");
-        }
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-    }
+		UserDetails userDetails = customUserDetails.loadUserByUsername(username);
+		if (userDetails == null) {
+			System.out.println("sign in userDetails - null " + userDetails);
+			throw new BadCredentialsException("Invalid username or password");
+		}
+		if (!passwordEncoder.matches(password, userDetails.getPassword())) {
+			System.out.println("sign in userDetails - password not match " + userDetails);
+			throw new BadCredentialsException("Invalid username or password");
+		}
+		return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+	}
 }

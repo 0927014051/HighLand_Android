@@ -22,4 +22,6 @@ public interface UserService {
 	public User updateStatusByUsername(String username,Long staff_id) throws UserException;
 
 	public ProfileUserAndCustomerResponse updateUserAndCustomerProfileByJwt(String jwt, ProfileUserRequest update) throws UserException;
-	}
+	
+	public User changePassword(String username ,String password);
+}

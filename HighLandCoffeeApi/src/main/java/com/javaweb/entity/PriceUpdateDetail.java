@@ -55,6 +55,7 @@ public class PriceUpdateDetail {
 	@JoinColumn(name = "product_id", insertable = false, updatable = false)
 	private Product product;
 
+	@JsonIgnore
 	public Long getPrice_update_detail_id() {
 		return price_update_detail_id;
 	}
@@ -71,6 +72,7 @@ public class PriceUpdateDetail {
 		this.price_new = price_new;
 	}
 
+	@JsonIgnore
 	public int getPrice_old() {
 		return price_old;
 	}
@@ -79,6 +81,7 @@ public class PriceUpdateDetail {
 		this.price_old = price_old;
 	}
 
+	@JsonIgnore
 	public LocalDateTime getCreated_at() {
 		return created_at;
 	}
@@ -87,6 +90,7 @@ public class PriceUpdateDetail {
 		this.created_at = created_at;
 	}
 
+	@JsonIgnore
 	public LocalDateTime getUpdated_at() {
 		return updated_at;
 	}
@@ -95,6 +99,7 @@ public class PriceUpdateDetail {
 		this.updated_at = updated_at;
 	}
 
+	@JsonIgnore
 	public String getProduct_id() {
 		return product_id;
 	}
@@ -103,6 +108,7 @@ public class PriceUpdateDetail {
 		this.product_id = product_id;
 	}
 
+	
 	public Staff getStaff() {
 		return staff;
 	}
@@ -119,6 +125,7 @@ public class PriceUpdateDetail {
 		this.product = product;
 	}
 
+	@JsonIgnore
 	public Long getCreated_by() {
 		return created_by;
 	}
@@ -126,7 +133,7 @@ public class PriceUpdateDetail {
 	public void setCreated_by(Long created_by) {
 		this.created_by = created_by;
 	}
-
+	@JsonIgnore
 	public Long getUpdated_by() {
 		return updated_by;
 	}

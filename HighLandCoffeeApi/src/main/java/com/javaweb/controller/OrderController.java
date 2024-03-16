@@ -14,6 +14,8 @@ import com.javaweb.entity.Orders;
 import com.javaweb.entity.User;
 import com.javaweb.exception.UserException;
 import com.javaweb.reponsitory.OrderRepo;
+import com.javaweb.request.BuyNowRequest;
+import com.javaweb.response.ApiResponse;
 import com.javaweb.service.CustomerService;
 import com.javaweb.service.OrderService;
 import com.javaweb.service.UserService;
@@ -44,6 +46,24 @@ public class OrderController {
 		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
 		Orders orders = orderService.createOrder(customer);
 		return new ResponseEntity<Orders>(orders,HttpStatus.OK);
+	}
+	
+	@PostMapping("/buynow")
+	public ResponseEntity<ApiResponse> buynowOrderHandler(@RequestHeader("Authorization") String jwt, @RequestBody BuyNowRequest rq) throws UserException{
+		User user = userService.findUserByJwt(jwt);
+		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
+		Orders orders = orderService.orderBuyNow(rq,customer.getCustomer_id());
+		ApiResponse response = new ApiResponse();
+		if(orders != null) {
+			response.setCode(HttpStatus.CREATED.value());
+			response.setMessage("created order success");
+			response.setStatus(true);		
+		}else {
+			response.setCode(HttpStatus.BAD_REQUEST.value());
+			response.setMessage("created order fail");
+			response.setStatus(false);
+		}
+		return new ResponseEntity<ApiResponse>(response,HttpStatus.OK);
 	}
 	
 

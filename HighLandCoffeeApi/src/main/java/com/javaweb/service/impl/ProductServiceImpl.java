@@ -8,6 +8,7 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.services.storage.Storage;
@@ -32,6 +33,8 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepo productRepo;
 	private PriceUpdateRepo priceUpdateRepo;
 	private CategoryRepo categoryRepo;
+	@Autowired
+	private ProductService productService;
 	private final EntityManager entityManager;
 
 	public ProductServiceImpl(ProductRepo productRepo, PriceUpdateRepo priceUpdateRepo, CategoryRepo categoryRepo,EntityManager entityManager) {
@@ -40,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
 		this.categoryRepo = categoryRepo;
 		this.entityManager = entityManager;
 	}
+	
 
 	@Override
 	public Product createProduct(CreateProductRequest req) throws ProductException{
@@ -79,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
 		}else {
 			throw new ProductException("product name exist ") ;
 		}
-		
+				
 		return savedProduct;
 	}
 

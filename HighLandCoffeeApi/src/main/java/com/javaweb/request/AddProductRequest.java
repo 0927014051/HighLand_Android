@@ -5,27 +5,18 @@ import org.springframework.web.multipart.MultipartFile;
 public class AddProductRequest {
 
 	private MultipartFile[] file;
-	private CreateProductRequest data;
+	private TestRequest data;
 	public MultipartFile[] getFile() {
 		return file;
 	}
 	public void setFile(MultipartFile[] file) {
 		this.file = file;
 	}
-	public CreateProductRequest getData() {
+	public TestRequest getData() {
 		return data;
 	}
-	public void setData(CreateProductRequest data) {
+	public void setData(TestRequest data) {
 		this.data = data;
-	}
-	public AddProductRequest(MultipartFile[] file, CreateProductRequest data) {
-		super();
-		this.file = file;
-		this.data = data;
-	}
-	public AddProductRequest() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	

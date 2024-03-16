@@ -86,4 +86,5 @@ public class UserController {
 		return new ResponseEntity<ApiResponse>(rq,HttpStatus.ACCEPTED);
 	}
 	
+	
 }

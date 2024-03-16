@@ -159,5 +159,13 @@ public class UserServiceImpl implements UserService{
 		User savedUser =  userRepo.save(user);
 		return savedUser;
 	}
+	@Override
+	public User changePassword(String username,String password) {
+		User findUser = userRepo.findByUsername(username);
+		if( password != null) {
+			findUser.setPassword(password);
+		}
+		return userRepo.save(findUser);
+	}
 
 }

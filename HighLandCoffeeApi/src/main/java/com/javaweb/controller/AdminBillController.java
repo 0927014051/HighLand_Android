@@ -43,13 +43,14 @@ public class AdminBillController {
 		User user = userService.findUserByJwt(jwt);
 		Staff staff =  staffService.findStaffByUserId(user.getUser_id());
 		Bill saveBill = billService.createBill(orders, staff.getStaff_id());
+		
 		ApiResponse apiResponse = new ApiResponse();
 		if(saveBill != null) {
 			apiResponse.setMessage("create bill success");
 			apiResponse.setStatus(true);
-			apiResponse.setStt(HttpStatus.ACCEPTED.value());
+			apiResponse.setCode(HttpStatus.CREATED.value());
 		}
-		return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.ACCEPTED);
+		return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/all")
