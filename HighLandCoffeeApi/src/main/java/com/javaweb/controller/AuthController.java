@@ -167,20 +167,35 @@ public class AuthController {
 	
 	@PutMapping("/change/{username}")
 	public ResponseEntity<ApiResponse> changePasswordUser(@PathVariable String username, @RequestBody User user){
+		ApiResponse res = new ApiResponse();
+		User find = userService.findUserByUserName(username);
+		HttpStatus stt = null;
+		if(find != null) {
 		String password = passwordEncoder.encode(user.getPassword());
 		User savedUser = userService.changePassword(username, password);
-		ApiResponse res = new ApiResponse();
+		
 		
 		if(savedUser != null) {
+			stt = HttpStatus.OK;
+
 			res.setCode(HttpStatus.OK.value());
 			res.setMessage("change password success");
 			res.setStatus(true);
 		}else {
+			stt = HttpStatus.BAD_REQUEST;
+
 			res.setCode(HttpStatus.BAD_REQUEST.value());
 			res.setMessage("change password fail");
 			res.setStatus(false);
 		}
-		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
+		}else {
+			stt = HttpStatus.BAD_REQUEST;
+			res.setCode(HttpStatus.BAD_REQUEST.value());
+			res.setMessage("not found username");
+			res.setStatus(false);			
+		}
+		
+		return new ResponseEntity<ApiResponse>(res,stt);
 	}
 
 	private Authentication authenticate(String username, String password) {

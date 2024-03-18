@@ -122,6 +122,9 @@ public class ProductServiceImpl implements ProductService {
 		if (staff_id != null) {
 			product.setUpdated_by(staff_id);
 		}
+		if(!rq.getStatus().equals(null)) {
+			product.setStatus(rq.getStatus());
+		}
 		Category category = categoryRepo.findCategoryByName(rq.getCategory_name());
 		   if (category == null) {
 	            // If category doesn't exist, you may choose to throw an exception

@@ -95,39 +95,39 @@ public class AdminProductController {
 			@RequestParam("file") MultipartFile[] files, @RequestParam("data") String data)
 			throws JsonMappingException, JsonProcessingException, ProductException, UserException {
 		try {
-		User user = userService.findUserByJwt(jwt);
-		Staff staff = staffService.findStaffByUserId(user.getUser_id());
-		ObjectMapper objectMapper = new ObjectMapper();
-		Map<String, CreateProductRequest> testRequestMap = new HashMap<>();
-		CreateProductRequest rq = objectMapper.readValue(data, CreateProductRequest.class);
-		// Thêm vào Map với key là productName
-		testRequestMap.put(rq.getCategory_name(), rq);
-		testRequestMap.put(rq.getDescription(), rq);
-		for (MultipartFile file : files) {
-			try {
-				String fileName = imageService.save(file);
-				rq.setImage(fileName);
-				testRequestMap.put(rq.getImage(), rq);
-				String imageUrl = imageService.getImageUrl(fileName);
-				// do whatever you want with that
-			} catch (Exception e) {
-				System.err.println(e);
+			User user = userService.findUserByJwt(jwt);
+			Staff staff = staffService.findStaffByUserId(user.getUser_id());
+			ObjectMapper objectMapper = new ObjectMapper();
+			Map<String, CreateProductRequest> testRequestMap = new HashMap<>();
+			CreateProductRequest rq = objectMapper.readValue(data, CreateProductRequest.class);
+			// Thêm vào Map với key là productName
+			testRequestMap.put(rq.getCategory_name(), rq);
+			testRequestMap.put(rq.getDescription(), rq);
+			for (MultipartFile file : files) {
+				try {
+					String fileName = imageService.save(file);
+					rq.setImage(fileName);
+					testRequestMap.put(rq.getImage(), rq);
+					String imageUrl = imageService.getImageUrl(fileName);
+					// do whatever you want with that
+				} catch (Exception e) {
+					System.err.println(e);
+				}
 			}
-		}
-		testRequestMap.put(rq.getProduct_name(), rq);
-		testRequestMap.put(rq.getStatus(), rq);
-		String price = String.valueOf(rq.getPrice());
-		testRequestMap.put(price, rq);
-		testRequestMap.put(rq.getDescription(), rq);
-		rq.setStaff_id(staff.getStaff_id());
-		String staff_id = rq.getStaff_id().toString();
-		testRequestMap.put(staff_id, rq);
-		Product createProduct = productService.createProduct(rq);
-		// System.err.println("data: " + data);
-		ApiResponse response = new ApiResponse("Thêm thành công", true,HttpStatus.CREATED.value());
-		return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
-		}catch (Exception e) {
-			ApiResponse response = new ApiResponse("Thêm thất bại", false,HttpStatus.BAD_REQUEST.value());
+			testRequestMap.put(rq.getProduct_name(), rq);
+			testRequestMap.put(rq.getStatus(), rq);
+			String price = String.valueOf(rq.getPrice());
+			testRequestMap.put(price, rq);
+			testRequestMap.put(rq.getDescription(), rq);
+			rq.setStaff_id(staff.getStaff_id());
+			String staff_id = rq.getStaff_id().toString();
+			testRequestMap.put(staff_id, rq);
+			Product createProduct = productService.createProduct(rq);
+			// System.err.println("data: " + data);
+			ApiResponse response = new ApiResponse("Thêm thành công", true, HttpStatus.CREATED.value());
+			return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			ApiResponse response = new ApiResponse("Thêm thất bại", false, HttpStatus.BAD_REQUEST.value());
 
 			return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
 		}
@@ -144,14 +144,46 @@ public class AdminProductController {
 
 	@PutMapping("{productId}/update")
 	@SuppressWarnings("rawtypes")
-	public ResponseEntity<EntityStatusResponse> updatePoroductHandler(@RequestBody CreateProductRequest rq,
-			@PathVariable String productId, @RequestHeader("Authorization") String jwt)
-			throws ProductException, UserException {
-		User user = userService.findUserByJwt(jwt);
-		Staff staff = staffService.findStaffByUserId(user.getUser_id());
-		Product updatedProduct = productService.updateProduct(productId, rq, staff.getStaff_id());
-		EntityStatusResponse response = new EntityStatusResponse(updatedProduct, HttpStatus.OK.value(), "success");
-		return new ResponseEntity<EntityStatusResponse>(response, HttpStatus.OK);
+	public ResponseEntity<ApiResponse> updatePoroductHandler(@PathVariable String productId,
+			@RequestHeader("Authorization") String jwt, @RequestParam("file") MultipartFile[] files,
+			@RequestParam("data") String data)
+			throws JsonMappingException, JsonProcessingException, ProductException, UserException {
+		try {
+			User user = userService.findUserByJwt(jwt);
+			Staff staff = staffService.findStaffByUserId(user.getUser_id());
+			ObjectMapper objectMapper = new ObjectMapper();
+			Map<String, CreateProductRequest> testRequestMap = new HashMap<>();
+			CreateProductRequest rq = objectMapper.readValue(data, CreateProductRequest.class);
+			// Thêm vào Map với key là productName
+			testRequestMap.put(rq.getCategory_name(), rq);
+			testRequestMap.put(rq.getDescription(), rq);
+			for (MultipartFile file : files) {
+				try {
+					String fileName = imageService.save(file);
+					rq.setImage(fileName);
+					testRequestMap.put(rq.getImage(), rq);
+					String imageUrl = imageService.getImageUrl(fileName);
+					// do whatever you want with that
+				} catch (Exception e) {
+					System.err.println(e);
+				}
+			}
+			testRequestMap.put(rq.getProduct_name(), rq);
+			testRequestMap.put(rq.getStatus(), rq);
+			String price = String.valueOf(rq.getPrice());
+			testRequestMap.put(price, rq);
+			testRequestMap.put(rq.getDescription(), rq);
+			rq.setStaff_id(staff.getStaff_id());
+			String staff_id = rq.getStaff_id().toString();
+			testRequestMap.put(staff_id, rq);
+			Product updatedProduct = productService.updateProduct(productId, rq, staff.getStaff_id());
+			ApiResponse response = new ApiResponse("Update product success", true, HttpStatus.ACCEPTED.value());
+			return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			ApiResponse response = new ApiResponse("Update product fail", false, HttpStatus.BAD_REQUEST.value());
+
+			return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
+		}
 	}
 
 	@PutMapping("{productId}/updatePrice")
