@@ -80,7 +80,7 @@ public class AdminProductController {
 		return new ResponseEntity<PriceUpdateDetail>(updatePrice,HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{productId}/delete")
+	@DeleteMapping("/delete/{productId}")
 	public ResponseEntity<ApiResponse> deleteProductHandler(@PathVariable String productId,@RequestHeader("Authorization") String jwt) throws ProductException, UserException{
 		System.err.println("delete product controller ....");
 		User user = userService.findUserByJwt(jwt);

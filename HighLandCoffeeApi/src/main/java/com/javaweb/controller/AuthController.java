@@ -64,7 +64,7 @@ public class AuthController {
 	@RequestMapping(value = "/signup",method = RequestMethod.POST)
 	public ResponseEntity<ApiResponse> createUserHandler(@Valid @RequestBody SignupRequest user) throws UserException{
 		  	String username = user.getUsername();
-	        String password = user.getPassword();
+String password = user.getPassword();
 	        String role_name = user.getRole_name();
 	        System.err.println("roleName = " + role_name);
 	        User isUserExist = userRepository.findByUsername(username);
@@ -114,7 +114,7 @@ public class AuthController {
     public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();        
-        Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);        
         String tokenSevenday = jwtTokenProvider.generateAccessToken(authentication);
         String tokenThirtyDay = jwtTokenProvider.generateRefreshToken(authentication);
@@ -123,7 +123,7 @@ public class AuthController {
         LocalDateTime expiredAccressToken = currentTime.plus(7, ChronoUnit.DAYS);
         LocalDateTime expiredRefreshToken = currentTime.plus(30, ChronoUnit.DAYS);
         // Chuyển LocalDateTime thành Timestamp
-        Timestamp expiredAccressTokenTimestamp = Timestamp.valueOf(expiredAccressToken);
+Timestamp expiredAccressTokenTimestamp = Timestamp.valueOf(expiredAccressToken);
         Timestamp expiredRefreshTokenTimestamp = Timestamp.valueOf(expiredRefreshToken);
         // Create new user
         AuthResponse authResponse = new AuthResponse(tokenSevenday,true);
