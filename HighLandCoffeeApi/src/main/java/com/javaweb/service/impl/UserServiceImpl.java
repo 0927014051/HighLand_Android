@@ -164,6 +164,7 @@ public class UserServiceImpl implements UserService{
 		User findUser = userRepo.findByUsername(username);
 		if( password != null ) {
 			findUser.setPassword(password);
+			findUser.setUpdated_at(LocalDateTime.now());
 		}
 		return userRepo.save(findUser);
 	}

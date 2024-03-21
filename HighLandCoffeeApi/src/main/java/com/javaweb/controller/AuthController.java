@@ -92,6 +92,7 @@ public class AuthController {
 		createdUser.setRole_id(role.getRole_id());
 		createdUser.setCreated_at(LocalDateTime.now());
 		createdUser.setUpdated_at(LocalDateTime.now());
+		createdUser.setStatus("Active");
 		User savedUser = userRepository.save(createdUser);
 		ApiResponse apiResponse = new ApiResponse();
 		if (savedUser != null) {

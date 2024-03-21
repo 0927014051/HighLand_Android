@@ -71,8 +71,8 @@ public class UserController {
 	
 	  @GetMapping("/{username}/find")
 	  @SuppressWarnings("rawtypes")
-	  public ResponseEntity<EntityStatusResponse> findUserByUserName(@RequestBody User user){
-		  User findUser = userService.findUserByUserName(user.getUsername());
+	  public ResponseEntity<EntityStatusResponse> findUserByUserName(@PathVariable String username){
+		  User findUser = userService.findUserByUserName(username);
 		EntityStatusResponse entityStatusResponse = new EntityStatusResponse(findUser, HttpStatus.OK.value(), "find user success by code " + HttpStatus.OK.value());
 		  return new ResponseEntity<EntityStatusResponse>(entityStatusResponse,HttpStatus.OK);
 	  }
