@@ -15,4 +15,5 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Display pom.xml Content
-        run: cat HighLand_Android/HighLandCoffeeApi/pom.xml
+        run: dir HighLand_Android/HighLandCoffeeApi/pom.xml
+        shell: bash
