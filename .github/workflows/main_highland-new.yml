@@ -1,4 +1,4 @@
-name: Build and deploy JAR app to Azure Web App - highland-new
+name: View pom.xml Content
 
 on:
   push:
@@ -7,53 +7,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: windows-latest
+  view_pom_content:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      - name: Set up Java version
-        uses: actions/setup-java@v1
-        with:
-          java-version: '8'
-
-      - name: Build with Maven
+      - name: View pom.xml Content
         run: |
-          cd D:\SendGit\HighLand_Android\HighLandCoffeeApi  # Di chuyển vào thư mục chứa pom.xml
-          mvn clean install
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: java-app
-          path: D:\SendGit\HighLand_Android\HighLandCoffeeApi/target/*.jar
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: java-app
-          path: D:\SendGit\HighLand_Android\HighLandCoffeeApi/target
-
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'highland-new'  # Thay thế bằng tên của Azure Web App của bạn
-          slot-name: 'Production'
-          package: D:\SendGit\HighLand_Android\HighLandCoffeeApi/target/*.jar
+          cd ${{ github.workspace }}  # Di chuyển đến thư mục github.workspace (thường là D:\a)
+          cat pom.xml  # In ra nội dung của pom.xml
