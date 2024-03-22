@@ -1,63 +1,14 @@
-name: Build and deploy JAR app to Azure Web App - highland-new
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
 jobs:
-  build:
-    runs-on: windows-latest
-
+  your_job_name:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Java version
-        uses: actions/setup-java@v1
+      - name: Checkout code
+        uses: actions/checkout@v2  # Make sure the code is checked out
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          java-version: '8'
-
-      - name: Change working directory to HighLandCoffeeApi
-        run: cd D:\SendGit\HighLand_Android\HighLandCoffeeApi
-        shell: 'pwsh'
-
-      - name: Build with Maven
-        run: mvn clean install
-        shell: 'pwsh'
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: java-app
-          path: 'target/*.jar'
-
-  deploy:
-    runs-on: windows-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: java-app
-
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FDCF1A445BE844B49DEFA35DC7C8A6CA }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F5DB2F490E6E478FAD3433BDAD7B58B9 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_CF54C8817D354096A76715B18E3CFFED }}
-
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'highland-new'
-          slot-name: 'Production'
-          package: '*.jar'
+          node-version: '14'
+      - name: Debug workspace
+        run: |
+          ls -al   # Hiển thị danh sách tất cả các file trong workspace
+          echo "Current directory: $PWD"  # Hiển thị thư mục làm việc hiện tại
