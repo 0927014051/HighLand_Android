@@ -18,8 +18,12 @@ jobs:
         with:
           java-version: '8'
 
+      - name: Change working directory to repository root
+        run: cd $GITHUB_WORKSPACE
+        shell: 'pwsh'
+
       - name: Change working directory to HighLandCoffeeApi
-        run: cd D:\SendGit\HighLand_Android\HighLandCoffeeApi
+        run: cd HighLand_Android/HighLandCoffeeApi
         shell: 'pwsh'
 
       - name: Build with Maven
