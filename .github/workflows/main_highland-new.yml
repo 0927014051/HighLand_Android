@@ -22,7 +22,7 @@ jobs:
           java-version: '8'
 
       - name: Build with Maven
-        run: mvn -f "D:\SendGit\HighLand_Android\HighLandCoffeeApi\pom.xml" clean compile
+        run: mvn -f 'D:\SendGit\HighLand_Android\HighLandCoffeeApi\pom.xml' clean compile
         shell: 'pwsh'
 
       - name: Upload artifact for deployment job
