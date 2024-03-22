@@ -16,5 +16,5 @@ jobs:
 
       - name: Copy pom.xml to D:\a
         run: |
-          copy D:\SendGit\HighLand_Android\HighLandCoffeeApi\pom.xml ${{ github.workspace }}\pom.xml
+          copy HighLandCoffeeApi/pom.xml ${{ github.workspace }}\pom.xml
           dir ${{ github.workspace }}  # In ra danh sách các file trong thư mục github.workspace
