@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy JAR app to Azure Web App - high-land
+name: Build and deploy JAR app to Azure Web App - highland-new
 
 on:
   push:
@@ -21,20 +18,25 @@ jobs:
         with:
           java-version: '8'
 
+      - name: Change working directory to HighLandCoffeeApi
+        run: cd D:\SendGit\HighLand_Android\HighLandCoffeeApi
+        shell: 'pwsh'
+
       - name: Build with Maven
         run: mvn clean install
+        shell: 'pwsh'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: 'target/*.jar'
 
   deploy:
     runs-on: windows-latest
     needs: build
     environment:
-      name: 'production'
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
@@ -44,18 +46,18 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: java-app
-      
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.__clientidsecretname__ }}
-          tenant-id: ${{ secrets.__tenantidsecretname__ }}
-          subscription-id: ${{ secrets.__subscriptionidsecretname__ }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FDCF1A445BE844B49DEFA35DC7C8A6CA }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F5DB2F490E6E478FAD3433BDAD7B58B9 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_CF54C8817D354096A76715B18E3CFFED }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'high-land'
-          slot-name: 'production'
+          app-name: 'highland-new'
+          slot-name: 'Production'
           package: '*.jar'
