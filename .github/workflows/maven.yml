@@ -1,4 +1,4 @@
-name: Display Workspace
+name: Display pom.xml Content
 
 on:
   push:
@@ -7,8 +7,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  display-workspace:
+  display-pom:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Display Workspace
-        run: echo "Workspace is $GITHUB_WORKSPACE"
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Display pom.xml Content
+        run: cat HighLand_Android/HighLandCoffeeApi/pom.xml
