@@ -1,4 +1,4 @@
-name: View pom.xml Content
+name: Copy pom.xml to D:\a
 
 on:
   push:
@@ -7,14 +7,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  view_pom_content:
-    runs-on: ubuntu-latest
+  copy_pom_to_d_a:
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: View pom.xml Content
+      - name: Copy pom.xml to D:\a
         run: |
-          cd ${{ github.workspace }}  # Di chuyển đến thư mục github.workspace (thường là D:\a)
-          cat pom.xml  # In ra nội dung của pom.xml
+          copy path\to\pom.xml ${{ github.workspace }}\pom.xml
+          dir ${{ github.workspace }}  # In ra danh sách các file trong thư mục github.workspace
