@@ -53,8 +53,6 @@ public class CartController {
 	public ResponseEntity<ApiResponse> addItemToCart(@RequestBody AddItemRequest req, @RequestHeader("Authorization") String jwt) throws UserException, ProductException{
 		User user = userService.findUserByJwt(jwt);
 		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
-		System.err.println("Customer_id: " + customer.getCustomer_id() + "req - " + req.getProduct_id() + " - " + req.getPrice() + " - " + req.getQuantity()  );
-
 		cartService.addCartItem(customer.getCustomer_id(), req);
 		ApiResponse response = new ApiResponse("Item add to cart",true,HttpStatus.ACCEPTED.value());
 		

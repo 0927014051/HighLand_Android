@@ -17,7 +17,9 @@ public CartDetail createCartDetail(CartDetail cartItem);
 	
 	public CartDetail findCartDetailById(Long cartItemId) throws CartDetailException;
 	
-	public CartDetail findCartDetailByCartIdAndProductId(Long cart_id, String proudct_id,String size,String topping);
+	public CartDetail findCartDetailByCartIdAndProductIdWithTopping(Long cart_id,String product_id, String size, String topping);
+	
+	public CartDetail findCartDetailByCartIdAndProductIdWithToppingNull(Long cart_id,String product_id, String size);
 	
 	public List<CartDetail> findCartDetailByCartId(Long cart_id);
 	

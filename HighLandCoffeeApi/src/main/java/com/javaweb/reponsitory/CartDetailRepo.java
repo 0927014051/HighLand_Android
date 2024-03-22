@@ -24,7 +24,11 @@ public interface CartDetailRepo extends JpaRepository<CartDetail, Long>{
 	public int totalQuantityByCartId(Long cart_id);
 	
 	@Query( value = "SELECT * FROM cart_detail WHERE cart_id = ?1 AND product_id = ?2 AND size = ?3 AND topping = ?4",nativeQuery =  true)
-	public CartDetail findCartDetailByCartIdAndProductId(Long cart_id,String product_id, String size, String topping);
+	public CartDetail findCartDetailByCartIdAndProductIdWithTopping(Long cart_id,String product_id, String size, String topping);
+	
+	@Query( value = "SELECT * FROM cart_detail WHERE cart_id = ?1 AND product_id = ?2 AND size = ?3",nativeQuery =  true)
+	public CartDetail findCartDetailByCartIdAndProductIdWithToppingNull(Long cart_id,String product_id, String size);
+
 	
 	@Query( value = "SELECT * FROM cart_detail WHERE cart_id = ?1",nativeQuery =  true)
 	public List<CartDetail> findCartDetailByCartId(Long cart_id);

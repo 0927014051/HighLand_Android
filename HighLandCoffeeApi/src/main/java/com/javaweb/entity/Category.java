@@ -33,6 +33,9 @@ public class Category {
 	private String category_name;
 	
 	@Column
+	private String slug;
+	
+	@Column
 	private Long created_by;
 	
 	@Column
@@ -111,6 +114,16 @@ public class Category {
 		this.updated_by = updated_by;
 	}
 
+	
+	
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+
 	@JsonIgnore
 	public LocalDateTime getCreated_at() {
 		return created_at;
@@ -161,12 +174,13 @@ public class Category {
 		this.category_size = category_size;
 	}
 
-	public Category(Long category_id, String category_name, Long created_by, Long updated_by, LocalDateTime created_at,
-			LocalDateTime updated_at, Staff staff_created, Staff staff_updated, List<Product> product,
-			List<Topping_Category> topping_category, List<Category_Size> category_size) {
+	public Category(Long category_id, String category_name, String slug, Long created_by, Long updated_by,
+			LocalDateTime created_at, LocalDateTime updated_at, Staff staff_created, Staff staff_updated,
+			List<Product> product, List<Topping_Category> topping_category, List<Category_Size> category_size) {
 		super();
 		this.category_id = category_id;
 		this.category_name = category_name;
+		this.slug = slug;
 		this.created_by = created_by;
 		this.updated_by = updated_by;
 		this.created_at = created_at;
@@ -177,7 +191,6 @@ public class Category {
 		this.topping_category = topping_category;
 		this.category_size = category_size;
 	}
-	
 
 	public Category() {
 		

@@ -64,57 +64,86 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public String addCartItem(Long customer_id, AddItemRequest req) throws ProductException {
 		Cart cart = cartRepo.findCartBCustomerId(customer_id);
-		Product product = productService.findProductById(req.getProduct_id());
+		Product product = productService.findProductByName(req.getProduct_name());
+		PriceUpdateDetail priceUpdateDetail = priceUpdateService.findPriceUpdateByProductId(product.getProduct_id());
 		// CartDetail isPresent = cartDetailService.isCartDetailExist(cart,
 		// product,customer_id );
-		PriceUpdateDetail priceUpdateDetail = priceUpdateService.findPriceUpdateByProductId(req.getProduct_id());
-		CartDetail isCheckCartDetail = cartDetailRepo.findCartDetailByCartIdAndProductId(cart.getCart_id(),
-				req.getProduct_id(), req.getSize(), req.getTopping());
-		Topping topping = toppingService.findToppingByName(req.getTopping());
-		Topping_Category topping_Category = toppingCategoryService.findToppingCategoryById(product.getCategory_id(),
-				topping.getTopping_id());
-		System.err.println(topping_Category.getTopping_price());
-		System.err.println(isCheckCartDetail.getPrice());
-
-		int priceTopping = 0;
-		if (isCheckCartDetail != null) {
-			isCheckCartDetail.setQuantity(isCheckCartDetail.getQuantity() + 1);
-			if (topping != null) {
-				priceTopping = priceUpdateDetail.getPrice_new() + topping_Category.getTopping_price();
-			} else {
+		if(req.getTopping() == null || req.getTopping().equals("") ){
+			CartDetail isCheckCartDetail = cartDetailRepo.findCartDetailByCartIdAndProductIdWithToppingNull(cart.getCart_id(),
+					product.getProduct_id(), req.getSize());
+			int priceTopping = 0;
+			if (isCheckCartDetail != null) {
+				isCheckCartDetail.setQuantity(isCheckCartDetail.getQuantity() + 1);
 				priceTopping = priceUpdateDetail.getPrice_new();
-			}
-			isCheckCartDetail.setPrice(priceTopping);
-			System.err.println(isCheckCartDetail.getPrice());
-			cartDetailRepo.save(isCheckCartDetail);
-			int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
-			int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
-			cart.setTotal_price(totalPrice);
-			cart.setTotal_quantity(totalQuantity);
-			cartRepo.save(cart);
-		} else {
-			CartDetail cartDetail = new CartDetail();
-			cartDetail.setCart(cart);
-			cartDetail.setProduct(product);
-			cartDetail.setCart_id(cart.getCart_id());
-			cartDetail.setProduct_id(req.getProduct_id());
-			int priceCartDetail = req.getQuantity() * priceUpdateDetail.getPrice_new();
-			if (topping != null) {
-				priceCartDetail = priceUpdateDetail.getPrice_new() + topping_Category.getTopping_price();
+				isCheckCartDetail.setPrice(priceTopping);
+				cartDetailRepo.save(isCheckCartDetail);
+				int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
+				int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
+				cart.setTotal_price(totalPrice);
+				cart.setTotal_quantity(totalQuantity);
+				cartRepo.save(cart);
 			} else {
-				priceCartDetail = priceUpdateDetail.getPrice_new();
+				CartDetail cartDetail = new CartDetail();
+				cartDetail.setCart(cart);
+				cartDetail.setProduct(product);
+				cartDetail.setCart_id(cart.getCart_id());
+				cartDetail.setProduct_id(product.getProduct_id());
+				int priceCartDetail = req.getQuantity() * priceUpdateDetail.getPrice_new();
+				priceCartDetail = priceUpdateDetail.getPrice_new() ;
+				cartDetail.setPrice(priceCartDetail);
+				cartDetail.setSize(req.getSize());
+				CartDetail createdCartDetail = cartDetailService.createCartDetail(cartDetail);
+				cart.getCart_detail().add(createdCartDetail);
+				int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
+				int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
+				cart.setTotal_price(totalPrice);
+				cart.setTotal_quantity(totalQuantity);
+				cartRepo.save(cart);
 			}
-			cartDetail.setPrice(priceCartDetail);
-			cartDetail.setSize(req.getSize());
-			cartDetail.setTopping(req.getTopping());
-			CartDetail createdCartDetail = cartDetailService.createCartDetail(cartDetail);
-			cart.getCart_detail().add(createdCartDetail);
-			int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
-			int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
-			cart.setTotal_price(totalPrice);
-			cart.setTotal_quantity(totalQuantity);
-			cartRepo.save(cart);
 		}
+		if(!req.getTopping().equals("")) {
+			System.err.println("topping " + req.getTopping());
+			CartDetail isCheckCartDetail = cartDetailRepo.findCartDetailByCartIdAndProductIdWithTopping(cart.getCart_id(),
+					product.getProduct_id(), req.getSize(), req.getTopping());
+			Topping topping = toppingService.findToppingByName(req.getTopping());
+			System.err.println("ToppingId: " + topping.getTopping_id());
+			Topping_Category topping_Category = toppingCategoryService.findToppingCategoryById(product.getCategory_id(),
+					topping.getTopping_id());
+			System.err.println("Topping_cateogry: " + topping_Category.getTopping_price());
+			int priceTopping = 0;
+			if (isCheckCartDetail != null) {
+				isCheckCartDetail.setQuantity(isCheckCartDetail.getQuantity() + 1);
+				priceTopping = priceUpdateDetail.getPrice_new() + topping_Category.getTopping_price();
+				isCheckCartDetail.setPrice(priceTopping);
+				System.err.println(isCheckCartDetail.getPrice());
+				cartDetailRepo.save(isCheckCartDetail);
+				int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
+				int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
+				cart.setTotal_price(totalPrice);
+				cart.setTotal_quantity(totalQuantity);
+				cartRepo.save(cart);
+			} else {
+				CartDetail cartDetail = new CartDetail();
+				cartDetail.setCart(cart);
+				cartDetail.setProduct(product);
+				cartDetail.setCart_id(cart.getCart_id());
+				cartDetail.setProduct_id(product.getProduct_id());
+				int priceCartDetail = req.getQuantity() * priceUpdateDetail.getPrice_new();
+				priceCartDetail = priceUpdateDetail.getPrice_new() + topping_Category.getTopping_price();
+				cartDetail.setPrice(priceCartDetail);
+				cartDetail.setSize(req.getSize());
+				cartDetail.setTopping(req.getTopping());
+				CartDetail createdCartDetail = cartDetailService.createCartDetail(cartDetail);
+				cart.getCart_detail().add(createdCartDetail);
+				int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
+				int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
+				cart.setTotal_price(totalPrice);
+				cart.setTotal_quantity(totalQuantity);
+				cartRepo.save(cart);
+			
+			}
+			}
+		
 		return "Item add to cart";
 	}
 

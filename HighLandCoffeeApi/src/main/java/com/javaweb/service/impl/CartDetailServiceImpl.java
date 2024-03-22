@@ -95,8 +95,12 @@ public class CartDetailServiceImpl implements CartDetailService{
 	}
 	
 	@Override
-	public CartDetail findCartDetailByCartIdAndProductId(Long cart_id, String proudct_id,String size, String topping) {
-		return cartDetailRepo.findCartDetailByCartIdAndProductId(cart_id, proudct_id,size,topping);
+	public CartDetail findCartDetailByCartIdAndProductIdWithTopping(Long cart_id, String proudct_id,String size, String topping) {
+		return cartDetailRepo.findCartDetailByCartIdAndProductIdWithTopping(cart_id, proudct_id,size,topping);
+	}
+	@Override
+	public CartDetail findCartDetailByCartIdAndProductIdWithToppingNull(Long cart_id, String proudct_id,String size) {
+		return cartDetailRepo.findCartDetailByCartIdAndProductIdWithToppingNull(cart_id, proudct_id,size);
 	}
 	
 	@Override

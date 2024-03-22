@@ -17,6 +17,7 @@ import com.javaweb.entity.Customer;
 import com.javaweb.entity.Staff;
 import com.javaweb.entity.User;
 import com.javaweb.exception.UserException;
+import com.javaweb.function.ConvertToSlug;
 import com.javaweb.service.CategoryService;
 import com.javaweb.service.StaffService;
 import com.javaweb.service.UserService;
@@ -50,6 +51,7 @@ public class AdminCategoryController {
 		category.setUpdated_at(LocalDateTime.now());
 		category.setCreated_by(staff.getStaff_id());
 		category.setUpdated_by(staff.getStaff_id());
+		category.setSlug(ConvertToSlug.convertToSlug(category_name));
 		Category createCategory = categoryService.createCategory(category);
 		return new ResponseEntity<Category>(createCategory,HttpStatus.ACCEPTED);
 	}

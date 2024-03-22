@@ -100,6 +100,11 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return false;
 	}
+	
+	@Override
+	public Product findProductByName(String name) {
+		return productRepo.findProductByName(name);
+	}
 
 	@Override
 	@Transactional
