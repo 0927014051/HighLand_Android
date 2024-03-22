@@ -35,9 +35,10 @@ public class ProductController {
 	@GetMapping("/products/category")
 	public ResponseEntity<EntityStatusResponse> findProductByCategory(@RequestParam String name){
 		List<Product> products = productService.findProductByCategory(name);
+		System.err.println("prodcy" + products);
 		EntityStatusResponse res = new EntityStatusResponse<>();
 		HttpStatus send = null;
-		if(products.isEmpty()) {
+		if(!products.isEmpty()) {
 			res.setData(products);
 			res.setMessage("find product by category success");
 			res.setStatus(HttpStatus.OK.value());
