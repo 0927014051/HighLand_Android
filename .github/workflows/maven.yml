@@ -1,19 +1,37 @@
-name: Display pom.xml Content
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+Để xem nội dung của thư mục workspace trong GitHub Actions trên PowerShell, bạn có thể sử dụng biến môi trường GITHUB_WORKSPACE. Đây là cách để hiển thị nội dung của thư mục làm việc trong GitHub Actions:
 
+1. Xem nội dung thư mục làm việc:
+powershell
+Copy code
+# Hiển thị nội dung của thư mục làm việc
+ls $env:GITHUB_WORKSPACE
+Đây là cách đơn giản nhất để xem nội dung của thư mục làm việc. Nếu bạn muốn hiển thị chi tiết hơn, bạn có thể sử dụng:
+
+powershell
+Copy code
+# Hiển thị nội dung với thông tin chi tiết
+ls -al $env:GITHUB_WORKSPACE
+Điều này sẽ hiển thị danh sách các tệp và thư mục trong thư mục làm việc, bao gồm cả thông tin chi tiết như quyền hạn và ngày tạo.
+
+2. Hiển thị đường dẫn của workspace:
+Nếu bạn chỉ muốn hiển thị đường dẫn của workspace, bạn có thể sử dụng:
+
+powershell
+Copy code
+# Hiển thị đường dẫn của workspace
+echo $env:GITHUB_WORKSPACE
+Điều này sẽ hiển thị đường dẫn đến thư mục làm việc của GitHub Actions.
+
+3. Sử dụng trong một workflow:
+Nếu bạn muốn sử dụng trong một bước của workflow trong GitHub Actions, bạn có thể sử dụng các lệnh trên trong một action:
+
+yaml
+Copy code
 jobs:
-  display-pom:
+  your_job_name:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Display pom.xml Content
-        run: dir HighLand_Android/HighLandCoffeeApi/pom.xml
-        shell: bash
+      - name: Check Workspace
+        run: |
+          ls $env:GITHUB_WORKSPACE
