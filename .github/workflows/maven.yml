@@ -1,0 +1,14 @@
+name: Display Workspace
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  display-workspace:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display Workspace
+        run: echo "Workspace is $GITHUB_WORKSPACE"
