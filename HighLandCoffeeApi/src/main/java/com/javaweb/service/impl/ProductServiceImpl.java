@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -21,6 +22,7 @@ import com.javaweb.reponsitory.CategoryRepo;
 import com.javaweb.reponsitory.PriceUpdateRepo;
 import com.javaweb.reponsitory.ProductRepo;
 import com.javaweb.request.CreateProductRequest;
+import com.javaweb.request.ProductSaleRequest;
 import com.javaweb.service.ProductService;
 import com.javaweb.service.UserService;
 
@@ -174,7 +176,20 @@ public class ProductServiceImpl implements ProductService {
 		List<Product> products = productRepo.searchProduct(query);
 		return products;
 	}
-
+	
+	@Override
+	 public List<ProductSaleRequest> getProductSales() {
+        List<Object[]> results = productRepo.getProductSales();
+        return results.stream()
+                .map(this::mapToProductSaleRequest)
+                .collect(Collectors.toList());
+    }
+	private ProductSaleRequest mapToProductSaleRequest(Object[] result) {
+        String productId = (String) result[0];
+        String productName = (String) result[1];
+        long totalSoldQuantity = (long) result[2];
+        return new ProductSaleRequest(productId, productName, totalSoldQuantity);
+    }
 	public static String generateProductCode() {
 		Random random = new Random();
 		StringBuilder codeBuilder = new StringBuilder();

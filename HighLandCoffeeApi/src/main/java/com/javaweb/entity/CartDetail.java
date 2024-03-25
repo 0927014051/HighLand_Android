@@ -39,8 +39,8 @@ public class CartDetail {
 	@Column
 	private Long cart_id;
 	
-	@JsonIgnore
-	@ManyToOne(fetch=FetchType.LAZY)
+	
+	@ManyToOne
 	@JoinColumn(name =  "product_id",updatable =  false, insertable =  false)
 	private Product product;
 	
@@ -74,6 +74,7 @@ public class CartDetail {
 		this.price = price;
 	}
 
+	@JsonIgnore
 	public String getProduct_id() {
 		return product_id;
 	}
