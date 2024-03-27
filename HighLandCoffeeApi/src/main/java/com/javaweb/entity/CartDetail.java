@@ -74,7 +74,7 @@ public class CartDetail {
 		this.price = price;
 	}
 
-	@JsonIgnore
+	
 	public String getProduct_id() {
 		return product_id;
 	}

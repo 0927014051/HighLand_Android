@@ -5,6 +5,7 @@ import java.util.Random;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.entity.Cart;
+import com.javaweb.entity.CartDetail;
 import com.javaweb.entity.Customer;
 import com.javaweb.entity.User;
 import com.javaweb.exception.ProductException;
@@ -20,6 +22,7 @@ import com.javaweb.exception.UserException;
 import com.javaweb.request.AddItemRequest;
 import com.javaweb.response.ApiResponse;
 import com.javaweb.response.EntityStatusResponse;
+import com.javaweb.service.CartDetailService;
 import com.javaweb.service.CartService;
 import com.javaweb.service.CustomerService;
 import com.javaweb.service.UserService;
@@ -31,10 +34,12 @@ public class CartController {
 	private CartService cartService;
 	private UserService userService;
 	private CustomerService customerService;
-	public CartController(CartService cartService, UserService userService,CustomerService customerService) {
+	private CartDetailService cartDetailService;
+	public CartController(CartService cartService, UserService userService,CustomerService customerService,CartDetailService cartDetailService) {
 		this.cartService = cartService;
 		this.userService = userService;
 		this.customerService = customerService;
+		this.cartDetailService = cartDetailService;
 	}
 	
 	@GetMapping("/")
@@ -59,15 +64,13 @@ public class CartController {
 		return new ResponseEntity<ApiResponse>(response,HttpStatus.ACCEPTED);
 	}
 	
-	 
-    @GetMapping("/test")
-    public ResponseEntity<String> withResponseEntity() {
-        int randomInt = new Random().ints(1, 1, 11).findFirst().getAsInt();
-        if (randomInt < 9) {
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("Expectation Failed from Client (CODE 417)\n");   
-        } else {
-            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body("April Fool's Status Code (CODE 418)\n");
-        }
-    }   
+	@PostMapping("/delete/item")
+	public ResponseEntity<ApiResponse> deleeteCartDetailItem(@RequestHeader("Authorization") String jwt,@RequestBody CartDetail item){
+		cartDetailService.deleteItemCartDetail(item.getProduct_id(), item.getSize());
+		System.err.println("product_id" + item.getProduct_id() + "   " + item.getSize());
+		ApiResponse res = new ApiResponse("delete item success", true, HttpStatus.OK.value());
+		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
+		
+	}
 
 }

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -23,6 +24,8 @@ import com.javaweb.reponsitory.CartRepo;
 import com.javaweb.reponsitory.OrderDetailRepo;
 import com.javaweb.reponsitory.OrderRepo;
 import com.javaweb.request.BuyNowRequest;
+import com.javaweb.request.ProductSaleRequest;
+import com.javaweb.request.StatisticRequest;
 import com.javaweb.service.CartDetailService;
 import com.javaweb.service.CartService;
 import com.javaweb.service.OrderDetailService;
@@ -57,15 +60,6 @@ public class OrderServiceimpl implements OrderService {
 	public Orders createOrder(Customer customer) {
 		Cart cart = cartService.findCartBCustomerId(customer.getCustomer_id());
 		List<OrderDetail> list = new ArrayList<>();
-
-//			Orders orders = new Orders();
-//			orders.setCreate_at(LocalDateTime.now());
-//			orders.setUpdate_at(LocalDateTime.now());
-//			orders.setCustomer_id(customer.getCustomer_id());
-//			orders.setStatus(0);
-//			orders.setTotal_price(0);
-//			orders.setTotal_quantity(0);
-//			Orders createdOrders = orderRepo.save(orders);
 		int totalPrice = 0;
 		int totalQuantity = 0;
 		for (CartDetail detail : cart.getCart_detail()) {
@@ -166,5 +160,18 @@ public class OrderServiceimpl implements OrderService {
 		}
 		return orderRepo.save(update);
 	}
+	@Override
+	 public List<StatisticRequest> getTotalAmountByMonth(int year){
+       List<Object[]> results = orderRepo.getTotalAmountByMonth(year);
+       return results.stream()
+               .map(this::mapToStatisticRequest)
+               .collect(Collectors.toList());
+   }
+	
+	private StatisticRequest mapToStatisticRequest(Object[] result) {
+        int month = (int) result[0];
+        long price = (long) result[1];
+        return new StatisticRequest(month,price);
+    }
 
 }

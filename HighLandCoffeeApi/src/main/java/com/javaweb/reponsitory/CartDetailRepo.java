@@ -2,6 +2,8 @@ package com.javaweb.reponsitory;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -36,5 +38,10 @@ public interface CartDetailRepo extends JpaRepository<CartDetail, Long>{
 	@Modifying
     @Query("DELETE FROM CartDetail cd WHERE cd.cart_id = :cart_id")
 	public void deleteCartDetail(Long cart_id);
+	
+	@Modifying
+	@Transactional
+    @Query("DELETE FROM CartDetail cd WHERE cd.product_id = :product_id AND cd.size = :size")
+	public void deleteItemCartDetail(String product_id, String size);
 
 }

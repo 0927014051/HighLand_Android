@@ -20,15 +20,18 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.entity.Category;
 import com.javaweb.entity.Role;
+import com.javaweb.entity.Size;
 import com.javaweb.entity.Staff;
 import com.javaweb.entity.Topping;
 import com.javaweb.entity.Topping_Category;
 import com.javaweb.entity.User;
 import com.javaweb.exception.UserException;
+import com.javaweb.request.AddCategorySizeRequest;
 import com.javaweb.request.CreateToppingCategoryRequest;
 import com.javaweb.response.ApiResponse;
 import com.javaweb.service.IImageService;
 import com.javaweb.service.RoleService;
+import com.javaweb.service.SizeService;
 import com.javaweb.service.StaffService;
 import com.javaweb.service.ToppingService;
 import com.javaweb.service.UserService;
@@ -42,15 +45,17 @@ public class AdminController {
 	private StaffService staffService;
 	private IImageService iImageService;
 	private ToppingService toppingService;
+	private SizeService sizeService;
 
 	public AdminController(RoleService roleService, UserService userService, StaffService staffService,
-			IImageService iImageService, ToppingService toppingService) {
+			IImageService iImageService, ToppingService toppingService,SizeService sizeService) {
 		super();
 		this.roleService = roleService;
 		this.userService = userService;
 		this.staffService = staffService;
 		this.toppingService = toppingService;
 		this.iImageService = iImageService;
+		this.sizeService = sizeService;
 	}
 
 	@PostMapping("/role/add")
@@ -102,6 +107,18 @@ public class AdminController {
 			return new ResponseEntity<ApiResponse>(response, HttpStatus.BAD_REQUEST);
 		}
 
+	}
+	@PostMapping("/size/add")
+	public ResponseEntity<ApiResponse> createSizeHanlder(@RequestHeader("Authorization") String jwt, @RequestBody AddCategorySizeRequest size) throws UserException{
+		User user = userService.findUserByJwt(jwt);
+		Staff staff = staffService.findStaffByUserId(user.getUser_id());
+		for(Category item: size.getCategory()) {
+			//System.err.println("category_name: " + item.getCategory_name());
+		}
+		Size createSize = sizeService.createSize(size, staff.getStaff_id());
+		ApiResponse res = new ApiResponse("add size success", true, HttpStatus.CREATED.value());
+		return new ResponseEntity<ApiResponse>(res,HttpStatus.CREATED);
+		
 	}
 
 }

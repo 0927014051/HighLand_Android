@@ -10,8 +10,6 @@ public class AddItemRequest {
 	
 	private String size;
 	
-	private String topping;
-	
 	public AddItemRequest() {
 		
 	}
@@ -48,21 +46,12 @@ public class AddItemRequest {
 		this.size = size;
 	}
 
-	public String getTopping() {
-		return topping;
-	}
-
-	public void setTopping(String topping) {
-		this.topping = topping;
-	}
-
-	public AddItemRequest(String product_name, int quantity, Integer price, String size, String topping) {
+	public AddItemRequest(String product_name, int quantity, Integer price, String size) {
 		super();
 		this.product_name = product_name;
 		this.quantity = quantity;
 		this.price = price;
 		this.size = size;
-		this.topping = topping;
 	}
 	
 	

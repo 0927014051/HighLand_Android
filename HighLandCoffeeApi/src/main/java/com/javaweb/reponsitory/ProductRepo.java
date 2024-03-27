@@ -22,7 +22,7 @@ public interface ProductRepo extends JpaRepository<Product, String>{
 	@Query("SELECT p From Product p Where LOWER(p.product_name)=:name")
 	public Product findProductByName(String name);
 	
-	 @Query("SELECT p.product_id, p.product_name, SUM(od.quantity * od.price) AS total_sold " +
+	 @Query("SELECT p.product_id, p.product_name, SUM(od.quantity * od.price) as total_sold , SUM(od.quantity) AS total_quantity " +
 	            "FROM Product p " +
 	            "JOIN OrderDetail od ON p.product_id = od.product_id " +
 	            "JOIN Orders o ON od.order_id = o.order_id AND o.status = 3 " +

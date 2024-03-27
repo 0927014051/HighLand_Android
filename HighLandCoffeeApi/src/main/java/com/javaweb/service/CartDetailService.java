@@ -24,6 +24,9 @@ public CartDetail createCartDetail(CartDetail cartItem);
 	public List<CartDetail> findCartDetailByCartId(Long cart_id);
 	
 	public void deleteCartDetail(Long cart_id);
+	
+	public void deleteItemCartDetail(String product_id, String size);
+
 
 
 }

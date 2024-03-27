@@ -112,4 +112,9 @@ public class CartDetailServiceImpl implements CartDetailService{
 	public void deleteCartDetail(Long cart_id){
 		cartDetailRepo.deleteCartDetail(cart_id);
 	}
+	
+	@Override
+	public void deleteItemCartDetail(String product_id, String size) {
+		cartDetailRepo.deleteItemCartDetail(product_id, size);
+	}
 }

@@ -26,10 +26,5 @@ public class HomeController {
 		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
 	}
 	
-	@GetMapping("/get")
-	public ResponseEntity<EntityStatusResponse> get(){
-		List<ProductSaleRequest> get = productService.getProductSales();
-		EntityStatusResponse result = new EntityStatusResponse(get, 0, null);
-		return new ResponseEntity<EntityStatusResponse>(result,HttpStatus.OK);
-	}
+	
 }

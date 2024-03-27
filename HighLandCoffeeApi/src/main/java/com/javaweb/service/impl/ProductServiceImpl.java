@@ -188,7 +188,8 @@ public class ProductServiceImpl implements ProductService {
         String productId = (String) result[0];
         String productName = (String) result[1];
         long totalSoldQuantity = (long) result[2];
-        return new ProductSaleRequest(productId, productName, totalSoldQuantity);
+        long totalQuanity = (long) result[3];
+        return new ProductSaleRequest(productId, productName, totalSoldQuantity,totalQuanity);
     }
 	public static String generateProductCode() {
 		Random random = new Random();

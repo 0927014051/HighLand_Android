@@ -8,6 +8,7 @@ import com.javaweb.entity.User;
 import com.javaweb.exception.OrdersException;
 import com.javaweb.exception.ProductException;
 import com.javaweb.request.BuyNowRequest;
+import com.javaweb.request.StatisticRequest;
 
 
 public interface OrderService {
@@ -19,6 +20,9 @@ public interface OrderService {
 	public Orders findOrderById(Long orderId) throws ProductException;
 	
 	public Orders orderBuyNow(BuyNowRequest rq,Long customer_id);
+	
+    public List<StatisticRequest> getTotalAmountByMonth(int year);
+
 	
 //	public Orders findOrdersById(Long orderId) throws OrdersException;
 //	
