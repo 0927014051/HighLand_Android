@@ -51,7 +51,8 @@ public class UserController {
 	@GetMapping("/profile")
 	public ResponseEntity<EntityStatusResponse> getProfileUserByJwt(@RequestHeader("Authorization") String jwt) throws UserException{
 		User profileUserResponse = userService.findUserByJwt(jwt);
-		EntityStatusResponse res = new EntityStatusResponse(profileUserResponse, HttpStatus.OK.value(), "success");
+		Customer customer = customerService.findCustomerByUserId(profileUserResponse.getUser_id());
+		EntityStatusResponse res = new EntityStatusResponse(customer, HttpStatus.OK.value(), "success");
 		return new ResponseEntity<EntityStatusResponse>(res,HttpStatus.ACCEPTED);	
 	}
 	

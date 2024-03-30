@@ -63,7 +63,7 @@ public class Customer {
 	@OneToMany(mappedBy = "customer")
 	private List<CouponDetail> coupon_detail;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id",updatable = false, insertable = false)
 	private User user;
@@ -105,7 +105,7 @@ public class Customer {
 		this.lastname = lastname;
 	}
 
-	@JsonIgnore
+	
 	public Date getBirthday() {
 		return birthday;
 	}
@@ -114,7 +114,7 @@ public class Customer {
 		this.birthday = birthday;
 	}
 
-	@JsonIgnore
+	
 	public String getEmail() {
 		return email;
 	}
@@ -123,7 +123,7 @@ public class Customer {
 		this.email = email;
 	}
 
-	@JsonIgnore
+	
 	public String getPhone() {
 		return phone;
 	}
@@ -156,7 +156,7 @@ public class Customer {
 		this.updated_at = updated_at;
 	}
 
-	@JsonIgnore
+	
 	public String getCccd() {
 		return cccd;
 	}
@@ -164,8 +164,7 @@ public class Customer {
 	public void setCccd(String cccd) {
 		this.cccd = cccd;
 	}
-
-	@JsonIgnore
+	
 	public String getTax_id() {
 		return tax_id;
 	}

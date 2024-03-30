@@ -2,6 +2,7 @@ package com.javaweb.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -167,6 +168,23 @@ public class OrderServiceimpl implements OrderService {
                .map(this::mapToStatisticRequest)
                .collect(Collectors.toList());
    }
+	
+	@Override
+	public List<ProductSaleRequest> getTotalAmountByDate(Date start, Date end){
+		List<Object[]> results = orderRepo.getTotalAmountByDate(start, end);
+		 return results.stream()
+	                .map(this::mapToProductSaleRequest)
+	                .collect(Collectors.toList());
+		
+	}
+	
+	private ProductSaleRequest mapToProductSaleRequest(Object[] result) {
+        String productId = (String) result[0];
+        String productName = (String) result[1];
+        long totalSoldQuantity = (long) result[2];
+        long totalQuanity = (long) result[3];
+        return new ProductSaleRequest(productId, productName, totalSoldQuantity,totalQuanity);
+    }
 	
 	private StatisticRequest mapToStatisticRequest(Object[] result) {
         int month = (int) result[0];

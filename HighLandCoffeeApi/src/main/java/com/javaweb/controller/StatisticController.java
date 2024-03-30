@@ -1,5 +1,11 @@
 package com.javaweb.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -44,5 +50,23 @@ public class StatisticController {
 		List<StatisticRequest> rq = orderService.getTotalAmountByMonth(changeYear);
 		ListEntityStatusResponse result = new ListEntityStatusResponse(rq, HttpStatus.OK.value(), "success");
 		return new ResponseEntity<ListEntityStatusResponse>(result,HttpStatus.OK);
+	}
+	
+	@GetMapping("/date")
+	public ResponseEntity<ListEntityStatusResponse> getStatisticOrderByDate(@RequestParam("start") String dateStart, @RequestParam("end") String dateEnd){
+	        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+	        Date start = null;
+	        Date end = null;
+	        try {
+	            // Parsing a String to Date
+	            start = dateFormatter.parse(dateStart);
+	            end = dateFormatter.parse(dateEnd);
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	        }
+	    
+		List<ProductSaleRequest> rq = orderService.getTotalAmountByDate(start, end);
+		ListEntityStatusResponse rs = new ListEntityStatusResponse<>(rq, HttpStatus.OK.value(), "success");
+		return new ResponseEntity<ListEntityStatusResponse>(rs,HttpStatus.OK);
 	}
 }
