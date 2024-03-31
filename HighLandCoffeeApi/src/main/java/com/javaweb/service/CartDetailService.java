@@ -26,6 +26,11 @@ public CartDetail createCartDetail(CartDetail cartItem);
 	public void deleteCartDetail(Long cart_id);
 	
 	public void deleteItemCartDetail(String product_id, String size);
+	
+	public void incrementQuantity(Long cart_id, String product_id, String size );
+
+	public void reduceQuantity(Long cart_id, String product_id, String size );
+
 
 
 

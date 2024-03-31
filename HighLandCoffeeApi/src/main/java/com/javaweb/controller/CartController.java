@@ -72,5 +72,27 @@ public class CartController {
 		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
 		
 	}
+	
+	@PutMapping("/increment/quantity")
+	public ResponseEntity<ApiResponse> updateQuantityCartDetail(@RequestHeader("Authorization") String jwt,@RequestBody CartDetail item) throws UserException{
+		User user = userService.findUserByJwt(jwt);
+		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
+		Cart cart = cartService.findCartBCustomerId(customer.getCustomer_id());
+		System.err.println(cart.getCart_id() + " " + item.getProduct_id() + " " + item.getSize());
+		cartDetailService.incrementQuantity(cart.getCart_id(),item.getProduct_id(),item.getSize());
+		ApiResponse res = new ApiResponse("success", true, HttpStatus.OK.value());
+		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
+	}
+	
+	@PutMapping("/reduce/quantity")
+	public ResponseEntity<ApiResponse> reduceQuantityCartDetail(@RequestHeader("Authorization") String jwt,@RequestBody CartDetail item) throws UserException{
+		User user = userService.findUserByJwt(jwt);
+		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
+		Cart cart = cartService.findCartBCustomerId(customer.getCustomer_id());
+		System.err.println(cart.getCart_id() + " " + item.getProduct_id() + " " + item.getSize());
+		cartDetailService.reduceQuantity(cart.getCart_id(),item.getProduct_id(),item.getSize());
+		ApiResponse res = new ApiResponse("success", true, HttpStatus.OK.value());
+		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
+	}
 
 }

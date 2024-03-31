@@ -14,4 +14,5 @@ public interface OrderDetailRepo extends JpaRepository<OrderDetail, Long>{
 	@Query("SELECT SUM(quantity) FROM OrderDetail WHERE order_id = ?1")
 	public int totalQuantityByOrderId(Long cart_id);
 
+
 }

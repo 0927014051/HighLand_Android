@@ -43,5 +43,15 @@ public interface CartDetailRepo extends JpaRepository<CartDetail, Long>{
 	@Transactional
     @Query("DELETE FROM CartDetail cd WHERE cd.product_id = :product_id AND cd.size = :size")
 	public void deleteItemCartDetail(String product_id, String size);
-
+	
+	
+	@Modifying
+	@Transactional
+	@Query("UPDATE CartDetail SET quantity = (quantity + 1) WHERE cart_id = :cartId AND product_id = :productId AND size = :size")
+	void incrementQuantity(@Param("cartId") Long cartId, @Param("productId") String productId, @Param("size") String size);
+	
+	@Modifying
+	@Transactional
+	@Query("UPDATE CartDetail SET quantity = (quantity - 1) WHERE cart_id = :cartId AND product_id = :productId AND size = :size")
+	void reduceQuantity(@Param("cartId") Long cartId, @Param("productId") String productId, @Param("size") String size);
 }
