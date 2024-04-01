@@ -1,7 +1,10 @@
 package com.javaweb.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +17,7 @@ import com.javaweb.entity.User;
 import com.javaweb.exception.ProductException;
 import com.javaweb.exception.UserException;
 import com.javaweb.response.EntityStatusResponse;
+import com.javaweb.response.ListEntityStatusResponse;
 import com.javaweb.service.OrderService;
 import com.javaweb.service.StaffService;
 import com.javaweb.service.UserService;
@@ -39,6 +43,14 @@ public class AdminOrderController {
 		Orders updateOrders = orderService.updateStatusOrder(order_id, orders.getStatus(),staff.getStaff_id());
 		EntityStatusResponse response = new EntityStatusResponse(updateOrders,HttpStatus.OK.value(),"SUCCESS");
 		return new ResponseEntity<EntityStatusResponse>(response,HttpStatus.OK) ;
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<ListEntityStatusResponse> getAllOrder(){
+		
+		List<Orders> allOrder = orderService.getAllOrders();
+		ListEntityStatusResponse res = new ListEntityStatusResponse(allOrder, HttpStatus.OK.value(), "find all sucesss");
+		return new ResponseEntity<ListEntityStatusResponse>(res,HttpStatus.OK);
 	}
 	
 

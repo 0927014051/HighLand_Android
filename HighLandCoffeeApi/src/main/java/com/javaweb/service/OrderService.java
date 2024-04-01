@@ -26,6 +26,8 @@ public interface OrderService {
     public List<StatisticRequest> getTotalAmountByMonth(int year);
     
     public List<ProductSaleRequest> getTotalAmountByDate(Date start, Date end);
+    
+    public List<Orders> getAllOrders();
 
 	
 //	public Orders findOrdersById(Long orderId) throws OrdersException;

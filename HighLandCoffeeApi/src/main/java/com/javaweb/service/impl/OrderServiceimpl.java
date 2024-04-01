@@ -178,6 +178,11 @@ public class OrderServiceimpl implements OrderService {
 		
 	}
 	
+	@Override
+	public List<Orders> getAllOrders(){
+		return orderRepo.findAll();
+	}
+	
 	private ProductSaleRequest mapToProductSaleRequest(Object[] result) {
         String productId = (String) result[0];
         String productName = (String) result[1];
