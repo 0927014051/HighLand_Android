@@ -60,4 +60,9 @@ public class SizeServiceImpl implements SizeService{
 		return savedSize;
 	}
 	
+	@Override
+	public List<Size> getAllSize(){
+		return sizeRepo.findAll();
+	}
+	
 }

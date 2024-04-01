@@ -1,5 +1,7 @@
 package com.javaweb.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.javaweb.entity.Category_Size;
@@ -17,6 +19,9 @@ public class SizeCategoryServiceImpl implements SizeCategoryService{
 		this.sizeCategoryRepo = sizeCategoryRepo;
 	}
 	
-
+	@Override
+	public List<Category_Size> getAllCategorySize(){
+		return sizeCategoryRepo.findAll();
+	}
 
 }

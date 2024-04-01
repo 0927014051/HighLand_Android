@@ -74,6 +74,8 @@ public class AuthController {
 		String username = user.getUsername();
 		String password = user.getPassword();
 		String role_name = user.getRole_name();
+		String first_name = user.getFirs_name();
+		String last_name = user.getLast_name();
 		System.err.println("roleName = " + role_name);
 		User isUserExist = userRepository.findByUsername(username);
 		Role role = roleService.findRoleByName(role_name);
@@ -99,6 +101,8 @@ public class AuthController {
 			if (role.getRole_id() == 3) {
 
 				Customer customer = new Customer();
+				customer.setFirstname(first_name);
+				customer.setLastname(last_name);
 				customer.setCreated_at(LocalDateTime.now());
 				customer.setUpdated_at(LocalDateTime.now());
 				customer.setUser_id(createdUser.getUser_id());
@@ -118,6 +122,8 @@ public class AuthController {
 			if (role.getRole_id() == 2) {
 				if (savedUser != null) {
 					Staff staff = new Staff();
+					staff.setFirstname(first_name);
+					staff.setLastname(last_name);
 					staff.setCreated_at(LocalDateTime.now());
 					staff.setUpdated_at(LocalDateTime.now());
 					staff.setUser_id(createdUser.getUser_id());

@@ -171,7 +171,7 @@ public class Product {
 		return review;
 	}
 	
-	@JsonIgnore
+	
 	public String getStatus() {
 		return status;
 	}

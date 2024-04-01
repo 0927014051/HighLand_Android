@@ -1,14 +1,18 @@
 package com.javaweb.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javaweb.entity.Category_Size;
 import com.javaweb.entity.Customer;
 import com.javaweb.entity.Orders;
 import com.javaweb.entity.User;
@@ -16,8 +20,11 @@ import com.javaweb.exception.UserException;
 import com.javaweb.reponsitory.OrderRepo;
 import com.javaweb.request.BuyNowRequest;
 import com.javaweb.response.ApiResponse;
+import com.javaweb.response.EntityStatusResponse;
+import com.javaweb.response.ListEntityStatusResponse;
 import com.javaweb.service.CustomerService;
 import com.javaweb.service.OrderService;
+import com.javaweb.service.SizeCategoryService;
 import com.javaweb.service.UserService;
 
 @RestController
@@ -27,16 +34,18 @@ public class OrderController {
 	private OrderService orderService;
 	private CustomerService customerService;
 	private UserService userService;
+	private SizeCategoryService sizeCategoryService;
 	
 	@Autowired
 	private OrderRepo orderRepo;
 
-	public OrderController(OrderService orderService, CustomerService customerService, OrderRepo orderRepo,UserService userService) {
+	public OrderController(OrderService orderService, CustomerService customerService, OrderRepo orderRepo,UserService userService, SizeCategoryService sizeCategoryService) {
 		super();
 		this.orderService = orderService;
 		this.customerService = customerService;
 		this.orderRepo = orderRepo;
 		this.userService = userService;
+		this.sizeCategoryService = sizeCategoryService;
 	}
 	
 	@PostMapping("/create")
@@ -64,6 +73,13 @@ public class OrderController {
 			response.setStatus(false);
 		}
 		return new ResponseEntity<ApiResponse>(response,HttpStatus.OK);
+	}
+	
+	@GetMapping("/size/all")
+	public ResponseEntity<ListEntityStatusResponse> getAllCategorySize(){
+		List<Category_Size> category_Sizes = sizeCategoryService.getAllCategorySize();
+		ListEntityStatusResponse res = new ListEntityStatusResponse(category_Sizes, HttpStatus.OK.value(), "success");
+		return new ResponseEntity<ListEntityStatusResponse>(res,HttpStatus.OK);
 	}
 	
 

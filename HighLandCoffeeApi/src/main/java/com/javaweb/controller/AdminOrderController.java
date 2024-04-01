@@ -53,5 +53,12 @@ public class AdminOrderController {
 		return new ResponseEntity<ListEntityStatusResponse>(res,HttpStatus.OK);
 	}
 	
+	@GetMapping("/{orderId}/find")
+	public ResponseEntity<EntityStatusResponse> findOrderById(@PathVariable Long orderId) throws ProductException{
+		Orders orders = orderService.findOrderById(orderId);
+		EntityStatusResponse res = new EntityStatusResponse(orders,HttpStatus.OK.value(),"find order success");
+		return new ResponseEntity<EntityStatusResponse>(res,HttpStatus.OK);
+	}
+	
 
 }

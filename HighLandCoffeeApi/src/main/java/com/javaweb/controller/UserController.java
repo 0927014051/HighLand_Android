@@ -85,5 +85,28 @@ public class UserController {
 		return new ResponseEntity<ApiResponse>(rq,HttpStatus.ACCEPTED);
 	}
 	
+	@GetMapping("/find")
+	public ResponseEntity<EntityStatusResponse> findCustomerAndStaffProfileByJwt(@RequestHeader("Authorization") String jwt) throws UserException{
+		User user = userService.findUserByJwt(jwt);
+		EntityStatusResponse res = new EntityStatusResponse();
+		if(user.getRole_id() == 3) {
+			Customer customer = customerService.findCustomerByUserId(user.getUser_id());
+			res.setData(customer);
+			res.setMessage("find customer success");
+			res.setStatus(HttpStatus.OK.value());
+		}else if(user.getRole_id() == 2) {
+			Staff staff = staffService.findStaffByUserId(user.getUser_id());
+			res.setData(staff);
+			res.setMessage("find staff success");
+			res.setStatus(HttpStatus.OK.value());
+		}else {
+			res.setData(null);
+			res.setMessage("not found");
+			res.setStatus(HttpStatus.CONFLICT.value());
+			System.err.println("not found");
+		}
+		return new ResponseEntity<EntityStatusResponse>(res,HttpStatus.OK);
+	}
+	
 	
 }
