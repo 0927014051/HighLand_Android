@@ -57,7 +57,7 @@ public class Orders {
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> order_detail;
 
-	@JsonIgnore
+	
 	public Long getOrder_id() {
 		return order_id;
 	}

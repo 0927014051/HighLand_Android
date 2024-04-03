@@ -30,6 +30,8 @@ public CartDetail createCartDetail(CartDetail cartItem);
 	public void incrementQuantity(Long cart_id, String product_id, String size );
 
 	public void reduceQuantity(Long cart_id, String product_id, String size );
+	
+	public void updateQuantity(Long cart_id, String product_id, String size,int quantity ) throws UserException;
 
 
 

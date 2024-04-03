@@ -4,6 +4,7 @@ import com.javaweb.entity.Cart;
 import com.javaweb.entity.Customer;
 import com.javaweb.entity.User;
 import com.javaweb.exception.ProductException;
+import com.javaweb.exception.UserException;
 import com.javaweb.request.AddItemRequest;
 
 
@@ -16,4 +17,6 @@ public interface CartService {
 	public Cart findCartBCustomerId(Long customerId);
 //
 	public void clearCart(Long customerId);
+	
+	public Cart findById(Long cart_id) throws UserException;
 }

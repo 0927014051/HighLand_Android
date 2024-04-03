@@ -54,4 +54,9 @@ public interface CartDetailRepo extends JpaRepository<CartDetail, Long>{
 	@Transactional
 	@Query("UPDATE CartDetail SET quantity = (quantity - 1) WHERE cart_id = :cartId AND product_id = :productId AND size = :size")
 	void reduceQuantity(@Param("cartId") Long cartId, @Param("productId") String productId, @Param("size") String size);
+	
+	@Modifying
+	@Transactional
+	@Query("UPDATE CartDetail SET quantity = :quantity WHERE cart_id = :cartId AND product_id = :productId AND size = :size")
+	void updateQuantity(@Param("cartId") Long cartId, @Param("productId") String productId, @Param("size") String size, int quantity);
 }

@@ -1,5 +1,8 @@
 package com.javaweb;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +24,14 @@ public class SpringbootWebApplication {
 	@GetMapping("/message")
 	public String messgae() {
 		return "deploy success with azure ";
+	}
+	
+	@GetMapping("/ip")
+	public String get() throws UnknownHostException {
+		
+		InetAddress IP=InetAddress.getLocalHost();
+		
+		return IP.toString();
 	}
 	
 }

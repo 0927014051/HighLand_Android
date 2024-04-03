@@ -1,6 +1,7 @@
 package com.javaweb.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import javax.management.loading.PrivateClassLoader;
 
@@ -15,6 +16,7 @@ import com.javaweb.entity.Topping;
 import com.javaweb.entity.Topping_Category;
 import com.javaweb.entity.User;
 import com.javaweb.exception.ProductException;
+import com.javaweb.exception.UserException;
 import com.javaweb.reponsitory.CartDetailRepo;
 import com.javaweb.reponsitory.CartRepo;
 import com.javaweb.request.AddItemRequest;
@@ -109,6 +111,18 @@ public class CartServiceImpl implements CartService {
 			cart.getCart_detail().clear();
 			cartRepo.save(cart);
 		}
+	}
+	
+	@Override
+	public Cart findById(Long cart_id) throws UserException  {
+
+		Optional<Cart> cart = cartRepo.findById(cart_id);
+
+		if (cart.isPresent()) {
+			return cart.get();
+		}
+		throw new UserException("Cart not found with id " + cart);
+
 	}
 
 }

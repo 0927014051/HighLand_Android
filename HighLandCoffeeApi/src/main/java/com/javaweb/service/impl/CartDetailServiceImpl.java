@@ -17,6 +17,7 @@ import com.javaweb.reponsitory.CartDetailRepo;
 import com.javaweb.reponsitory.CartRepo;
 import com.javaweb.reponsitory.CustomerRepo;
 import com.javaweb.service.CartDetailService;
+import com.javaweb.service.CartService;
 import com.javaweb.service.CustomerService;
 import com.javaweb.service.PriceUpdateService;
 import com.javaweb.service.UserService;
@@ -29,13 +30,15 @@ public class CartDetailServiceImpl implements CartDetailService{
 	private CartRepo cartRepo;
 	private CustomerService customerService;
 	private PriceUpdateService priceUpdateService;
-	public CartDetailServiceImpl(CartDetailRepo cartDetailRepo, UserService userService, CartRepo cartRepo, CustomerService customerService,PriceUpdateService priceUpdateService) {
+	private CartService cartService;
+	public CartDetailServiceImpl(CartDetailRepo cartDetailRepo, UserService userService, CartRepo cartRepo, CustomerService customerService,PriceUpdateService priceUpdateService,CartService cartService) {
 		super();
 		this.cartDetailRepo = cartDetailRepo;
 		this.userService = userService;
 		this.cartRepo = cartRepo;
 		this.customerService = customerService;
 		this.priceUpdateService = priceUpdateService;
+		this.cartService = cartService;
 	}
 	
 	@Override
@@ -126,5 +129,15 @@ public class CartDetailServiceImpl implements CartDetailService{
 	@Override
 	public void reduceQuantity(Long cart_id, String product_id, String size ){
 		cartDetailRepo.reduceQuantity(cart_id,product_id, size);
+	}
+	@Override
+	public void updateQuantity(Long cart_id, String product_id, String size,int quantity ) throws UserException {
+		Cart cart = cartService.findById(cart_id);
+		cartDetailRepo.updateQuantity(cart_id, product_id, size, quantity);
+		int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
+		int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
+		cart.setTotal_price(totalPrice);
+		cart.setTotal_quantity(totalQuantity);
+		cartRepo.save(cart);
 	}
 }

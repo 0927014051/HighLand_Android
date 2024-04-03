@@ -94,5 +94,15 @@ public class CartController {
 		ApiResponse res = new ApiResponse("success", true, HttpStatus.OK.value());
 		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
 	}
+	
+	@PutMapping("/update/quantity")
+	public ResponseEntity<ApiResponse> updateQuantity(@RequestHeader("Authorization") String jwt,@RequestBody CartDetail item) throws UserException{
+		User user = userService.findUserByJwt(jwt);
+		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
+		Cart cart = cartService.findCartBCustomerId(customer.getCustomer_id());
+		cartDetailService.updateQuantity(cart.getCart_id(),item.getProduct_id(),item.getSize(),item.getQuantity());
+		ApiResponse res = new ApiResponse("success", true, HttpStatus.OK.value());
+		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
+	}
 
 }

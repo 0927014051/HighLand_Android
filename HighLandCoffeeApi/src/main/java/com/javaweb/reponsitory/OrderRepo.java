@@ -36,4 +36,11 @@ public interface OrderRepo extends JpaRepository<Orders, Long>{
 	            "ORDER BY " +
 	            "    total_sold DESC")
 	    List<Object[]> getTotalAmountByDate(Date startDate, Date endDate);
+	 
+	    @Query(value = "SELECT * FROM Orders WHERE customer_id =:customer_id",nativeQuery = true )
+	    List<Orders> findOrderByCustomerId(Long customer_id);
+	    
+	    @Query(value = "SELECT * FROM Orders WHERE order_id =:orderId",nativeQuery = true )
+	    Orders findOrderByOrderId(Long orderId);
+
 }

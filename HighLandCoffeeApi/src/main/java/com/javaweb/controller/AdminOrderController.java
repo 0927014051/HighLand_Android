@@ -16,6 +16,7 @@ import com.javaweb.entity.Staff;
 import com.javaweb.entity.User;
 import com.javaweb.exception.ProductException;
 import com.javaweb.exception.UserException;
+import com.javaweb.response.ApiResponse;
 import com.javaweb.response.EntityStatusResponse;
 import com.javaweb.response.ListEntityStatusResponse;
 import com.javaweb.service.OrderService;
@@ -37,25 +38,50 @@ public class AdminOrderController {
 	}
 	
 	@PutMapping("/{order_id}/status")
-	public ResponseEntity<EntityStatusResponse> updateStatusOrder(@PathVariable Long order_id,@RequestBody Orders orders, @RequestHeader("Authorization") String jwt) throws UserException, ProductException{
+	public ResponseEntity<ApiResponse> updateStatusOrder(@PathVariable Long order_id,@RequestBody Orders orders, @RequestHeader("Authorization") String jwt) throws UserException, ProductException{
 		User user = userService.findUserByJwt(jwt);
 		Staff staff = staffService.findStaffByUserId(user.getUser_id());
+		System.err.println("status: " + orders.getStatus());
+
 		Orders updateOrders = orderService.updateStatusOrder(order_id, orders.getStatus(),staff.getStaff_id());
-		EntityStatusResponse response = new EntityStatusResponse(updateOrders,HttpStatus.OK.value(),"SUCCESS");
-		return new ResponseEntity<EntityStatusResponse>(response,HttpStatus.OK) ;
+		ApiResponse res = new ApiResponse();
+		HttpStatus http = null;
+		if(updateOrders != null) {
+			res.setCode(HttpStatus.OK.value());
+			res.setMessage("update success");
+			res.setStatus(true);
+			http = HttpStatus.OK;
+		}else {
+			res.setCode(HttpStatus.CONFLICT.value());
+			res.setMessage("update fail");
+			res.setStatus(false);
+			http = HttpStatus.CONFLICT;
+		}
+		return new ResponseEntity<ApiResponse>(res,http) ;
 	}
 	
 	@GetMapping("/all")
 	public ResponseEntity<ListEntityStatusResponse> getAllOrder(){
-		
+		ListEntityStatusResponse res = new ListEntityStatusResponse();
+		HttpStatus http = null;
 		List<Orders> allOrder = orderService.getAllOrders();
-		ListEntityStatusResponse res = new ListEntityStatusResponse(allOrder, HttpStatus.OK.value(), "find all sucesss");
-		return new ResponseEntity<ListEntityStatusResponse>(res,HttpStatus.OK);
+		if(allOrder.isEmpty()) {
+			res.setData(null);
+			res.setMessage("not found");
+			res.setStatus(HttpStatus.CONFLICT.value());
+			http = HttpStatus.CONFLICT;
+		}else {
+			res.setData(allOrder);
+			res.setMessage("find order success");
+			res.setStatus(HttpStatus.OK.value());
+			http = HttpStatus.OK;
+		}
+		return new ResponseEntity<ListEntityStatusResponse>(res,http);
 	}
 	
 	@GetMapping("/{orderId}/find")
 	public ResponseEntity<EntityStatusResponse> findOrderById(@PathVariable Long orderId) throws ProductException{
-		Orders orders = orderService.findOrderById(orderId);
+		Orders orders = orderService.findOrderByOrderId(orderId);
 		EntityStatusResponse res = new EntityStatusResponse(orders,HttpStatus.OK.value(),"find order success");
 		return new ResponseEntity<EntityStatusResponse>(res,HttpStatus.OK);
 	}

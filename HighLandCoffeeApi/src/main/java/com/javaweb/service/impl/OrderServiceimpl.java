@@ -130,19 +130,14 @@ public class OrderServiceimpl implements OrderService {
 	}
 
 	@Override
-	public Orders findOrderById(Long orderId) throws ProductException {
-		Optional<Orders> orderOptional = orderRepo.findById(orderId);
-		if (orderOptional.isPresent()) {
-			System.err.println("find product");
-			return orderOptional.get();
-		}
-		throw new ProductException("Order not found with id " + orderId);
+	public Orders findOrderByOrderId(Long orderId)  {
+		return orderRepo.findOrderByOrderId(orderId);
 	}
 
 	@Override
 	public Orders updateStatusOrder(Long orderId, int status, Long staff_id) throws ProductException {
 
-		Orders update = findOrderById(orderId);
+		Orders update = findOrderByOrderId(orderId);
 		if (update != null) {
 			if (status == 3) {
 				Bill bill = new Bill();
@@ -181,6 +176,11 @@ public class OrderServiceimpl implements OrderService {
 	@Override
 	public List<Orders> getAllOrders(){
 		return orderRepo.findAll();
+	}
+	
+	@Override
+	public List<Orders> findOrderByCustomerId(Long customer_id){
+		return orderRepo.findOrderByCustomerId(customer_id);
 	}
 	
 	private ProductSaleRequest mapToProductSaleRequest(Object[] result) {

@@ -19,7 +19,7 @@ public interface OrderService {
 	
 	public Orders updateStatusOrder(Long orderId,int status,Long staff_id) throws ProductException;
 	
-	public Orders findOrderById(Long orderId) throws ProductException;
+	public Orders findOrderByOrderId(Long orderId) throws ProductException;
 	
 	public Orders orderBuyNow(BuyNowRequest rq,Long customer_id);
 	
@@ -28,8 +28,8 @@ public interface OrderService {
     public List<ProductSaleRequest> getTotalAmountByDate(Date start, Date end);
     
     public List<Orders> getAllOrders();
-
-	
+    
+	public List<Orders> findOrderByCustomerId(Long customer_id);
 //	public Orders findOrdersById(Long orderId) throws OrdersException;
 //	
 //	public List<Orders> usersOrdersHistory(Long userId);

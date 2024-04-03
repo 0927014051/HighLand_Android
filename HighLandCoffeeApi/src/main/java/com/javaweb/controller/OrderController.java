@@ -49,12 +49,28 @@ public class OrderController {
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<Orders> createOrderHandler( @RequestHeader("Authorization") String jwt) throws UserException{
-		 
+	public ResponseEntity<ApiResponse> createOrderHandler( @RequestHeader("Authorization") String jwt) throws UserException{		 
 		User user = userService.findUserByJwt(jwt);
-		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
-		Orders orders = orderService.createOrder(customer);
-		return new ResponseEntity<Orders>(orders,HttpStatus.OK);
+		ApiResponse res = new ApiResponse();
+		HttpStatus http = null;
+		if(user != null) {
+			Customer customer = customerService.findCustomerByUserId(user.getUser_id());
+			if(customer != null) {
+				Orders orders = orderService.createOrder(customer);
+				if(orders != null) {
+					res.setCode(HttpStatus.CREATED.value());
+					res.setMessage("create order success");
+					res.setStatus(true);
+					http = HttpStatus.CREATED;
+				}else {
+					res.setCode(HttpStatus.BAD_REQUEST.value());
+					res.setMessage("create order fail");
+					res.setStatus(false);
+					http = HttpStatus.BAD_REQUEST;
+				}
+			}
+		}
+		return new ResponseEntity<ApiResponse>(res,http);
 	}
 	
 	@PostMapping("/buynow")
@@ -63,23 +79,59 @@ public class OrderController {
 		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
 		Orders orders = orderService.orderBuyNow(rq,customer.getCustomer_id());
 		ApiResponse response = new ApiResponse();
+		HttpStatus http = null;
 		if(orders != null) {
 			response.setCode(HttpStatus.CREATED.value());
 			response.setMessage("created order success");
-			response.setStatus(true);		
+			response.setStatus(true);	
+			http = HttpStatus.OK;
 		}else {
 			response.setCode(HttpStatus.BAD_REQUEST.value());
 			response.setMessage("created order fail");
 			response.setStatus(false);
+			http = HttpStatus.CONFLICT;
 		}
-		return new ResponseEntity<ApiResponse>(response,HttpStatus.OK);
+		return new ResponseEntity<ApiResponse>(response,http);
 	}
 	
 	@GetMapping("/size/all")
 	public ResponseEntity<ListEntityStatusResponse> getAllCategorySize(){
 		List<Category_Size> category_Sizes = sizeCategoryService.getAllCategorySize();
-		ListEntityStatusResponse res = new ListEntityStatusResponse(category_Sizes, HttpStatus.OK.value(), "success");
-		return new ResponseEntity<ListEntityStatusResponse>(res,HttpStatus.OK);
+		ListEntityStatusResponse res = new ListEntityStatusResponse();
+		HttpStatus http = null;
+		if(category_Sizes !=null) {
+			res.setData(category_Sizes);
+			res.setMessage("find all size");
+			res.setStatus(HttpStatus.OK.value());
+			http = HttpStatus.OK;
+		}else {
+			res.setData(null);
+			res.setMessage("not found size or is empty");
+			res.setStatus(HttpStatus.CONFLICT.value());
+			http = HttpStatus.CONFLICT;
+		}
+		return new ResponseEntity<ListEntityStatusResponse>(res,http);
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<ListEntityStatusResponse> getAllOrderByJwt(@RequestHeader("Authorization") String jwt) throws UserException{
+		User user = userService.findUserByJwt(jwt);
+		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
+		List<Orders> allOrder = orderRepo.findOrderByCustomerId(customer.getCustomer_id());
+		ListEntityStatusResponse res = new ListEntityStatusResponse();
+		HttpStatus http = null;
+		if(allOrder != null) {
+			res.setData(allOrder);
+			res.setMessage("find all order success");
+			res.setStatus(HttpStatus.OK.value());
+			http = HttpStatus.OK;
+		}else {
+			res.setData(null);
+			res.setMessage("not found ");
+			res.setStatus(HttpStatus.CONFLICT.value());
+			http = HttpStatus.CONFLICT;
+		}
+		return new ResponseEntity<ListEntityStatusResponse>(res,http);
 	}
 	
 
