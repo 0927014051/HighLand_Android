@@ -38,6 +38,8 @@ import com.javaweb.service.UserService;
 
 @RestController
 @RequestMapping("/api/admin")
+@SuppressWarnings({ "rawtypes", "unchecked" })
+
 public class AdminController {
 
 	private RoleService roleService;

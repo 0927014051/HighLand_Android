@@ -38,6 +38,9 @@ public class Orders {
 	
 	@Column
 	private int status;
+
+	@Column
+	private String note;
 	
 	@Column(name = "create_at")
 	private LocalDateTime create_at;
@@ -140,20 +143,29 @@ public class Orders {
 		this.create_at = create_at;
 	}
 
-	public Orders(Long order_id, int total_price, int total_quantity, LocalDateTime update_at, int status, LocalDateTime create_at,
-			Long customer_id, com.javaweb.entity.Customer customer, com.javaweb.entity.Bill bill,
-			List<com.javaweb.entity.OrderDetail> order_detail) {
-		super();
+	
+
+	public Orders(Long order_id, int total_price, int total_quantity, LocalDateTime update_at, int status, String note,
+			LocalDateTime create_at, Long customer_id, Customer customer, Bill bill, List<OrderDetail> order_detail) {
 		this.order_id = order_id;
 		this.total_price = total_price;
 		this.total_quantity = total_quantity;
 		this.update_at = update_at;
 		this.status = status;
+		this.note = note;
 		this.create_at = create_at;
 		this.customer_id = customer_id;
 		this.customer = customer;
 		this.bill = bill;
 		this.order_detail = order_detail;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public Orders() {

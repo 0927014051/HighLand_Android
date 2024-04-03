@@ -25,6 +25,8 @@ import com.javaweb.service.UserService;
 
 @RestController
 @RequestMapping("/api/admin/order")
+@SuppressWarnings({ "rawtypes", "unchecked" })
+
 public class AdminOrderController {
 	
 	private OrderService orderService;

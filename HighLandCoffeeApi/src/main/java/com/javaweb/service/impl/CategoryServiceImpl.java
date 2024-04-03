@@ -1,15 +1,12 @@
 package com.javaweb.service.impl;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.entity.Category;
-import com.javaweb.exception.ProductException;
 import com.javaweb.exception.UserException;
 import com.javaweb.reponsitory.CategoryRepo;
 import com.javaweb.service.CategoryService;

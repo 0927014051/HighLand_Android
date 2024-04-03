@@ -25,6 +25,8 @@ import com.javaweb.service.UserService;
 
 @RestController
 @RequestMapping("/api/admin/bill")
+@SuppressWarnings({ "rawtypes", "unchecked" })
+
 public class AdminBillController {
 	
 	private BillService billService;

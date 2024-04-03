@@ -27,7 +27,7 @@ import com.javaweb.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class UserController {
 
 	private UserService userService;

@@ -20,6 +20,8 @@ import com.javaweb.service.UserService;
 
 @RestController
 @RequestMapping("/api/staff")
+@SuppressWarnings({ "rawtypes", "unchecked" })
+
 public class AdminStaffController {
 
 	private UserService userService;
@@ -30,7 +32,6 @@ public class AdminStaffController {
 		this.staffService = staffService;
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PutMapping("/{staffId}/update")
 	public ResponseEntity<EntityStatusResponse> updateProfileStaff(@RequestBody ProfileCustomerRequest staff,@RequestHeader("Authorization") String jwt) throws UserException, ParseException{
 		User user = userService.findUserByJwt(jwt);

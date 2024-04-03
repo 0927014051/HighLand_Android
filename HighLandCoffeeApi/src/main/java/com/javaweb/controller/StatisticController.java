@@ -24,6 +24,8 @@ import com.javaweb.service.ProductService;
 
 @RestController
 @RequestMapping("/api/statistic")
+@SuppressWarnings({ "rawtypes", "unchecked" })
+
 public class StatisticController {
 	
 	private ProductService productService;

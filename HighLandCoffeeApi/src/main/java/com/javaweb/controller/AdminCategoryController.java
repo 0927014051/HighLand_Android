@@ -28,10 +28,11 @@ import com.javaweb.response.ListEntityStatusResponse;
 import com.javaweb.service.CategoryService;
 import com.javaweb.service.StaffService;
 import com.javaweb.service.UserService;
-import com.mysql.cj.protocol.x.Ok;
 
 @RestController
 @RequestMapping("/api/admin/category")
+@SuppressWarnings({ "rawtypes", "unchecked" })
+
 public class AdminCategoryController {
 
 	private CategoryService categoryService;

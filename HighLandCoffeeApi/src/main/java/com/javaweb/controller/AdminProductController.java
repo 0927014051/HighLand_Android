@@ -47,7 +47,7 @@ import com.javaweb.service.UserService;
 
 @RestController
 @RequestMapping("/api/admin/product")
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class AdminProductController {
 
 	private ProductService productService;

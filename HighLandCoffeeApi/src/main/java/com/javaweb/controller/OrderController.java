@@ -20,7 +20,6 @@ import com.javaweb.exception.UserException;
 import com.javaweb.reponsitory.OrderRepo;
 import com.javaweb.request.BuyNowRequest;
 import com.javaweb.response.ApiResponse;
-import com.javaweb.response.EntityStatusResponse;
 import com.javaweb.response.ListEntityStatusResponse;
 import com.javaweb.service.CustomerService;
 import com.javaweb.service.OrderService;
@@ -29,6 +28,8 @@ import com.javaweb.service.UserService;
 
 @RestController
 @RequestMapping("/api/order")
+@SuppressWarnings({ "rawtypes", "unchecked" })
+
 public class OrderController {
 	
 	private OrderService orderService;
