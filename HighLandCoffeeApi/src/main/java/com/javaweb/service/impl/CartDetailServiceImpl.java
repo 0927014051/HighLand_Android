@@ -3,6 +3,7 @@ package com.javaweb.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.entity.Cart;
@@ -26,19 +27,15 @@ import com.javaweb.service.UserService;
 public class CartDetailServiceImpl implements CartDetailService{
 
 	private CartDetailRepo cartDetailRepo;
-	private UserService userService;
 	private CartRepo cartRepo;
 	private CustomerService customerService;
 	private PriceUpdateService priceUpdateService;
-	private CartService cartService;
-	public CartDetailServiceImpl(CartDetailRepo cartDetailRepo, UserService userService, CartRepo cartRepo, CustomerService customerService,PriceUpdateService priceUpdateService,CartService cartService) {
+	public CartDetailServiceImpl(CartDetailRepo cartDetailRepo, CartRepo cartRepo, CustomerService customerService,PriceUpdateService priceUpdateService) {
 		super();
 		this.cartDetailRepo = cartDetailRepo;
-		this.userService = userService;
 		this.cartRepo = cartRepo;
 		this.customerService = customerService;
 		this.priceUpdateService = priceUpdateService;
-		this.cartService = cartService;
 	}
 	
 	@Override
@@ -132,12 +129,16 @@ public class CartDetailServiceImpl implements CartDetailService{
 	}
 	@Override
 	public void updateQuantity(Long cart_id, String product_id, String size,int quantity ) throws UserException {
-		Cart cart = cartService.findById(cart_id);
+		Optional<Cart> optional = cartRepo.findById(cart_id);
 		cartDetailRepo.updateQuantity(cart_id, product_id, size, quantity);
-		int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
-		int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
-		cart.setTotal_price(totalPrice);
-		cart.setTotal_quantity(totalQuantity);
-		cartRepo.save(cart);
+		if (optional.isPresent()) {
+			Cart cart =  optional.get();
+			int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
+			int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
+			cart.setTotal_price(totalPrice);
+			cart.setTotal_quantity(totalQuantity);
+			cartRepo.save(cart);
+		}
+		
 	}
 }
