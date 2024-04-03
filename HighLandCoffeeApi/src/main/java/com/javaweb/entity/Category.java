@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicUpdate;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -31,6 +27,9 @@ public class Category {
 	
 	@Column
 	private String category_name;
+
+	@Column
+	private String status;
 	
 	@Column
 	private String slug;
@@ -114,8 +113,6 @@ public class Category {
 		this.updated_by = updated_by;
 	}
 
-	
-	
 	public String getSlug() {
 		return slug;
 	}
@@ -174,12 +171,25 @@ public class Category {
 		this.category_size = category_size;
 	}
 
-	public Category(Long category_id, String category_name, String slug, Long created_by, Long updated_by,
-			LocalDateTime created_at, LocalDateTime updated_at, Staff staff_created, Staff staff_updated,
-			List<Product> product, List<Topping_Category> topping_category, List<Category_Size> category_size) {
-		super();
+	public Category() {
+		
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Category(Long category_id, String category_name, String status, String slug, Long created_by,
+			Long updated_by, LocalDateTime created_at, LocalDateTime updated_at, Staff staff_created,
+			Staff staff_updated, List<Product> product, List<Topping_Category> topping_category,
+			List<Category_Size> category_size) {
 		this.category_id = category_id;
 		this.category_name = category_name;
+		this.status = status;
 		this.slug = slug;
 		this.created_by = created_by;
 		this.updated_by = updated_by;
@@ -192,11 +202,7 @@ public class Category {
 		this.category_size = category_size;
 	}
 
-	public Category() {
-		
-	}
-
-
+ 
 	
 	
 	
