@@ -151,7 +151,7 @@ public class ProductServiceImpl implements ProductService {
 			System.err.println("find product" + optionalProduct);
 			return optionalProduct.get();
 		}
-		throw new ProductException("Product not found with id " + id);
+		throw new ProductException("Product not found with id" + id);
 	}
 
 	@Override
