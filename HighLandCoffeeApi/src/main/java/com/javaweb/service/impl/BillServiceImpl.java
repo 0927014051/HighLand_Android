@@ -16,7 +16,7 @@ public class BillServiceImpl implements BillService{
 	private BillRepo billRepo;
 
 	public BillServiceImpl(BillRepo billRepo) {
-		super();
+		super(); 
 		this.billRepo = billRepo;
 	}
 	
