@@ -148,7 +148,7 @@ public class ProductServiceImpl implements ProductService {
 	public Product findProductById(String id) throws ProductException {
 		Optional<Product> optionalProduct = productRepo.findById(id);
 		if (optionalProduct.isPresent()) {
-			System.err.println("find product");
+			System.err.println("find product" + optionalProduct);
 			return optionalProduct.get();
 		}
 		throw new ProductException("Product not found with id " + id);
