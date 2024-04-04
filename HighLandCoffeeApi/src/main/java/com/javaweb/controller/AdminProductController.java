@@ -100,18 +100,21 @@ public class AdminProductController {
 			CreateProductRequest rq = objectMapper.readValue(data, CreateProductRequest.class);
 			// Thêm vào Map với key là productName
 			testRequestMap.put(rq.getCategory_name(), rq);
-			testRequestMap.put(rq.getDescription(), rq);
+			testRequestMap.put(rq.getDescription(), rq);			
 			for (MultipartFile file : files) {
 				try {
+					
 					String fileName = imageService.save(file);
 					rq.setImage(fileName);
 					testRequestMap.put(rq.getImage(), rq);
 					String imageUrl = imageService.getImageUrl(fileName);
 					// do whatever you want with that
+				
 				} catch (Exception e) {
 					System.err.println(e);
 				}
 			}
+			
 			testRequestMap.put(rq.getProduct_name(), rq);
 			testRequestMap.put(rq.getStatus(), rq);
 			String price = String.valueOf(rq.getPrice());
@@ -156,16 +159,20 @@ public class AdminProductController {
 			testRequestMap.put(rq.getCategory_name(), rq);
 			testRequestMap.put(rq.getDescription(), rq);
 			for (MultipartFile file : files) {
-				try {
+				
+				if(file.isEmpty()){
+					System.err.println("product img" + productId);
+					Product product = productService.findProductById(productId);
+					rq.setImage(product.getImage());
+					testRequestMap.put(rq.getImage(), rq);
+					
+				}else{
 					String fileName = imageService.save(file);
 					rq.setImage(fileName);
 					testRequestMap.put(rq.getImage(), rq);
 					String imageUrl = imageService.getImageUrl(fileName);
-					// do whatever you want with that
-				} catch (Exception e) {
-					System.err.println(e);
-				}
-			}
+				}					
+		}
 			testRequestMap.put(rq.getProduct_name(), rq);
 			testRequestMap.put(rq.getStatus(), rq);
 			String price = String.valueOf(rq.getPrice());
@@ -178,7 +185,7 @@ public class AdminProductController {
 			ApiResponse response = new ApiResponse("Update product success", true, HttpStatus.ACCEPTED.value());
 			return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
 		} catch (Exception e) {
-			ApiResponse response = new ApiResponse("Update product fail", false, HttpStatus.BAD_REQUEST.value());
+			ApiResponse response = new ApiResponse(e.getMessage(), false, HttpStatus.BAD_REQUEST.value());
 
 			return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
 		}
