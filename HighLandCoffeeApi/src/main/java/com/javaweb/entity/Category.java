@@ -58,10 +58,7 @@ public class Category {
 	
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<Product> product;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "category")
-	private List<Topping_Category> topping_category;
+
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "category")
@@ -155,14 +152,6 @@ public class Category {
 		this.staff_updated = staff_updated;
 	}
 
-	public List<Topping_Category> getTopping_category() {
-		return topping_category;
-	}
-
-	public void setTopping_category(List<Topping_Category> topping_category) {
-		this.topping_category = topping_category;
-	}
-
 	public List<Category_Size> getCategory_size() {
 		return category_size;
 	}
@@ -185,7 +174,7 @@ public class Category {
 
 	public Category(Long category_id, String category_name, String status, String slug, Long created_by,
 			Long updated_by, LocalDateTime created_at, LocalDateTime updated_at, Staff staff_created,
-			Staff staff_updated, List<Product> product, List<Topping_Category> topping_category,
+			Staff staff_updated, List<Product> product,
 			List<Category_Size> category_size) {
 		this.category_id = category_id;
 		this.category_name = category_name;
@@ -198,7 +187,6 @@ public class Category {
 		this.staff_created = staff_created;
 		this.staff_updated = staff_updated;
 		this.product = product;
-		this.topping_category = topping_category;
 		this.category_size = category_size;
 	}
 

@@ -197,4 +197,14 @@ public class OrderServiceimpl implements OrderService {
         return new StatisticRequest(month,price);
     }
 
+	@Override
+	public  List<Orders> findOrderByStatus(String status){
+		return orderRepo.findOrderByStatus(status);
+	}
+
+	@Override
+	public List<Orders> findOrderByDate(Date startDate, Date endDate){
+		return orderRepo.findOrderByDate(startDate, endDate);
+	}
+
 }

@@ -1,5 +1,8 @@
 package com.javaweb.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.javaweb.entity.Orders;
 import com.javaweb.entity.Staff;
@@ -86,6 +90,54 @@ public class AdminOrderController {
 		Orders orders = orderService.findOrderByOrderId(orderId);
 		EntityStatusResponse res = new EntityStatusResponse(orders,HttpStatus.OK.value(),"find order success");
 		return new ResponseEntity<EntityStatusResponse>(res,HttpStatus.OK);
+	}
+
+	@GetMapping("/status")
+	public ResponseEntity<ListEntityStatusResponse> findOrderByStatus(@RequestParam String status){
+		List<Orders> listOrder = orderService.findOrderByStatus(status);
+		ListEntityStatusResponse res = new ListEntityStatusResponse<>();
+		HttpStatus http = null;
+		if(listOrder != null){
+			res.setData(listOrder);
+			res.setMessage("success");
+			res.setStatus(HttpStatus.OK.value());
+			http  = HttpStatus.OK;
+		}else{
+			res.setData(null);
+			res.setMessage("not found orders");
+			res.setStatus(HttpStatus.CONFLICT.value());
+			http = HttpStatus.CONFLICT;
+		}
+		return new ResponseEntity<>(res,http);
+	}
+
+	@GetMapping("/date")
+	public ResponseEntity<ListEntityStatusResponse> findListOrderByDateStartAndDateEnd(@RequestParam String start, @RequestParam String end){
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+	        Date dateStart = null;
+	        Date dateEnd = null;
+	        try {
+	            // Parsing a String to Date
+	            dateStart = dateFormatter.parse(start);
+	            dateEnd = dateFormatter.parse(end);
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	        }
+			List<Orders> listOrder = orderService.findOrderByDate(dateStart, dateEnd);
+			ListEntityStatusResponse res = new ListEntityStatusResponse<>();
+			HttpStatus http = null;
+			if(listOrder != null){
+				res.setData(listOrder);
+				res.setMessage("success");
+				res.setStatus(HttpStatus.OK.value());
+				http = HttpStatus.OK;
+			}else{
+				res.setData(null);
+				res.setMessage("not found orders");
+				res.setStatus(HttpStatus.CONFLICT.value());
+				http = HttpStatus.CONFLICT;
+			}
+			return new ResponseEntity<>(res,http);
 	}
 	
 

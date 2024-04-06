@@ -43,4 +43,11 @@ public interface OrderRepo extends JpaRepository<Orders, Long>{
 	    @Query(value = "SELECT * FROM Orders WHERE order_id =:orderId",nativeQuery = true )
 	    Orders findOrderByOrderId(Long orderId);
 
+
+		@Query(value = "SELECT * FROM Orders WHERE status =:status",nativeQuery = true )
+	    List<Orders> findOrderByStatus(String status);
+
+		@Query(value = "SELECT * FROM Orders WHERE DATE(create_at) >= DATE(:startDate) AND DATE(create_at) <= DATE(:endDate)",nativeQuery = true )
+	    List<Orders> findOrderByDate(Date startDate, Date endDate);
+
 }

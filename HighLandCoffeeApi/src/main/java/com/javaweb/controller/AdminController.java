@@ -22,8 +22,7 @@ import com.javaweb.entity.Category;
 import com.javaweb.entity.Role;
 import com.javaweb.entity.Size;
 import com.javaweb.entity.Staff;
-import com.javaweb.entity.Topping;
-import com.javaweb.entity.Topping_Category;
+
 import com.javaweb.entity.User;
 import com.javaweb.exception.UserException;
 import com.javaweb.request.AddCategorySizeRequest;
@@ -33,7 +32,6 @@ import com.javaweb.service.IImageService;
 import com.javaweb.service.RoleService;
 import com.javaweb.service.SizeService;
 import com.javaweb.service.StaffService;
-import com.javaweb.service.ToppingService;
 import com.javaweb.service.UserService;
 
 @RestController
@@ -46,16 +44,14 @@ public class AdminController {
 	private UserService userService;
 	private StaffService staffService;
 	private IImageService iImageService;
-	private ToppingService toppingService;
 	private SizeService sizeService;
 
 	public AdminController(RoleService roleService, UserService userService, StaffService staffService,
-			IImageService iImageService, ToppingService toppingService,SizeService sizeService) {
+			IImageService iImageService,SizeService sizeService) {
 		super();
 		this.roleService = roleService;
 		this.userService = userService;
 		this.staffService = staffService;
-		this.toppingService = toppingService;
 		this.iImageService = iImageService;
 		this.sizeService = sizeService;
 	}
@@ -100,7 +96,6 @@ public class AdminController {
 				}
 
 			}
-			Topping topping = toppingService.createTopping(rq);
 			ApiResponse response = new ApiResponse("Thêm thành công", true, HttpStatus.CREATED.value());
 			return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
 		} catch (Exception e) {

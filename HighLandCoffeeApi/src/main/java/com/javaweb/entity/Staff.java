@@ -67,14 +67,6 @@ public class Staff {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "staff_created")
-	private List<Topping> topping_created;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "staff_updated")
-	private List<Topping> topping_updated;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "staff_created")
 	private List<Size> size_created;
 	
 	@JsonIgnore
@@ -253,22 +245,6 @@ public class Staff {
 		this.user = user;
 	}
 
-	public List<Topping> getTopping_created() {
-		return topping_created;
-	}
-
-	public void setTopping_created(List<Topping> topping_created) {
-		this.topping_created = topping_created;
-	}
-
-	public List<Topping> getTopping_updated() {
-		return topping_updated;
-	}
-
-	public void setTopping_updated(List<Topping> topping_updated) {
-		this.topping_updated = topping_updated;
-	}
-
 	public List<Size> getSize_created() {
 		return size_created;
 	}
@@ -335,7 +311,7 @@ public class Staff {
 
 	public Staff(Long staff_id, String firstname, String lastname, Date birthday, String email, String phone,
 			String address, LocalDateTime created_at, LocalDateTime updated_at, String cccd, String tax_id, long salary,
-			Long user_id, List<Bill> bill, List<Topping> topping_created, List<Topping> topping_updated,
+			Long user_id, List<Bill> bill,
 			List<Size> size_created, List<Size> size_updated, List<Category> category_updated,
 			List<Category> category_created, List<Product> product_updated, List<Product> product_created,
 			List<PriceUpdateDetail> price_update_detail, User user, List<Coupon> coupon_created,
@@ -355,8 +331,6 @@ public class Staff {
 		this.salary = salary;
 		this.user_id = user_id;
 		this.bill = bill;
-		this.topping_created = topping_created;
-		this.topping_updated = topping_updated;
 		this.size_created = size_created;
 		this.size_updated = size_updated;
 		this.category_updated = category_updated;

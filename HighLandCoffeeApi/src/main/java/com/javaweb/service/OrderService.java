@@ -30,6 +30,10 @@ public interface OrderService {
     public List<Orders> getAllOrders();
     
 	public List<Orders> findOrderByCustomerId(Long customer_id);
+
+
+	List<Orders> findOrderByStatus(String status);
+	List<Orders> findOrderByDate(Date startDate, Date endDate);
 //	public Orders findOrdersById(Long orderId) throws OrdersException;
 //	
 //	public List<Orders> usersOrdersHistory(Long userId);

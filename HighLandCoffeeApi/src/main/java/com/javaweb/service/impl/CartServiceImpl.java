@@ -12,8 +12,6 @@ import com.javaweb.entity.CartDetail;
 import com.javaweb.entity.Customer;
 import com.javaweb.entity.PriceUpdateDetail;
 import com.javaweb.entity.Product;
-import com.javaweb.entity.Topping;
-import com.javaweb.entity.Topping_Category;
 import com.javaweb.entity.User;
 import com.javaweb.exception.ProductException;
 import com.javaweb.exception.UserException;
@@ -24,8 +22,7 @@ import com.javaweb.service.CartDetailService;
 import com.javaweb.service.CartService;
 import com.javaweb.service.PriceUpdateService;
 import com.javaweb.service.ProductService;
-import com.javaweb.service.ToppingCategoryService;
-import com.javaweb.service.ToppingService;
+
 
 import ch.qos.logback.core.joran.conditional.IfAction;
 
@@ -37,19 +34,16 @@ public class CartServiceImpl implements CartService {
 	private ProductService productService;
 	private PriceUpdateService priceUpdateService;
 	private CartDetailRepo cartDetailRepo;
-	private ToppingService toppingService;
-	private ToppingCategoryService toppingCategoryService;
+
 
 	public CartServiceImpl(CartRepo cartRepo, CartDetailService cartDetailService, ProductService productService,
-			PriceUpdateService priceUpdateService, CartDetailRepo cartDetailRepo, ToppingService toppingService,
-			ToppingCategoryService toppingCategoryService) {
+			PriceUpdateService priceUpdateService, CartDetailRepo cartDetailRepo) {
 		this.cartRepo = cartRepo;
 		this.cartDetailService = cartDetailService;
 		this.productService = productService;
 		this.priceUpdateService = priceUpdateService;
 		this.cartDetailRepo = cartDetailRepo;
-		this.toppingService = toppingService;
-		this.toppingCategoryService = toppingCategoryService;
+		
 	}
 
 	@Override
