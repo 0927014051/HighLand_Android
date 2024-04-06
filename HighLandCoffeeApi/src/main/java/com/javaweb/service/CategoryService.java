@@ -17,4 +17,6 @@ public interface CategoryService {
 
 	 Category deleteCategory(Long id, Long staff_id) throws UserException;
 
+	 Category findCategoryByName(String name);
+
 }

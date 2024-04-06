@@ -41,6 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
 		update.setCategory_name(category.getCategory_name());
 		update.setUpdated_at(LocalDateTime.now());
 		update.setUpdated_by(staff_id);
+		update.setStatus(category.getStatus());
 		return categoryRepo.save(update);
 	}
 
@@ -56,6 +57,12 @@ public class CategoryServiceImpl implements CategoryService {
 		category.setUpdated_by(staff_id);
 		category.setUpdated_at(LocalDateTime.now());
 		return categoryRepo.save(category);
+	}
+
+	@Override
+	public Category findCategoryByName(String name) {
+		// TODO Auto-generated method stub
+		return categoryRepo.findCategoryByName(name);
 	}
 
 }

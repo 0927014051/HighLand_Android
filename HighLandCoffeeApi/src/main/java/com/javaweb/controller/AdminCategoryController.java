@@ -47,7 +47,7 @@ public class AdminCategoryController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<Category> createCategoryHandler(@RequestBody Map<String, Object> categoryMap,@RequestHeader("Authorization") String jwt) throws UserException{
+	public ResponseEntity<ApiResponse> createCategoryHandler(@RequestBody Map<String, Object> categoryMap,@RequestHeader("Authorization") String jwt) throws UserException{
 		Category category = new Category();
 		User user = userService.findUserByJwt(jwt);
 		Staff staff = staffService.findStaffByUserId(user.getUser_id());
@@ -55,6 +55,10 @@ public class AdminCategoryController {
 		if(categoryMap.containsKey("category_name")) {
 			category_name = (String) categoryMap.get("category_name");
 		}
+		Category checkCategoryNameExist = categoryService.findCategoryByName(category_name);
+		ApiResponse res = new ApiResponse();
+		HttpStatus http = null;
+		if(checkCategoryNameExist == null){
 		category.setCategory_name(category_name);
 		category.setStatus("Active");
 		category.setCreated_at(LocalDateTime.now());
@@ -63,7 +67,25 @@ public class AdminCategoryController {
 		category.setUpdated_by(staff.getStaff_id());
 		category.setSlug(ConvertToSlug.convertToSlug(category_name));
 		Category createCategory = categoryService.createCategory(category);
-		return new ResponseEntity<Category>(createCategory,HttpStatus.ACCEPTED);
+		if (createCategory != null) {
+			res.setCode(HttpStatus.CREATED.value());
+			res.setMessage("success");
+			res.setStatus(true);
+			http = HttpStatus.CREATED;
+		}else{
+			res.setCode(HttpStatus.CONFLICT.value());
+			res.setMessage("fail");
+			res.setStatus(false);
+			http = HttpStatus.CONFLICT;
+		}
+		}else{
+			res.setCode(HttpStatus.CONFLICT.value());
+			res.setMessage("category name exist");
+			res.setStatus(false);
+			http = HttpStatus.CONFLICT;
+
+		}
+		return new ResponseEntity<>(res,http);
 	}
 
 	@PutMapping("/{id}/update")
