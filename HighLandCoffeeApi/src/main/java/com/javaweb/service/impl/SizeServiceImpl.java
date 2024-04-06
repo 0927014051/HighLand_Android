@@ -2,7 +2,6 @@ package com.javaweb.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import com.javaweb.reponsitory.CategoryRepo;
 import com.javaweb.reponsitory.SizeCategoryRepo;
 import com.javaweb.reponsitory.SizeRepo;
 import com.javaweb.request.AddCategorySizeRequest;
-import com.javaweb.service.CategoryService;
 import com.javaweb.service.SizeService;
 
 @Service
@@ -63,6 +61,11 @@ public class SizeServiceImpl implements SizeService{
 	@Override
 	public List<Size> getAllSize(){
 		return sizeRepo.findAll();
+	}
+
+	@Override
+	public Size findSizeByName(String size_name) {
+		return sizeRepo.findSizeByName(size_name);
 	}
 	
 }

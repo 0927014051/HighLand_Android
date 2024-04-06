@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.javaweb.entity.Cart;
 import com.javaweb.entity.CartDetail;
+import com.javaweb.entity.Category_Size;
 import com.javaweb.entity.Customer;
 import com.javaweb.entity.PriceUpdateDetail;
 import com.javaweb.entity.Product;
+import com.javaweb.entity.Size;
 import com.javaweb.entity.User;
 import com.javaweb.exception.ProductException;
 import com.javaweb.exception.UserException;
@@ -22,7 +24,8 @@ import com.javaweb.service.CartDetailService;
 import com.javaweb.service.CartService;
 import com.javaweb.service.PriceUpdateService;
 import com.javaweb.service.ProductService;
-
+import com.javaweb.service.SizeCategoryService;
+import com.javaweb.service.SizeService;
 
 import ch.qos.logback.core.joran.conditional.IfAction;
 
@@ -34,16 +37,19 @@ public class CartServiceImpl implements CartService {
 	private ProductService productService;
 	private PriceUpdateService priceUpdateService;
 	private CartDetailRepo cartDetailRepo;
+	private SizeService sizeService;
+	private SizeCategoryService sizeCategoryService;
 
 
 	public CartServiceImpl(CartRepo cartRepo, CartDetailService cartDetailService, ProductService productService,
-			PriceUpdateService priceUpdateService, CartDetailRepo cartDetailRepo) {
+			PriceUpdateService priceUpdateService, CartDetailRepo cartDetailRepo,SizeService sizeService,SizeCategoryService sizeCategoryService) {
 		this.cartRepo = cartRepo;
 		this.cartDetailService = cartDetailService;
 		this.productService = productService;
 		this.priceUpdateService = priceUpdateService;
 		this.cartDetailRepo = cartDetailRepo;
-		
+		this.sizeService = sizeService;
+		this.sizeCategoryService = sizeCategoryService;	
 	}
 
 	@Override
@@ -66,15 +72,20 @@ public class CartServiceImpl implements CartService {
 		// product,customer_id );
 		CartDetail isCheckCartDetail = cartDetailRepo.findCartDetailByCartIdAndProductIdWithToppingNull(cart.getCart_id(),
 					product.getProduct_id(), req.getSize());
-			int priceTopping = 0;
+		Size size = sizeService.findSizeByName(req.getSize());
+		Category_Size categorySize = sizeCategoryService.findCategory_SizeBySizeId(size.getSize_id());
+		
+			int priceItem = 0;
+			int priceSize = 0;
 			if (isCheckCartDetail != null) {
 				isCheckCartDetail.setQuantity(isCheckCartDetail.getQuantity() + 1);
-				priceTopping = priceUpdateDetail.getPrice_new();
-				isCheckCartDetail.setPrice(priceTopping);
+				priceItem = priceUpdateDetail.getPrice_new();
+				priceSize = priceItem +  (int) ( (priceItem)*categorySize.getPercent()%100);
+				isCheckCartDetail.setPrice(priceSize);
 				cartDetailRepo.save(isCheckCartDetail);
 				int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
 				int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
-				cart.setTotal_price(totalPrice);
+				cart.setTotal_price(totalPrice );
 				cart.setTotal_quantity(totalQuantity);
 				cartRepo.save(cart);
 			} else {
@@ -85,7 +96,8 @@ public class CartServiceImpl implements CartService {
 				cartDetail.setProduct_id(product.getProduct_id());
 				int priceCartDetail = req.getQuantity() * priceUpdateDetail.getPrice_new();
 				priceCartDetail = priceUpdateDetail.getPrice_new() ;
-				cartDetail.setPrice(priceCartDetail);
+				priceSize = priceCartDetail +  (int) ( (priceCartDetail)*categorySize.getPercent()%100);
+				cartDetail.setPrice(priceSize);
 				cartDetail.setSize(req.getSize());
 				CartDetail createdCartDetail = cartDetailService.createCartDetail(cartDetail);
 				cart.getCart_detail().add(createdCartDetail);

@@ -24,4 +24,11 @@ public class SizeCategoryServiceImpl implements SizeCategoryService{
 		return sizeCategoryRepo.findAll();
 	}
 
+	@Override
+	public Category_Size findCategory_SizeBySizeId(Long id) {
+		return sizeCategoryRepo.findCategory_SizeBySizeId(id);
+	}
+
+	
+
 }

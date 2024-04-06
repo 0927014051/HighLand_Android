@@ -10,4 +10,7 @@ public interface SizeService {
 	public Size createSize(AddCategorySizeRequest size,Long staff_id);
 	
 	public List<Size> getAllSize();
+
+	public Size findSizeByName(String size_name);
+
 }
