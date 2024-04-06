@@ -38,6 +38,9 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public Category updateCategory(Long id,Long staff_id,Category category) throws UserException {
 		Category update = findById(id);
+		if(category.getCategory_name().equals(update.getCategory_name())){
+			return null;
+		}
 		update.setCategory_name(category.getCategory_name());
 		update.setUpdated_at(LocalDateTime.now());
 		update.setUpdated_by(staff_id);
