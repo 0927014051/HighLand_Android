@@ -77,7 +77,6 @@ public class AuthController {
 		String role_name = user.getRole_name();
 		String first_name = user.getFirs_name();
 		String last_name = user.getLast_name();
-		System.err.println("roleName = " + role_name);
 		User isUserExist = userRepository.findByUsername(username);
 		Role role = roleService.findRoleByName(role_name);
 		// ApiResponse apiResponse = new ApiResponse(username + " :signup

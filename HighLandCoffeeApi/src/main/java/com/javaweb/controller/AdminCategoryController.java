@@ -56,6 +56,7 @@ public class AdminCategoryController {
 			category_name = (String) categoryMap.get("category_name");
 		}
 		category.setCategory_name(category_name);
+		category.setStatus("Active");
 		category.setCreated_at(LocalDateTime.now());
 		category.setUpdated_at(LocalDateTime.now());
 		category.setCreated_by(staff.getStaff_id());
