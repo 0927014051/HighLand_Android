@@ -60,11 +60,11 @@ public class Category {
 	private List<Product> product;
 
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "category")
 	private List<Category_Size> category_size;
 
-	@JsonIgnore
+	
 	public Long getCategory_id() {
 		return category_id;
 	}
