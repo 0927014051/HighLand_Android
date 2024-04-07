@@ -38,7 +38,6 @@ public class Category_Size {
 	@JoinColumn(name = "category_id",insertable = false, updatable = false)
 	private Category category;
 
-
 	public Long getCategory_size_id() {
 		return category_size_id;
 	}
@@ -89,7 +88,6 @@ public class Category_Size {
 
 	public Category_Size(Long category_size_id, Long size_id, Long category_id, float percent, Size size,
 			Category category) {
-		super();
 		this.category_size_id = category_size_id;
 		this.size_id = size_id;
 		this.category_id = category_id;
@@ -99,9 +97,9 @@ public class Category_Size {
 	}
 
 	public Category_Size() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
+
+
 	
 	
 	

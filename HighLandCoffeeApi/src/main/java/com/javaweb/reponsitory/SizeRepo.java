@@ -8,7 +8,7 @@ import com.javaweb.entity.Size;
 
 @Repository
 public interface SizeRepo extends JpaRepository<Size, Long>{
-    @Query("SELECT * FROM Size  WHERE size_name = :size_name")
+    @Query(value =  "SELECT * FROM Size  WHERE size_name = ?1",nativeQuery = true)
     public Size findSizeByName(String size_name);
 
 }
