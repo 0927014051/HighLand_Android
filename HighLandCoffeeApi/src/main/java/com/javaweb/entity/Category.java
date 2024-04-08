@@ -56,6 +56,7 @@ public class Category {
 	@JoinColumn(name = "updated_by",insertable = false, updatable = false)
 	private Staff staff_updated;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<Product> product;
 

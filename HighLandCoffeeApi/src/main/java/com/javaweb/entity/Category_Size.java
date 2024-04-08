@@ -29,11 +29,12 @@ public class Category_Size {
 	@Column
 	private float percent;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "size_id",updatable = false, insertable = false)
 	private Size size;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "category_id",insertable = false, updatable = false)
 	private Category category;
