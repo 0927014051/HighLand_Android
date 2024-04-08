@@ -9,5 +9,5 @@ public interface SizeCategoryService {
 	
 	List<Category_Size> getAllCategorySize();
 
-	Category_Size findCategory_SizeBySizeId(Long id);
+	Category_Size findCategory_SizeBySizeId(Long id, Long category_id);
 }
