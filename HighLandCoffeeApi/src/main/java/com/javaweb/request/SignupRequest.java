@@ -4,7 +4,7 @@ public class SignupRequest {
 	
 	private String username;
 	private String password;
-	private String firs_name;
+	private String first_name;
 	private String last_name;
 	private String role_name;
 	public String getUsername() {
@@ -25,18 +25,19 @@ public class SignupRequest {
 	public void setRole_name(String role_name) {
 		this.role_name = role_name;
 	}
-	public String getFirs_name() {
-		return firs_name;
-	}
-	public void setFirs_name(String firs_name) {
-		this.firs_name = firs_name;
-	}
 	public String getLast_name() {
 		return last_name;
 	}
 	public void setLast_name(String last_name) {
 		this.last_name = last_name;
 	}
+	public String getFirst_name() {
+		return first_name;
+	}
+	public void setFirst_name(String first_name) {
+		this.first_name = first_name;
+	}
+	
 	
 	
 

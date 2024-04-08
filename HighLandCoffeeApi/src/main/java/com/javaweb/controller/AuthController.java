@@ -75,7 +75,7 @@ public class AuthController {
 		String username = user.getUsername();
 		String password = user.getPassword();
 		String role_name = user.getRole_name();
-		String first_name = user.getFirs_name();
+		String first_name = user.getFirst_name();
 		String last_name = user.getLast_name();
 		User isUserExist = userRepository.findByUsername(username);
 		Role role = roleService.findRoleByName(role_name);
