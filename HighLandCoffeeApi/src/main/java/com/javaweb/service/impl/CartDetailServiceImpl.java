@@ -40,9 +40,7 @@ public class CartDetailServiceImpl implements CartDetailService{
 	
 	@Override
 	public CartDetail createCartDetail(CartDetail cartDetail) {
-		PriceUpdateDetail priceUpdateDetail = priceUpdateService.findPriceUpdateByProductId(cartDetail.getProduct().getProduct_id());
 		cartDetail.setQuantity(1);
-		cartDetail.setPrice(priceUpdateDetail.getPrice_new()*cartDetail.getQuantity());
 		CartDetail createdCartDetail = cartDetailRepo.save(cartDetail);
 		return createdCartDetail;
 	}

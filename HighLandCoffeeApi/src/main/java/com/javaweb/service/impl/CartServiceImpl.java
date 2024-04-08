@@ -81,7 +81,7 @@ public class CartServiceImpl implements CartService {
 			if (isCheckCartDetail != null) {
 				isCheckCartDetail.setQuantity(isCheckCartDetail.getQuantity() + 1);
 				priceItem = priceUpdateDetail.getPrice_new();
-				priceSize = priceItem +  (int) ( (priceItem)*categorySize.getPercent()%100);
+				priceSize = priceItem + (int) ((priceItem) * categorySize.getPercent()) / 100;	
 				isCheckCartDetail.setPrice(priceSize);
 				cartDetailRepo.save(isCheckCartDetail);
 				int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
@@ -91,17 +91,13 @@ public class CartServiceImpl implements CartService {
 				cartRepo.save(cart);
 			} else {
 				CartDetail cartDetail = new CartDetail();
-				cartDetail.setCart(cart);
-				cartDetail.setProduct(product);
 				cartDetail.setCart_id(cart.getCart_id());
-				cartDetail.setProduct_id(product.getProduct_id());
-				int priceCartDetail = req.getQuantity() * priceUpdateDetail.getPrice_new();
-				priceCartDetail = priceUpdateDetail.getPrice_new() ;
-				priceSize = priceCartDetail +  (int) ( (priceCartDetail)*categorySize.getPercent()%100);
+				cartDetail.setProduct_id(product.getProduct_id());				 
+				int priceCartDetail = priceUpdateDetail.getPrice_new() ;
+				priceSize = priceCartDetail + (int) ((priceCartDetail) * categorySize.getPercent()) / 100;		
 				cartDetail.setPrice(priceSize);
 				cartDetail.setSize(req.getSize());
 				CartDetail createdCartDetail = cartDetailService.createCartDetail(cartDetail);
-				cart.getCart_detail().add(createdCartDetail);
 				int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
 				int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
 				cart.setTotal_price(totalPrice);
@@ -109,6 +105,7 @@ public class CartServiceImpl implements CartService {
 				cartRepo.save(cart);
 			}		
 		return "Item add to cart";
+
 	}
 
 	@Override
