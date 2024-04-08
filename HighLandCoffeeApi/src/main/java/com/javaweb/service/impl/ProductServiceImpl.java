@@ -132,6 +132,13 @@ public class ProductServiceImpl implements ProductService {
 		if(!rq.getStatus().equals(null)) {
 			product.setStatus(rq.getStatus());
 		}
+		PriceUpdateDetail priceUpdateDetail = priceUpdateRepo.findPriceByProductId(productId);
+		priceUpdateDetail.setPrice_old(priceUpdateDetail.getPrice_new());
+		if(rq.getPrice() != 0) {
+			priceUpdateDetail.setPrice_new(rq.getPrice());
+			priceUpdateDetail.setUpdated_by(staff_id);
+			priceUpdateDetail.setUpdated_at(LocalDateTime.now());
+		}
 		Category category = categoryRepo.findCategoryByName(rq.getCategory_name());
 		   if (category == null) {
 	            // If category doesn't exist, you may choose to throw an exception
