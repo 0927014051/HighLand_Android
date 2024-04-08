@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService{
 		}
 		if(!updateCustomer.getEmail().equals(null)) {
 			Customer existingCustomerWithEmail = customerService.findCustomerByEmail(updateCustomer.getEmail());
-			if(existingCustomerWithEmail != null) {
+			if(existingCustomerWithEmail != null && !existingCustomerWithEmail.getEmail().equals(customer.getEmail()) ) {
 				throw new UserException("Email exist");
 			}
 			if(updateCustomer.getEmail() != null) {

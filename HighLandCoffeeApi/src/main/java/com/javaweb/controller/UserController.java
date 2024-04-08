@@ -50,6 +50,7 @@ public class UserController {
 	
 	@GetMapping("/profile")
 	public ResponseEntity<EntityStatusResponse> getProfileUserByJwt(@RequestHeader("Authorization") String jwt) throws UserException{
+		
 		User profileUserResponse = userService.findUserByJwt(jwt);
 		Customer customer = customerService.findCustomerByUserId(profileUserResponse.getUser_id());
 		EntityStatusResponse res = new EntityStatusResponse(customer, HttpStatus.OK.value(), "success");
@@ -64,6 +65,7 @@ public class UserController {
 	            return new ResponseEntity<ProfileUserAndCustomerResponse>(res, HttpStatus.OK);
 	        } catch (UserException e) {
 	            // Return ResponseEntity with error message if UserException is thrown
+				System.err.println(e.getMessage());
 	            return new ResponseEntity<ProfileUserAndCustomerResponse>(HttpStatus.NOT_FOUND); // Or appropriate error status
 	        }
 	    }
