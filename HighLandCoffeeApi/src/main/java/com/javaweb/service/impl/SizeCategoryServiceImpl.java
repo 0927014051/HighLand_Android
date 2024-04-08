@@ -25,8 +25,8 @@ public class SizeCategoryServiceImpl implements SizeCategoryService{
 	}
 
 	@Override
-	public Category_Size findCategory_SizeBySizeId(Long id) {
-		return sizeCategoryRepo.findCategory_SizeBySizeId(id);
+	public Category_Size findCategory_SizeBySizeId(Long id,Long category_id) {
+		return sizeCategoryRepo.findCategory_SizeBySizeId(id,category_id);
 	}
 
 	

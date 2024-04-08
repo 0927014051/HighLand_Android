@@ -75,6 +75,7 @@ public class CartServiceImpl implements CartService {
 		Size size = sizeService.findSizeByName(req.getSize());
 		Category_Size categorySize = sizeCategoryService.findCategory_SizeBySizeId(size.getSize_id(),product.getCategory_id());
 		
+		
 			int priceItem = 0;
 			int priceSize = 0;
 			if (isCheckCartDetail != null) {
