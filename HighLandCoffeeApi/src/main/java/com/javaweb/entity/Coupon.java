@@ -41,6 +41,15 @@ public class Coupon {
 	private int quantity;
 
 	@Column
+	private int remaining_amount;
+
+	@Column
+	private int minimum_value;
+
+	@Column
+	private String status;
+
+	@Column
 	private LocalDateTime created_at;
 	
 	@Column
@@ -170,16 +179,21 @@ public class Coupon {
 		this.staff_updated = staff_updated;
 	}
 
+
+
 	public Coupon(Long coupon_id, Date start_date, Date end_date, String type, String content, int quantity,
-			LocalDateTime created_at, LocalDateTime updated_at, Long created_by, Long updated_by,
-			List<CouponDetail> coupon_detail, Staff staff_created, Staff staff_updated) {
-		super();
+			int remaining_amount, int minimum_value, String status, LocalDateTime created_at, LocalDateTime updated_at,
+			Long created_by, Long updated_by, List<CouponDetail> coupon_detail, Staff staff_created,
+			Staff staff_updated) {
 		this.coupon_id = coupon_id;
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.type = type;
 		this.content = content;
 		this.quantity = quantity;
+		this.remaining_amount = remaining_amount;
+		this.minimum_value = minimum_value;
+		this.status = status;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.created_by = created_by;
@@ -187,6 +201,30 @@ public class Coupon {
 		this.coupon_detail = coupon_detail;
 		this.staff_created = staff_created;
 		this.staff_updated = staff_updated;
+	}
+
+	public int getRemaining_amount() {
+		return remaining_amount;
+	}
+
+	public void setRemaining_amount(int remaining_amount) {
+		this.remaining_amount = remaining_amount;
+	}
+
+	public int getMinimum_value() {
+		return minimum_value;
+	}
+
+	public void setMinimum_value(int minimum_value) {
+		this.minimum_value = minimum_value;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Coupon() {
