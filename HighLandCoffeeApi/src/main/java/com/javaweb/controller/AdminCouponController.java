@@ -86,10 +86,10 @@ public class AdminCouponController {
     }
 
     @RequestMapping("/{coupon_id}/status")
-    public ResponseEntity<ApiResponse> updateStatusCoupon(@RequestHeader("Authorization") String jwt, @RequestBody Coupon coupon, @PathVariable Long id) throws UserException, ProductException{
+    public ResponseEntity<ApiResponse> updateStatusCoupon(@RequestHeader("Authorization") String jwt, @RequestBody Coupon coupon, @PathVariable Long coupon_id) throws UserException, ProductException{
         User user = userService.findUserByJwt(jwt);
         Staff staff = staffService.findStaffByUserId(user.getUser_id());
-        Coupon updateCoupon = couponService.updateStatus(id, coupon);
+        Coupon updateCoupon = couponService.updateStatus(coupon_id, coupon);
         ApiResponse res = new ApiResponse();
         HttpStatus http = null;
         if(updateCoupon != null){
