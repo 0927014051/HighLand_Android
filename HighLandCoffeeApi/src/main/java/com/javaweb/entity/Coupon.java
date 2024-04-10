@@ -24,6 +24,9 @@ public class Coupon {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Long coupon_id;
+
+	@Column
+	private String image;
 	
 	@Column
 	private Date start_date;
@@ -83,6 +86,14 @@ public class Coupon {
 		this.coupon_id = coupon_id;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public Date getStart_date() {
 		return start_date;
 	}
@@ -123,86 +134,6 @@ public class Coupon {
 		this.quantity = quantity;
 	}
 
-	public LocalDateTime getCreated_at() {
-		return created_at;
-	}
-
-	public void setCreated_at(LocalDateTime created_at) {
-		this.created_at = created_at;
-	}
-
-	public LocalDateTime getUpdated_at() {
-		return updated_at;
-	}
-
-	public void setUpdated_at(LocalDateTime updated_at) {
-		this.updated_at = updated_at;
-	}
-
-	public List<CouponDetail> getCoupon_detail() {
-		return coupon_detail;
-	}
-
-	public void setCoupon_detail(List<CouponDetail> coupon_detail) {
-		this.coupon_detail = coupon_detail;
-	}
-
-	public Long getCreated_by() {
-		return created_by;
-	}
-
-	public void setCreated_by(Long created_by) {
-		this.created_by = created_by;
-	}
-
-	public Long getUpdated_by() {
-		return updated_by;
-	}
-
-	public void setUpdated_by(Long updated_by) {
-		this.updated_by = updated_by;
-	}
-
-	public Staff getStaff_created() {
-		return staff_created;
-	}
-
-	public void setStaff_created(Staff staff_created) {
-		this.staff_created = staff_created;
-	}
-
-	public Staff getStaff_updated() {
-		return staff_updated;
-	}
-
-	public void setStaff_updated(Staff staff_updated) {
-		this.staff_updated = staff_updated;
-	}
-
-
-
-	public Coupon(Long coupon_id, Date start_date, Date end_date, String type, String content, int quantity,
-			int remaining_amount, int minimum_value, String status, LocalDateTime created_at, LocalDateTime updated_at,
-			Long created_by, Long updated_by, List<CouponDetail> coupon_detail, Staff staff_created,
-			Staff staff_updated) {
-		this.coupon_id = coupon_id;
-		this.start_date = start_date;
-		this.end_date = end_date;
-		this.type = type;
-		this.content = content;
-		this.quantity = quantity;
-		this.remaining_amount = remaining_amount;
-		this.minimum_value = minimum_value;
-		this.status = status;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
-		this.created_by = created_by;
-		this.updated_by = updated_by;
-		this.coupon_detail = coupon_detail;
-		this.staff_created = staff_created;
-		this.staff_updated = staff_updated;
-	}
-
 	public int getRemaining_amount() {
 		return remaining_amount;
 	}
@@ -227,11 +158,90 @@ public class Coupon {
 		this.status = status;
 	}
 
-	public Coupon() {
-		super();
-		// TODO Auto-generated constructor stub
+	public LocalDateTime getCreated_at() {
+		return created_at;
 	}
-	
+
+	public void setCreated_at(LocalDateTime created_at) {
+		this.created_at = created_at;
+	}
+
+	public LocalDateTime getUpdated_at() {
+		return updated_at;
+	}
+
+	public void setUpdated_at(LocalDateTime updated_at) {
+		this.updated_at = updated_at;
+	}
+
+	public Long getCreated_by() {
+		return created_by;
+	}
+
+	public void setCreated_by(Long created_by) {
+		this.created_by = created_by;
+	}
+
+	public Long getUpdated_by() {
+		return updated_by;
+	}
+
+	public void setUpdated_by(Long updated_by) {
+		this.updated_by = updated_by;
+	}
+
+	public List<CouponDetail> getCoupon_detail() {
+		return coupon_detail;
+	}
+
+	public void setCoupon_detail(List<CouponDetail> coupon_detail) {
+		this.coupon_detail = coupon_detail;
+	}
+
+	public Staff getStaff_created() {
+		return staff_created;
+	}
+
+	public void setStaff_created(Staff staff_created) {
+		this.staff_created = staff_created;
+	}
+
+	public Staff getStaff_updated() {
+		return staff_updated;
+	}
+
+	public void setStaff_updated(Staff staff_updated) {
+		this.staff_updated = staff_updated;
+	}
+
+	public Coupon(Long coupon_id, String image, Date start_date, Date end_date, String type, String content,
+			int quantity, int remaining_amount, int minimum_value, String status, LocalDateTime created_at,
+			LocalDateTime updated_at, Long created_by, Long updated_by, List<CouponDetail> coupon_detail,
+			Staff staff_created, Staff staff_updated) {
+		this.coupon_id = coupon_id;
+		this.image = image;
+		this.start_date = start_date;
+		this.end_date = end_date;
+		this.type = type;
+		this.content = content;
+		this.quantity = quantity;
+		this.remaining_amount = remaining_amount;
+		this.minimum_value = minimum_value;
+		this.status = status;
+		this.created_at = created_at;
+		this.updated_at = updated_at;
+		this.created_by = created_by;
+		this.updated_by = updated_by;
+		this.coupon_detail = coupon_detail;
+		this.staff_created = staff_created;
+		this.staff_updated = staff_updated;
+	}
+
+	public Coupon() {
+	}
+
+
+
 	
 	
 }

@@ -3,6 +3,8 @@ package com.javaweb.service.impl;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.javaweb.entity.Coupon;
 import com.javaweb.entity.CouponDetail;
 import com.javaweb.exception.ProductException;
@@ -10,14 +12,16 @@ import com.javaweb.reponsitory.CouponDetailRepo;
 import com.javaweb.reponsitory.CouponRepo;
 import com.javaweb.service.CouponService;
 
+@Service
 public class CouponServiceImpl implements CouponService{
 
     private CouponRepo couponRepo;
     private CouponDetailRepo couponDetailRepo;
     
 
-    public CouponServiceImpl(CouponRepo couponRepo) {
+    public CouponServiceImpl(CouponRepo couponRepo,CouponDetailRepo couponDetailRepo) {
         this.couponRepo = couponRepo;
+        this.couponDetailRepo = couponDetailRepo;
     }
 
     @Override
@@ -32,12 +36,14 @@ public class CouponServiceImpl implements CouponService{
        createCoupon.setRemaining_amount(coupon.getRemaining_amount());
        createCoupon.setStart_date(coupon.getStart_date());
        createCoupon.setStatus(coupon.getStatus());
+       createCoupon.setImage(coupon.getImage());
        createCoupon.setType(coupon.getType());
-       createCoupon.setUpdated_at(coupon.getUpdated_at());
        createCoupon.setUpdated_by(staff_id);
+       createCoupon.setUpdated_at(LocalDateTime.now());
        Coupon savedCoupon = couponRepo.save(createCoupon);
        if(savedCoupon != null) {
         CouponDetail couponDetail = new CouponDetail();
+        couponDetail.setCoupon_id(savedCoupon.getCoupon_id());
         couponDetail.setStatus(coupon.getStatus());
         CouponDetail saveDetail = couponDetailRepo.save(couponDetail);
         if(saveDetail != null){
