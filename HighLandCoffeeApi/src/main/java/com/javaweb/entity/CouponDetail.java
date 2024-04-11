@@ -27,10 +27,7 @@ public class CouponDetail {
 	private Long coupon_id;
 	
 	@Column
-	private int status;
-	
-	@Column
-	private int value;
+	private String status;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -66,20 +63,12 @@ public class CouponDetail {
 		this.coupon_id = coupon_id;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public int getValue() {
-		return value;
-	}
-
-	public void setValue(int value) {
-		this.value = value;
 	}
 
 	public Customer getCustomer() {
@@ -98,16 +87,18 @@ public class CouponDetail {
 		this.coupon = coupon;
 	}
 
-	public CouponDetail(Long coupon_detail_id, Long customer_id, Long coupon_id, int status, int value,
+	public CouponDetail(Long coupon_detail_id, Long customer_id, Long coupon_id, String status,
 			com.javaweb.entity.Customer customer, com.javaweb.entity.Coupon coupon) {
 		super();
 		this.coupon_detail_id = coupon_detail_id;
 		this.customer_id = customer_id;
 		this.coupon_id = coupon_id;
 		this.status = status;
-		this.value = value;
 		this.customer = customer;
 		this.coupon = coupon;
+	}
+
+	public CouponDetail() {
 	}
 	
 	

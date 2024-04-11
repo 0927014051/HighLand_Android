@@ -24,6 +24,9 @@ public class Coupon {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Long coupon_id;
+
+	@Column
+	private String image;
 	
 	@Column
 	private Date start_date;
@@ -39,6 +42,15 @@ public class Coupon {
 	
 	@Column
 	private int quantity;
+
+	@Column
+	private int remaining_amount;
+
+	@Column
+	private int minimum_value;
+
+	@Column
+	private String status;
 
 	@Column
 	private LocalDateTime created_at;
@@ -72,6 +84,14 @@ public class Coupon {
 
 	public void setCoupon_id(Long coupon_id) {
 		this.coupon_id = coupon_id;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public Date getStart_date() {
@@ -114,6 +134,30 @@ public class Coupon {
 		this.quantity = quantity;
 	}
 
+	public int getRemaining_amount() {
+		return remaining_amount;
+	}
+
+	public void setRemaining_amount(int remaining_amount) {
+		this.remaining_amount = remaining_amount;
+	}
+
+	public int getMinimum_value() {
+		return minimum_value;
+	}
+
+	public void setMinimum_value(int minimum_value) {
+		this.minimum_value = minimum_value;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public LocalDateTime getCreated_at() {
 		return created_at;
 	}
@@ -128,14 +172,6 @@ public class Coupon {
 
 	public void setUpdated_at(LocalDateTime updated_at) {
 		this.updated_at = updated_at;
-	}
-
-	public List<CouponDetail> getCoupon_detail() {
-		return coupon_detail;
-	}
-
-	public void setCoupon_detail(List<CouponDetail> coupon_detail) {
-		this.coupon_detail = coupon_detail;
 	}
 
 	public Long getCreated_by() {
@@ -154,6 +190,14 @@ public class Coupon {
 		this.updated_by = updated_by;
 	}
 
+	public List<CouponDetail> getCoupon_detail() {
+		return coupon_detail;
+	}
+
+	public void setCoupon_detail(List<CouponDetail> coupon_detail) {
+		this.coupon_detail = coupon_detail;
+	}
+
 	public Staff getStaff_created() {
 		return staff_created;
 	}
@@ -170,16 +214,20 @@ public class Coupon {
 		this.staff_updated = staff_updated;
 	}
 
-	public Coupon(Long coupon_id, Date start_date, Date end_date, String type, String content, int quantity,
-			LocalDateTime created_at, LocalDateTime updated_at, Long created_by, Long updated_by,
-			List<CouponDetail> coupon_detail, Staff staff_created, Staff staff_updated) {
-		super();
+	public Coupon(Long coupon_id, String image, Date start_date, Date end_date, String type, String content,
+			int quantity, int remaining_amount, int minimum_value, String status, LocalDateTime created_at,
+			LocalDateTime updated_at, Long created_by, Long updated_by, List<CouponDetail> coupon_detail,
+			Staff staff_created, Staff staff_updated) {
 		this.coupon_id = coupon_id;
+		this.image = image;
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.type = type;
 		this.content = content;
 		this.quantity = quantity;
+		this.remaining_amount = remaining_amount;
+		this.minimum_value = minimum_value;
+		this.status = status;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.created_by = created_by;
@@ -190,10 +238,10 @@ public class Coupon {
 	}
 
 	public Coupon() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
-	
+
+
+
 	
 	
 }

@@ -20,27 +20,55 @@ public class JwtTokenProvider {
 	
 	private SecretKey key=Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 	
+	// public String generateAccessToken(Authentication auth) {
+
+	// 	String jwt=Jwts.builder()
+	// 			.setIssuedAt(new Date())
+	// 			.setExpiration(new Date(new Date().getTime()+604800000))
+	// 			.claim("username",auth.getName())
+	// 			.signWith(key)
+	// 			.compact();
+		
+	// 	return jwt;	
+	// }
 	public String generateAccessToken(Authentication auth) {
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		String authoritiesString = populateAuthorities(authorities);
 
-		String jwt=Jwts.builder()
-				.setIssuedAt(new Date())
-				.setExpiration(new Date(new Date().getTime()+604800000))
-				.claim("username",auth.getName())
-				.signWith(key)
-				.compact();
-		
-		return jwt;	
+		String jwt = Jwts.builder()
+    .setIssuedAt(new Date())
+    .setExpiration(new Date(new Date().getTime() + 604800000))
+    .claim("username", auth.getName())
+    .claim("authorities",populateAuthorities(auth.getAuthorities()))
+    .signWith(key)
+    .compact();
+		return jwt;
 	}
-	public String generateRefreshToken(Authentication auth) {
 
-		String jwt=Jwts.builder()
-				.setIssuedAt(new Date())
-				.setExpiration(new Date(new Date().getTime()+259200000))
-				.claim("username",auth.getName())
-				.signWith(key)
-				.compact();
+	// public String generateRefreshToken(Authentication auth) {
+
+	// 	String jwt=Jwts.builder()
+	// 			.setIssuedAt(new Date())
+	// 			.setExpiration(new Date(new Date().getTime()+259200000))
+	// 			.claim("username",auth.getName())
+	// 			.signWith(key)
+	// 			.compact();
 		
-		return jwt;	
+	// 	return jwt;	
+	// }
+	public String generateRefreshToken(Authentication auth) {
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		String authoritiesString = populateAuthorities(authorities);
+
+		String jwt = Jwts.builder()
+    .setIssuedAt(new Date())
+    .setExpiration(new Date(new Date().getTime() + 259200000))
+    .claim("username", auth.getName())
+    .claim("authorities",populateAuthorities(auth.getAuthorities()))
+    .signWith(key)
+    .compact();
+
+		return jwt;
 	}
 
 	public String getUsernameFromJwtToken(String jwt) {

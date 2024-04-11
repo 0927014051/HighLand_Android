@@ -3,25 +3,30 @@ package com.javaweb.config;
 import java.util.Arrays;
 import java.util.Collections;
 
-import javax.servlet.Filter;
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import com.javaweb.service.CustomerUserDetails;
+
 @Configuration
 @EnableWebSecurity
 public class AppConfig extends WebSecurityConfigurerAdapter {
+
+    private final CustomerUserDetails customerUserDetails;
+    
+    public AppConfig(CustomerUserDetails customerUserDetails) {
+        this.customerUserDetails = customerUserDetails;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -29,7 +34,9 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/admin/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/admin/**").hasAnyAuthority("STAFF")
+                .antMatchers("/api/**").hasAnyAuthority("CUSTOMER")
                 .anyRequest().permitAll()
             .and()
             .addFilterBefore(new JwtTokenValidator(), UsernamePasswordAuthenticationFilter.class)
@@ -37,6 +44,11 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
             .cors().configurationSource(corsConfigurationSource())
             .and().httpBasic()
             .and().formLogin();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(customerUserDetails);
     }
 
     @Bean
@@ -60,5 +72,4 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
