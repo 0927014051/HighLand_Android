@@ -31,6 +31,13 @@ public class CouponController {
     private CustomerService customerService;
     private CouponService couponService;
 
+    public CouponController(CouponDetailService couponDetailService, UserService userService,
+            CustomerService customerService, CouponService couponService) {
+        this.couponDetailService = couponDetailService;
+        this.userService = userService;
+        this.customerService = customerService;
+        this.couponService = couponService;
+    }
 
     @RequestMapping("/get")
     public ResponseEntity<ApiResponse> getCouponByCustomer(@RequestHeader("Authorization") String jwt,@RequestParam("coupon_id") Long coupon_id) throws UserException{
@@ -44,6 +51,11 @@ public class CouponController {
             res.setMessage("get success");
             res.setStatus(true);
             http = HttpStatus.OK;
+        }else{
+            res.setCode(HttpStatus.CONFLICT.value());
+            res.setMessage("get fail");
+            res.setStatus(false);
+            http = HttpStatus.CONFLICT;
         }
         return new ResponseEntity<>(res,http);
     }
