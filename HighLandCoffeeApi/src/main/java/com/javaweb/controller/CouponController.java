@@ -44,11 +44,6 @@ public class CouponController {
             res.setMessage("get success");
             res.setStatus(true);
             http = HttpStatus.OK;
-        }else{
-            res.setCode(HttpStatus.CONFLICT.value());
-            res.setMessage("get fail");
-            res.setStatus(false);
-            http = HttpStatus.CONFLICT;
         }
         return new ResponseEntity<>(res,http);
     }
