@@ -1,6 +1,7 @@
 package com.javaweb.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -68,6 +69,11 @@ public class CouponServiceImpl implements CouponService{
         }
         throw new ProductException("Coupon not found with id " + id);
 
+    }
+
+    @Override
+    public List<Coupon> findAll(){
+        return couponRepo.findAll();
     }
 
 }
