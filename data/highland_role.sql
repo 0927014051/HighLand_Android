@@ -16,36 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `cart_detail`
+-- Table structure for table `role`
 --
 
-DROP TABLE IF EXISTS `cart_detail`;
+DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cart_detail` (
-  `cart_detail_id` bigint NOT NULL AUTO_INCREMENT,
-  `cart_id` bigint DEFAULT NULL,
-  `price` int DEFAULT NULL,
-  `product_id` varchar(255) DEFAULT NULL,
-  `quantity` int DEFAULT NULL,
-  `size` varchar(255) DEFAULT NULL,
-  `topping` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`cart_detail_id`),
-  KEY `FKnkmyjg78fg6va4qmlqbhhjbm6` (`cart_id`),
-  KEY `FKcbuccx6hveumo5fd7rsl1knq5` (`product_id`),
-  CONSTRAINT `FKcbuccx6hveumo5fd7rsl1knq5` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
-  CONSTRAINT `FKnkmyjg78fg6va4qmlqbhhjbm6` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `role` (
+  `role_id` bigint NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cart_detail`
+-- Dumping data for table `role`
 --
 
-LOCK TABLES `cart_detail` WRITE;
-/*!40000 ALTER TABLE `cart_detail` DISABLE KEYS */;
-INSERT INTO `cart_detail` VALUES (16,1,42900,'FCDMHT',1,'L',NULL),(17,1,39000,'FCDMHT',1,'M',NULL);
-/*!40000 ALTER TABLE `cart_detail` ENABLE KEYS */;
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'ADMIN'),(2,'STAFF'),(3,'CUSTOMER');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:35:00
+-- Dump completed on 2024-04-13  2:36:36

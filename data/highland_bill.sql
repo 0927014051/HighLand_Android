@@ -16,34 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `orders`
+-- Table structure for table `bill`
 --
 
-DROP TABLE IF EXISTS `orders`;
+DROP TABLE IF EXISTS `bill`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `orders` (
-  `order_id` bigint NOT NULL AUTO_INCREMENT,
-  `create_at` datetime DEFAULT NULL,
-  `customer_id` bigint DEFAULT NULL,
-  `note` varchar(255) DEFAULT NULL,
-  `status` int DEFAULT NULL,
-  `total_price` int DEFAULT NULL,
-  `total_quantity` int DEFAULT NULL,
-  `update_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`order_id`),
-  KEY `FKbcl9eqhg829p6r1roqmgqamn4` (`customer_id`),
-  CONSTRAINT `FKbcl9eqhg829p6r1roqmgqamn4` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
+CREATE TABLE `bill` (
+  `bill_id` bigint NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` bigint DEFAULT NULL,
+  `order_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`bill_id`),
+  KEY `FKqiqa653thmqss9397l0mu648h` (`order_id`),
+  KEY `FK7y898ous1liiu22spbuqbc1d` (`created_by`),
+  CONSTRAINT `FK7y898ous1liiu22spbuqbc1d` FOREIGN KEY (`created_by`) REFERENCES `staff` (`staff_id`),
+  CONSTRAINT `FKqiqa653thmqss9397l0mu648h` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `orders`
+-- Dumping data for table `bill`
 --
 
-LOCK TABLES `orders` WRITE;
-/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+LOCK TABLES `bill` WRITE;
+/*!40000 ALTER TABLE `bill` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bill` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:35:01
+-- Dump completed on 2024-04-13  2:36:37

@@ -16,42 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `coupon`
+-- Table structure for table `category_size`
 --
 
-DROP TABLE IF EXISTS `coupon`;
+DROP TABLE IF EXISTS `category_size`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `coupon` (
-  `coupon_id` bigint NOT NULL AUTO_INCREMENT,
-  `content` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` bigint DEFAULT NULL,
-  `end_date` datetime DEFAULT NULL,
-  `quantity` int DEFAULT NULL,
-  `start_date` datetime DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `updated_by` bigint DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `minimum_value` int DEFAULT NULL,
-  `remaining_amount` int DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`coupon_id`),
-  KEY `FKg2rel5868jacees7c0yx5spu0` (`created_by`),
-  KEY `FKjctxt2uef88f2kspkjqe042eq` (`updated_by`),
-  CONSTRAINT `FKg2rel5868jacees7c0yx5spu0` FOREIGN KEY (`created_by`) REFERENCES `staff` (`staff_id`),
-  CONSTRAINT `FKjctxt2uef88f2kspkjqe042eq` FOREIGN KEY (`updated_by`) REFERENCES `staff` (`staff_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `category_size` (
+  `category_size_id` bigint NOT NULL AUTO_INCREMENT,
+  `category_id` bigint DEFAULT NULL,
+  `percent` float DEFAULT NULL,
+  `size_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`category_size_id`),
+  KEY `FK18gphm8wn60byschhc1bigp76` (`category_id`),
+  KEY `FKd7cg4o5n25mrk5145sgyj4f6t` (`size_id`),
+  CONSTRAINT `FK18gphm8wn60byschhc1bigp76` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`),
+  CONSTRAINT `FKd7cg4o5n25mrk5145sgyj4f6t` FOREIGN KEY (`size_id`) REFERENCES `size` (`size_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `coupon`
+-- Dumping data for table `category_size`
 --
 
-LOCK TABLES `coupon` WRITE;
-/*!40000 ALTER TABLE `coupon` DISABLE KEYS */;
-/*!40000 ALTER TABLE `coupon` ENABLE KEYS */;
+LOCK TABLES `category_size` WRITE;
+/*!40000 ALTER TABLE `category_size` DISABLE KEYS */;
+INSERT INTO `category_size` VALUES (9,2,10,5),(10,3,10,5),(11,2,0,6),(12,3,0,6);
+/*!40000 ALTER TABLE `category_size` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -63,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:35:01
+-- Dump completed on 2024-04-13  2:36:36

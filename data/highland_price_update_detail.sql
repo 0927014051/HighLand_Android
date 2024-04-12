@@ -16,39 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `customer`
+-- Table structure for table `price_update_detail`
 --
 
-DROP TABLE IF EXISTS `customer`;
+DROP TABLE IF EXISTS `price_update_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `customer` (
-  `customer_id` bigint NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) DEFAULT NULL,
-  `birthday` datetime DEFAULT NULL,
-  `cccd` varchar(255) DEFAULT NULL,
+CREATE TABLE `price_update_detail` (
+  `price_update_detail_id` bigint NOT NULL AUTO_INCREMENT,
   `created_at` datetime DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `firstname` varchar(255) DEFAULT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `tax_id` varchar(255) DEFAULT NULL,
+  `created_by` bigint DEFAULT NULL,
+  `price_new` int DEFAULT NULL,
+  `price_old` int DEFAULT NULL,
+  `product_id` varchar(255) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `user_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`customer_id`),
-  KEY `FKf02v450jft6pirig8rrs40o4` (`user_id`),
-  CONSTRAINT `FKf02v450jft6pirig8rrs40o4` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `updated_by` bigint DEFAULT NULL,
+  PRIMARY KEY (`price_update_detail_id`),
+  KEY `FKqqg6x7ou2wg76hybqnfmtnkcd` (`product_id`),
+  KEY `FKnj2eq1uaj86owx8uuyndsocmt` (`created_by`),
+  CONSTRAINT `FKnj2eq1uaj86owx8uuyndsocmt` FOREIGN KEY (`created_by`) REFERENCES `staff` (`staff_id`),
+  CONSTRAINT `FKqqg6x7ou2wg76hybqnfmtnkcd` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `customer`
+-- Dumping data for table `price_update_detail`
 --
 
-LOCK TABLES `customer` WRITE;
-/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'test','2002-07-25 00:00:00','12345678','2024-04-07 10:46:22','test2@gmail.com','test1','testLast','0987654321','123456789','2024-04-07 10:46:22',1),(2,'97 Man Thien','2001-04-04 00:00:00','12345678963','2024-04-07 12:44:31','example@gmail.com','Vy','Tran','+84373162586','159369147','2024-04-07 12:44:31',2),(3,NULL,NULL,NULL,'2024-04-08 08:32:46',NULL,'Trinh','Son','0363000451',NULL,'2024-04-08 08:32:46',4);
-/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
+LOCK TABLES `price_update_detail` WRITE;
+/*!40000 ALTER TABLE `price_update_detail` DISABLE KEYS */;
+INSERT INTO `price_update_detail` VALUES (1,'2024-04-07 13:56:39',1,59000,50000,'U1556B','2024-04-07 13:59:10',1),(2,'2024-04-07 14:37:54',1,59000,59000,'K9N1NJ','2024-04-07 14:37:54',1),(3,'2024-04-07 16:07:24',1,39000,60000,'FCDMHT','2024-04-08 04:15:24',1),(4,'2024-04-08 04:05:37',1,59000,59000,'FHOL6K','2024-04-08 04:05:37',1);
+/*!40000 ALTER TABLE `price_update_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -60,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:35:01
+-- Dump completed on 2024-04-13  2:36:37

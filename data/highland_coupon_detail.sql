@@ -16,35 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `order_detail`
+-- Table structure for table `coupon_detail`
 --
 
-DROP TABLE IF EXISTS `order_detail`;
+DROP TABLE IF EXISTS `coupon_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order_detail` (
-  `order_detail_id` bigint NOT NULL AUTO_INCREMENT,
-  `order_id` bigint DEFAULT NULL,
-  `price` int DEFAULT NULL,
-  `product_id` varchar(255) DEFAULT NULL,
-  `quantity` int DEFAULT NULL,
-  `size` varchar(255) DEFAULT NULL,
-  `topping` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`order_detail_id`),
-  KEY `FKpy74pkf9ybq4fxs7soxx44k2u` (`order_id`),
-  KEY `FKj1gw0pqsdwms2nko96l26h0hv` (`product_id`),
-  CONSTRAINT `FKj1gw0pqsdwms2nko96l26h0hv` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
-  CONSTRAINT `FKpy74pkf9ybq4fxs7soxx44k2u` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
+CREATE TABLE `coupon_detail` (
+  `coupon_detail_id` bigint NOT NULL AUTO_INCREMENT,
+  `coupon_id` bigint DEFAULT NULL,
+  `customer_id` bigint DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `value` int DEFAULT NULL,
+  PRIMARY KEY (`coupon_detail_id`),
+  KEY `FKmdsj1f80fv9mkkuguwdghx73n` (`coupon_id`),
+  KEY `FK2vtd29qa1s1ndyx0jlskyq72g` (`customer_id`),
+  CONSTRAINT `FK2vtd29qa1s1ndyx0jlskyq72g` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
+  CONSTRAINT `FKmdsj1f80fv9mkkuguwdghx73n` FOREIGN KEY (`coupon_id`) REFERENCES `coupon` (`coupon_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `order_detail`
+-- Dumping data for table `coupon_detail`
 --
 
-LOCK TABLES `order_detail` WRITE;
-/*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
+LOCK TABLES `coupon_detail` WRITE;
+/*!40000 ALTER TABLE `coupon_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `coupon_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:35:01
+-- Dump completed on 2024-04-13  2:36:36

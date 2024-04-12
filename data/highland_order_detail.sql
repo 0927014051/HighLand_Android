@@ -16,38 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `review`
+-- Table structure for table `order_detail`
 --
 
-DROP TABLE IF EXISTS `review`;
+DROP TABLE IF EXISTS `order_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `review` (
-  `review_id` bigint NOT NULL AUTO_INCREMENT,
-  `content` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `created_by` bigint DEFAULT NULL,
-  `order_detail_id` bigint DEFAULT NULL,
+CREATE TABLE `order_detail` (
+  `order_detail_id` bigint NOT NULL AUTO_INCREMENT,
+  `order_id` bigint DEFAULT NULL,
+  `price` int DEFAULT NULL,
   `product_id` varchar(255) DEFAULT NULL,
-  `star` int DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`review_id`),
-  KEY `FKcssmlbw56qtna19798dsddo3t` (`created_by`),
-  KEY `FKdoybou6u8c3hfn0bi5veayppo` (`order_detail_id`),
-  KEY `FK8ldiblkvx92d9i5yn9qqeuk8j` (`product_id`),
-  CONSTRAINT `FK8ldiblkvx92d9i5yn9qqeuk8j` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
-  CONSTRAINT `FKcssmlbw56qtna19798dsddo3t` FOREIGN KEY (`created_by`) REFERENCES `customer` (`customer_id`),
-  CONSTRAINT `FKdoybou6u8c3hfn0bi5veayppo` FOREIGN KEY (`order_detail_id`) REFERENCES `order_detail` (`order_detail_id`)
+  `quantity` int DEFAULT NULL,
+  `size` varchar(255) DEFAULT NULL,
+  `topping` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`order_detail_id`),
+  KEY `FKpy74pkf9ybq4fxs7soxx44k2u` (`order_id`),
+  KEY `FKj1gw0pqsdwms2nko96l26h0hv` (`product_id`),
+  CONSTRAINT `FKj1gw0pqsdwms2nko96l26h0hv` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
+  CONSTRAINT `FKpy74pkf9ybq4fxs7soxx44k2u` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `review`
+-- Dumping data for table `order_detail`
 --
 
-LOCK TABLES `review` WRITE;
-/*!40000 ALTER TABLE `review` DISABLE KEYS */;
-/*!40000 ALTER TABLE `review` ENABLE KEYS */;
+LOCK TABLES `order_detail` WRITE;
+/*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -59,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:35:00
+-- Dump completed on 2024-04-13  2:36:37

@@ -16,37 +16,40 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `price_update_detail`
+-- Table structure for table `staff`
 --
 
-DROP TABLE IF EXISTS `price_update_detail`;
+DROP TABLE IF EXISTS `staff`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `price_update_detail` (
-  `price_update_detail_id` bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `staff` (
+  `staff_id` bigint NOT NULL AUTO_INCREMENT,
+  `address` varchar(255) DEFAULT NULL,
+  `birthday` datetime DEFAULT NULL,
+  `cccd` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
-  `created_by` bigint DEFAULT NULL,
-  `price_new` int DEFAULT NULL,
-  `price_old` int DEFAULT NULL,
-  `product_id` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `firstname` varchar(255) DEFAULT NULL,
+  `lastname` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `salary` bigint DEFAULT NULL,
+  `tax_id` varchar(255) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `updated_by` bigint DEFAULT NULL,
-  PRIMARY KEY (`price_update_detail_id`),
-  KEY `FKqqg6x7ou2wg76hybqnfmtnkcd` (`product_id`),
-  KEY `FKnj2eq1uaj86owx8uuyndsocmt` (`created_by`),
-  CONSTRAINT `FKnj2eq1uaj86owx8uuyndsocmt` FOREIGN KEY (`created_by`) REFERENCES `staff` (`staff_id`),
-  CONSTRAINT `FKqqg6x7ou2wg76hybqnfmtnkcd` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `user_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`staff_id`),
+  KEY `FKsh01rx13s8dvl567sqipoxb04` (`user_id`),
+  CONSTRAINT `FKsh01rx13s8dvl567sqipoxb04` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `price_update_detail`
+-- Dumping data for table `staff`
 --
 
-LOCK TABLES `price_update_detail` WRITE;
-/*!40000 ALTER TABLE `price_update_detail` DISABLE KEYS */;
-INSERT INTO `price_update_detail` VALUES (1,'2024-04-07 13:56:39',1,59000,50000,'U1556B','2024-04-07 13:59:10',1),(2,'2024-04-07 14:37:54',1,59000,59000,'K9N1NJ','2024-04-07 14:37:54',1),(3,'2024-04-07 16:07:24',1,39000,60000,'FCDMHT','2024-04-08 04:15:24',1),(4,'2024-04-08 04:05:37',1,59000,59000,'FHOL6K','2024-04-08 04:05:37',1);
-/*!40000 ALTER TABLE `price_update_detail` ENABLE KEYS */;
+LOCK TABLES `staff` WRITE;
+/*!40000 ALTER TABLE `staff` DISABLE KEYS */;
+INSERT INTO `staff` VALUES (1,'Viet Nam','2002-07-24 17:00:00','12334443','2024-04-07 12:48:46','son@gmail.com','Trinh Thanh','Son','+84979345190',0,'1312312','2024-04-08 06:59:52',3);
+/*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -58,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:35:01
+-- Dump completed on 2024-04-13  2:36:36

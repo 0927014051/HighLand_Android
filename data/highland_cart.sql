@@ -16,33 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `coupon_detail`
+-- Table structure for table `cart`
 --
 
-DROP TABLE IF EXISTS `coupon_detail`;
+DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `coupon_detail` (
-  `coupon_detail_id` bigint NOT NULL AUTO_INCREMENT,
-  `coupon_id` bigint DEFAULT NULL,
+CREATE TABLE `cart` (
+  `cart_id` bigint NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
   `customer_id` bigint DEFAULT NULL,
-  `status` int DEFAULT NULL,
-  `value` int DEFAULT NULL,
-  PRIMARY KEY (`coupon_detail_id`),
-  KEY `FKmdsj1f80fv9mkkuguwdghx73n` (`coupon_id`),
-  KEY `FK2vtd29qa1s1ndyx0jlskyq72g` (`customer_id`),
-  CONSTRAINT `FK2vtd29qa1s1ndyx0jlskyq72g` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
-  CONSTRAINT `FKmdsj1f80fv9mkkuguwdghx73n` FOREIGN KEY (`coupon_id`) REFERENCES `coupon` (`coupon_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `total_price` int DEFAULT NULL,
+  `total_quantity` int DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`cart_id`),
+  KEY `FKjkl19yyf10l5tb7j5npdhgy3b` (`customer_id`),
+  CONSTRAINT `FKjkl19yyf10l5tb7j5npdhgy3b` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `coupon_detail`
+-- Dumping data for table `cart`
 --
 
-LOCK TABLES `coupon_detail` WRITE;
-/*!40000 ALTER TABLE `coupon_detail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `coupon_detail` ENABLE KEYS */;
+LOCK TABLES `cart` WRITE;
+/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+INSERT INTO `cart` VALUES (1,'2024-04-07 10:46:22',1,81900,2,'2024-04-07 10:46:22'),(2,'2024-04-07 12:44:31',2,0,0,'2024-04-07 12:44:31'),(3,'2024-04-08 08:32:46',3,0,0,'2024-04-08 08:32:46');
+/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:35:00
+-- Dump completed on 2024-04-13  2:36:36
