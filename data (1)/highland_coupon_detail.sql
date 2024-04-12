@@ -16,33 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `category_size`
+-- Table structure for table `coupon_detail`
 --
 
-DROP TABLE IF EXISTS `category_size`;
+DROP TABLE IF EXISTS `coupon_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `category_size` (
-  `category_size_id` bigint NOT NULL AUTO_INCREMENT,
-  `category_id` bigint DEFAULT NULL,
-  `percent` float DEFAULT NULL,
-  `size_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`category_size_id`),
-  KEY `FK18gphm8wn60byschhc1bigp76` (`category_id`),
-  KEY `FKd7cg4o5n25mrk5145sgyj4f6t` (`size_id`),
-  CONSTRAINT `FK18gphm8wn60byschhc1bigp76` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`),
-  CONSTRAINT `FKd7cg4o5n25mrk5145sgyj4f6t` FOREIGN KEY (`size_id`) REFERENCES `size` (`size_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `coupon_detail` (
+  `coupon_detail_id` bigint NOT NULL AUTO_INCREMENT,
+  `coupon_id` bigint DEFAULT NULL,
+  `customer_id` bigint DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `value` int DEFAULT NULL,
+  PRIMARY KEY (`coupon_detail_id`),
+  KEY `FKmdsj1f80fv9mkkuguwdghx73n` (`coupon_id`),
+  KEY `FK2vtd29qa1s1ndyx0jlskyq72g` (`customer_id`),
+  CONSTRAINT `FK2vtd29qa1s1ndyx0jlskyq72g` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
+  CONSTRAINT `FKmdsj1f80fv9mkkuguwdghx73n` FOREIGN KEY (`coupon_id`) REFERENCES `coupon` (`coupon_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `category_size`
+-- Dumping data for table `coupon_detail`
 --
 
-LOCK TABLES `category_size` WRITE;
-/*!40000 ALTER TABLE `category_size` DISABLE KEYS */;
-INSERT INTO `category_size` VALUES (4,3,20,14),(5,4,20,14),(6,5,20,14),(7,3,30,15),(8,4,30,15),(9,5,30,15);
-/*!40000 ALTER TABLE `category_size` ENABLE KEYS */;
+LOCK TABLES `coupon_detail` WRITE;
+/*!40000 ALTER TABLE `coupon_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `coupon_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-01 10:09:28
+-- Dump completed on 2024-04-13  2:35:00

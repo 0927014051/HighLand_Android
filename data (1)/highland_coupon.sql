@@ -16,34 +16,42 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `orders`
+-- Table structure for table `coupon`
 --
 
-DROP TABLE IF EXISTS `orders`;
+DROP TABLE IF EXISTS `coupon`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `orders` (
-  `order_id` bigint NOT NULL AUTO_INCREMENT,
-  `create_at` datetime DEFAULT NULL,
-  `customer_id` bigint DEFAULT NULL,
-  `status` int DEFAULT NULL,
-  `total_price` int DEFAULT NULL,
-  `total_quantity` int DEFAULT NULL,
-  `update_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`order_id`),
-  KEY `FKbcl9eqhg829p6r1roqmgqamn4` (`customer_id`),
-  CONSTRAINT `FKbcl9eqhg829p6r1roqmgqamn4` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `coupon` (
+  `coupon_id` bigint NOT NULL AUTO_INCREMENT,
+  `content` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` bigint DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `updated_by` bigint DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `minimum_value` int DEFAULT NULL,
+  `remaining_amount` int DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`coupon_id`),
+  KEY `FKg2rel5868jacees7c0yx5spu0` (`created_by`),
+  KEY `FKjctxt2uef88f2kspkjqe042eq` (`updated_by`),
+  CONSTRAINT `FKg2rel5868jacees7c0yx5spu0` FOREIGN KEY (`created_by`) REFERENCES `staff` (`staff_id`),
+  CONSTRAINT `FKjctxt2uef88f2kspkjqe042eq` FOREIGN KEY (`updated_by`) REFERENCES `staff` (`staff_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `orders`
+-- Dumping data for table `coupon`
 --
 
-LOCK TABLES `orders` WRITE;
-/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'2024-03-24 08:21:58',1,3,225000,5,'2024-03-24 08:21:58');
-/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+LOCK TABLES `coupon` WRITE;
+/*!40000 ALTER TABLE `coupon` DISABLE KEYS */;
+/*!40000 ALTER TABLE `coupon` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-01 10:09:28
+-- Dump completed on 2024-04-13  2:35:01

@@ -16,33 +16,40 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `coupon_detail`
+-- Table structure for table `staff`
 --
 
-DROP TABLE IF EXISTS `coupon_detail`;
+DROP TABLE IF EXISTS `staff`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `coupon_detail` (
-  `coupon_detail_id` bigint NOT NULL AUTO_INCREMENT,
-  `coupon_id` bigint DEFAULT NULL,
-  `customer_id` bigint DEFAULT NULL,
-  `status` int DEFAULT NULL,
-  `value` int DEFAULT NULL,
-  PRIMARY KEY (`coupon_detail_id`),
-  KEY `FKmdsj1f80fv9mkkuguwdghx73n` (`coupon_id`),
-  KEY `FK2vtd29qa1s1ndyx0jlskyq72g` (`customer_id`),
-  CONSTRAINT `FK2vtd29qa1s1ndyx0jlskyq72g` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
-  CONSTRAINT `FKmdsj1f80fv9mkkuguwdghx73n` FOREIGN KEY (`coupon_id`) REFERENCES `coupon` (`coupon_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `staff` (
+  `staff_id` bigint NOT NULL AUTO_INCREMENT,
+  `address` varchar(255) DEFAULT NULL,
+  `birthday` datetime DEFAULT NULL,
+  `cccd` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `firstname` varchar(255) DEFAULT NULL,
+  `lastname` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `salary` bigint DEFAULT NULL,
+  `tax_id` varchar(255) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `user_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`staff_id`),
+  KEY `FKsh01rx13s8dvl567sqipoxb04` (`user_id`),
+  CONSTRAINT `FKsh01rx13s8dvl567sqipoxb04` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `coupon_detail`
+-- Dumping data for table `staff`
 --
 
-LOCK TABLES `coupon_detail` WRITE;
-/*!40000 ALTER TABLE `coupon_detail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `coupon_detail` ENABLE KEYS */;
+LOCK TABLES `staff` WRITE;
+/*!40000 ALTER TABLE `staff` DISABLE KEYS */;
+INSERT INTO `staff` VALUES (1,'Viet Nam','2002-07-24 17:00:00','12334443','2024-04-07 12:48:46','son@gmail.com','Trinh Thanh','Son','+84979345190',0,'1312312','2024-04-08 06:59:52',3);
+/*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:17:13
+-- Dump completed on 2024-04-13  2:35:00

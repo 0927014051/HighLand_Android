@@ -16,33 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `topping_category`
+-- Table structure for table `category_size`
 --
 
-DROP TABLE IF EXISTS `topping_category`;
+DROP TABLE IF EXISTS `category_size`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `topping_category` (
-  `topping_category_id` bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `category_size` (
+  `category_size_id` bigint NOT NULL AUTO_INCREMENT,
   `category_id` bigint DEFAULT NULL,
-  `topping_id` bigint DEFAULT NULL,
-  `topping_price` int DEFAULT NULL,
-  PRIMARY KEY (`topping_category_id`),
-  KEY `FKklju5qltno3hxsuvgu91q321` (`category_id`),
-  KEY `FK8bd02cehbg6lgs26pb879ayla` (`topping_id`),
-  CONSTRAINT `FK8bd02cehbg6lgs26pb879ayla` FOREIGN KEY (`topping_id`) REFERENCES `topping` (`topping_id`),
-  CONSTRAINT `FKklju5qltno3hxsuvgu91q321` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `percent` float DEFAULT NULL,
+  `size_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`category_size_id`),
+  KEY `FK18gphm8wn60byschhc1bigp76` (`category_id`),
+  KEY `FKd7cg4o5n25mrk5145sgyj4f6t` (`size_id`),
+  CONSTRAINT `FK18gphm8wn60byschhc1bigp76` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`),
+  CONSTRAINT `FKd7cg4o5n25mrk5145sgyj4f6t` FOREIGN KEY (`size_id`) REFERENCES `size` (`size_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `topping_category`
+-- Dumping data for table `category_size`
 --
 
-LOCK TABLES `topping_category` WRITE;
-/*!40000 ALTER TABLE `topping_category` DISABLE KEYS */;
-INSERT INTO `topping_category` VALUES (2,4,2,20000);
-/*!40000 ALTER TABLE `topping_category` ENABLE KEYS */;
+LOCK TABLES `category_size` WRITE;
+/*!40000 ALTER TABLE `category_size` DISABLE KEYS */;
+INSERT INTO `category_size` VALUES (9,2,10,5),(10,3,10,5),(11,2,0,6),(12,3,0,6);
+/*!40000 ALTER TABLE `category_size` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-01 10:09:29
+-- Dump completed on 2024-04-13  2:35:00

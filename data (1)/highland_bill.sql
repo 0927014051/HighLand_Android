@@ -16,39 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `customer`
+-- Table structure for table `bill`
 --
 
-DROP TABLE IF EXISTS `customer`;
+DROP TABLE IF EXISTS `bill`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `customer` (
-  `customer_id` bigint NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) DEFAULT NULL,
-  `birthday` datetime DEFAULT NULL,
-  `cccd` varchar(255) DEFAULT NULL,
+CREATE TABLE `bill` (
+  `bill_id` bigint NOT NULL AUTO_INCREMENT,
   `created_at` datetime DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `firstname` varchar(255) DEFAULT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `tax_id` varchar(255) DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `user_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`customer_id`),
-  KEY `FKf02v450jft6pirig8rrs40o4` (`user_id`),
-  CONSTRAINT `FKf02v450jft6pirig8rrs40o4` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `created_by` bigint DEFAULT NULL,
+  `order_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`bill_id`),
+  KEY `FKqiqa653thmqss9397l0mu648h` (`order_id`),
+  KEY `FK7y898ous1liiu22spbuqbc1d` (`created_by`),
+  CONSTRAINT `FK7y898ous1liiu22spbuqbc1d` FOREIGN KEY (`created_by`) REFERENCES `staff` (`staff_id`),
+  CONSTRAINT `FKqiqa653thmqss9397l0mu648h` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `customer`
+-- Dumping data for table `bill`
 --
 
-LOCK TABLES `customer` WRITE;
-/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,NULL,NULL,NULL,'2024-03-21 04:53:55',NULL,NULL,NULL,'0363000451',NULL,'2024-03-21 04:53:55',3);
-/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
+LOCK TABLES `bill` WRITE;
+/*!40000 ALTER TABLE `bill` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bill` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -60,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-01 10:09:27
+-- Dump completed on 2024-04-13  2:35:01

@@ -16,36 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `cart_detail`
+-- Table structure for table `size`
 --
 
-DROP TABLE IF EXISTS `cart_detail`;
+DROP TABLE IF EXISTS `size`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cart_detail` (
-  `cart_detail_id` bigint NOT NULL AUTO_INCREMENT,
-  `cart_id` bigint DEFAULT NULL,
-  `price` int DEFAULT NULL,
-  `product_id` varchar(255) DEFAULT NULL,
-  `quantity` int DEFAULT NULL,
-  `size` varchar(255) DEFAULT NULL,
-  `topping` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`cart_detail_id`),
-  KEY `FKnkmyjg78fg6va4qmlqbhhjbm6` (`cart_id`),
-  KEY `FKcbuccx6hveumo5fd7rsl1knq5` (`product_id`),
-  CONSTRAINT `FKcbuccx6hveumo5fd7rsl1knq5` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
-  CONSTRAINT `FKnkmyjg78fg6va4qmlqbhhjbm6` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `size` (
+  `size_id` bigint NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` bigint DEFAULT NULL,
+  `size_name` varchar(255) DEFAULT NULL,
+  `update_by` bigint DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `updated_by` bigint DEFAULT NULL,
+  PRIMARY KEY (`size_id`),
+  KEY `FKtfks25gqd0so8i4iynmb9pl` (`created_by`),
+  KEY `FKrcpvu0ncr1tdyyk7m3dluuukr` (`updated_by`),
+  CONSTRAINT `FKrcpvu0ncr1tdyyk7m3dluuukr` FOREIGN KEY (`updated_by`) REFERENCES `staff` (`staff_id`),
+  CONSTRAINT `FKtfks25gqd0so8i4iynmb9pl` FOREIGN KEY (`created_by`) REFERENCES `staff` (`staff_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cart_detail`
+-- Dumping data for table `size`
 --
 
-LOCK TABLES `cart_detail` WRITE;
-/*!40000 ALTER TABLE `cart_detail` DISABLE KEYS */;
-INSERT INTO `cart_detail` VALUES (16,1,42900,'FCDMHT',1,'L',NULL),(17,1,39000,'FCDMHT',1,'M',NULL);
-/*!40000 ALTER TABLE `cart_detail` ENABLE KEYS */;
+LOCK TABLES `size` WRITE;
+/*!40000 ALTER TABLE `size` DISABLE KEYS */;
+INSERT INTO `size` VALUES (5,'2024-04-08 05:58:13',1,'L',1,'2024-04-08 05:58:13',NULL),(6,'2024-04-08 05:59:26',1,'M',1,'2024-04-08 05:59:26',NULL);
+/*!40000 ALTER TABLE `size` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:17:13
+-- Dump completed on 2024-04-13  2:35:00

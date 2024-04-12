@@ -16,14 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `staff`
+-- Table structure for table `customer`
 --
 
-DROP TABLE IF EXISTS `staff`;
+DROP TABLE IF EXISTS `customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `staff` (
-  `staff_id` bigint NOT NULL AUTO_INCREMENT,
+CREATE TABLE `customer` (
+  `customer_id` bigint NOT NULL AUTO_INCREMENT,
   `address` varchar(255) DEFAULT NULL,
   `birthday` datetime DEFAULT NULL,
   `cccd` varchar(255) DEFAULT NULL,
@@ -32,24 +32,23 @@ CREATE TABLE `staff` (
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
-  `salary` bigint DEFAULT NULL,
   `tax_id` varchar(255) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`staff_id`),
-  KEY `FKsh01rx13s8dvl567sqipoxb04` (`user_id`),
-  CONSTRAINT `FKsh01rx13s8dvl567sqipoxb04` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`customer_id`),
+  KEY `FKf02v450jft6pirig8rrs40o4` (`user_id`),
+  CONSTRAINT `FKf02v450jft6pirig8rrs40o4` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `staff`
+-- Dumping data for table `customer`
 --
 
-LOCK TABLES `staff` WRITE;
-/*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (1,'Viet Nam','2002-07-24 17:00:00','12334443','2024-04-07 12:48:46','son@gmail.com','Trinh Thanh','Son','+84979345190',0,'1312312','2024-04-08 06:59:52',3);
-/*!40000 ALTER TABLE `staff` ENABLE KEYS */;
+LOCK TABLES `customer` WRITE;
+/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (1,'test','2002-07-25 00:00:00','12345678','2024-04-07 10:46:22','test2@gmail.com','test1','testLast','0987654321','123456789','2024-04-07 10:46:22',1),(2,'97 Man Thien','2001-04-04 00:00:00','12345678963','2024-04-07 12:44:31','example@gmail.com','Vy','Tran','+84373162586','159369147','2024-04-07 12:44:31',2),(3,NULL,NULL,NULL,'2024-04-08 08:32:46',NULL,'Trinh','Son','0363000451',NULL,'2024-04-08 08:32:46',4);
+/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -61,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:17:12
+-- Dump completed on 2024-04-13  2:35:01

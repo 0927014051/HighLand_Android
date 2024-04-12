@@ -16,40 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `staff`
+-- Table structure for table `order_detail`
 --
 
-DROP TABLE IF EXISTS `staff`;
+DROP TABLE IF EXISTS `order_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `staff` (
-  `staff_id` bigint NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) DEFAULT NULL,
-  `birthday` datetime DEFAULT NULL,
-  `cccd` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `firstname` varchar(255) DEFAULT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `salary` bigint DEFAULT NULL,
-  `tax_id` varchar(255) DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `user_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`staff_id`),
-  KEY `FKsh01rx13s8dvl567sqipoxb04` (`user_id`),
-  CONSTRAINT `FKsh01rx13s8dvl567sqipoxb04` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `order_detail` (
+  `order_detail_id` bigint NOT NULL AUTO_INCREMENT,
+  `order_id` bigint DEFAULT NULL,
+  `price` int DEFAULT NULL,
+  `product_id` varchar(255) DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `size` varchar(255) DEFAULT NULL,
+  `topping` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`order_detail_id`),
+  KEY `FKpy74pkf9ybq4fxs7soxx44k2u` (`order_id`),
+  KEY `FKj1gw0pqsdwms2nko96l26h0hv` (`product_id`),
+  CONSTRAINT `FKj1gw0pqsdwms2nko96l26h0hv` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
+  CONSTRAINT `FKpy74pkf9ybq4fxs7soxx44k2u` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `staff`
+-- Dumping data for table `order_detail`
 --
 
-LOCK TABLES `staff` WRITE;
-/*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (1,NULL,NULL,NULL,'2024-03-21 04:53:44',NULL,NULL,NULL,'0927014051',0,NULL,'2024-03-21 04:53:44',2);
-/*!40000 ALTER TABLE `staff` ENABLE KEYS */;
+LOCK TABLES `order_detail` WRITE;
+/*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -61,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-01 10:09:29
+-- Dump completed on 2024-04-13  2:35:01

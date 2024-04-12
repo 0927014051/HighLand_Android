@@ -16,38 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `review`
+-- Table structure for table `price_update_detail`
 --
 
-DROP TABLE IF EXISTS `review`;
+DROP TABLE IF EXISTS `price_update_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `review` (
-  `review_id` bigint NOT NULL AUTO_INCREMENT,
-  `content` varchar(255) DEFAULT NULL,
+CREATE TABLE `price_update_detail` (
+  `price_update_detail_id` bigint NOT NULL AUTO_INCREMENT,
   `created_at` datetime DEFAULT NULL,
   `created_by` bigint DEFAULT NULL,
-  `order_detail_id` bigint DEFAULT NULL,
+  `price_new` int DEFAULT NULL,
+  `price_old` int DEFAULT NULL,
   `product_id` varchar(255) DEFAULT NULL,
-  `star` int DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`review_id`),
-  KEY `FKcssmlbw56qtna19798dsddo3t` (`created_by`),
-  KEY `FKdoybou6u8c3hfn0bi5veayppo` (`order_detail_id`),
-  KEY `FK8ldiblkvx92d9i5yn9qqeuk8j` (`product_id`),
-  CONSTRAINT `FK8ldiblkvx92d9i5yn9qqeuk8j` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
-  CONSTRAINT `FKcssmlbw56qtna19798dsddo3t` FOREIGN KEY (`created_by`) REFERENCES `customer` (`customer_id`),
-  CONSTRAINT `FKdoybou6u8c3hfn0bi5veayppo` FOREIGN KEY (`order_detail_id`) REFERENCES `order_detail` (`order_detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `updated_by` bigint DEFAULT NULL,
+  PRIMARY KEY (`price_update_detail_id`),
+  KEY `FKqqg6x7ou2wg76hybqnfmtnkcd` (`product_id`),
+  KEY `FKnj2eq1uaj86owx8uuyndsocmt` (`created_by`),
+  CONSTRAINT `FKnj2eq1uaj86owx8uuyndsocmt` FOREIGN KEY (`created_by`) REFERENCES `staff` (`staff_id`),
+  CONSTRAINT `FKqqg6x7ou2wg76hybqnfmtnkcd` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `review`
+-- Dumping data for table `price_update_detail`
 --
 
-LOCK TABLES `review` WRITE;
-/*!40000 ALTER TABLE `review` DISABLE KEYS */;
-/*!40000 ALTER TABLE `review` ENABLE KEYS */;
+LOCK TABLES `price_update_detail` WRITE;
+/*!40000 ALTER TABLE `price_update_detail` DISABLE KEYS */;
+INSERT INTO `price_update_detail` VALUES (1,'2024-04-07 13:56:39',1,59000,50000,'U1556B','2024-04-07 13:59:10',1),(2,'2024-04-07 14:37:54',1,59000,59000,'K9N1NJ','2024-04-07 14:37:54',1),(3,'2024-04-07 16:07:24',1,39000,60000,'FCDMHT','2024-04-08 04:15:24',1),(4,'2024-04-08 04:05:37',1,59000,59000,'FHOL6K','2024-04-08 04:05:37',1);
+/*!40000 ALTER TABLE `price_update_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -59,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-01 10:09:28
+-- Dump completed on 2024-04-13  2:35:01
