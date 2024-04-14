@@ -205,6 +205,25 @@ public class AuthController {
 		return new ResponseEntity<ApiResponse>(res,stt);
 	}
 
+	@RequestMapping("check/{username}")
+	public ResponseEntity<ApiResponse> checkUserExist(@PathVariable String username){
+		User user = userService.findUserByUserName(username);
+		ApiResponse res = new ApiResponse();
+		HttpStatus http = null;
+		if(user != null){
+			res.setCode(HttpStatus.OK.value());
+			res.setMessage("username exist");
+			res.setStatus(true);
+			http = HttpStatus.OK;
+		}else{
+			res.setCode(HttpStatus.CONFLICT.value());
+			res.setMessage("username not exist");
+			res.setStatus(false);
+			http = HttpStatus.CONFLICT;
+		}
+		return new ResponseEntity<>(res,http);
+	}
+
 	private Authentication authenticate(String username, String password) {
 		UserDetails userDetails = customUserDetails.loadUserByUsername(username);
 		if (userDetails == null) {
