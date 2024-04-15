@@ -68,12 +68,12 @@ public class Coupon {
 	@OneToMany(mappedBy = "coupon")
 	private List<CouponDetail> coupon_detail;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "created_by",updatable = false, insertable = false)
 	private Staff staff_created;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "updated_by",updatable = false, insertable = false)
 	private Staff staff_updated;
