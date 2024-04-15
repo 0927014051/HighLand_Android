@@ -23,7 +23,7 @@ import com.javaweb.service.OrderService;
 import com.javaweb.service.ProductService;
 
 @RestController
-@RequestMapping("/api/statistic")
+@RequestMapping("/api/admin/statistic")
 @SuppressWarnings({ "rawtypes", "unchecked" })
 
 public class StatisticController {

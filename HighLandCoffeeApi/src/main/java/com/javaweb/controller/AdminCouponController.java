@@ -28,7 +28,7 @@ import com.javaweb.service.StaffService;
 import com.javaweb.service.UserService;
 
 @RestController
-@RequestMapping("/admin/coupon")
+@RequestMapping("/api/admin/coupon")
 public class AdminCouponController {
 
     private CouponService couponService;
