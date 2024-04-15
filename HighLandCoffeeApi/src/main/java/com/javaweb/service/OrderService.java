@@ -1,5 +1,6 @@
 package com.javaweb.service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public interface OrderService {
 
 
 	List<Orders> findOrderByStatus(String status);
-	List<Orders> findOrderByDate(Date startDate, Date endDate);
+	List<Orders> findOrderByDate(LocalDate dateStart, LocalDate dateEnd);
 //	public Orders findOrdersById(Long orderId) throws OrdersException;
 //	
 //	public List<Orders> usersOrdersHistory(Long userId);

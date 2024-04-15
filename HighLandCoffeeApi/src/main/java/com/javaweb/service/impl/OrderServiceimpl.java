@@ -1,5 +1,6 @@
 package com.javaweb.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -203,7 +204,7 @@ public class OrderServiceimpl implements OrderService {
 	}
 
 	@Override
-	public List<Orders> findOrderByDate(Date startDate, Date endDate){
+	public List<Orders> findOrderByDate(LocalDate startDate, LocalDate endDate){
 		return orderRepo.findOrderByDate(startDate, endDate);
 	}
 

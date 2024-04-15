@@ -1,5 +1,6 @@
 package com.javaweb.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.api.Http;
 import com.javaweb.entity.Product;
 import com.javaweb.response.EntityStatusResponse;
+import com.javaweb.response.ListEntityStatusResponse;
 import com.javaweb.service.ProductService;
 
 @RestController
@@ -49,6 +52,22 @@ public class ProductController {
 			send = HttpStatus.CONFLICT;
 		}
 		return new ResponseEntity<EntityStatusResponse>(res,send);
+	}
+
+	@RequestMapping("/product/all")
+	public ResponseEntity<ListEntityStatusResponse> getAllProduct(){
+		List<Product> listProducts = productService.getAllProducts();
+		List<Product> allProducts = new ArrayList<>();
+		for(Product item : listProducts){
+			if(item.getStatus().equals("Active")){
+				allProducts.add(item);
+			}
+		}
+		ListEntityStatusResponse res = new ListEntityStatusResponse<>();
+		res.setData(allProducts);
+		res.setMessage("success");
+		res.setStatus(HttpStatus.OK.value());
+		return new ResponseEntity<>(res,HttpStatus.OK);
 	}
 
 }

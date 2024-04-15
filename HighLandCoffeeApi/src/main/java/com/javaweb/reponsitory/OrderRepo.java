@@ -1,5 +1,6 @@
 package com.javaweb.reponsitory;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +49,6 @@ public interface OrderRepo extends JpaRepository<Orders, Long>{
 	    List<Orders> findOrderByStatus(String status);
 
 		@Query(value = "SELECT * FROM Orders WHERE DATE(create_at) >= DATE(:startDate) AND DATE(create_at) <= DATE(:endDate)",nativeQuery = true )
-	    List<Orders> findOrderByDate(Date startDate, Date endDate);
+	    List<Orders> findOrderByDate(LocalDate startDate, LocalDate endDate);
 
 }

@@ -2,8 +2,11 @@ package com.javaweb.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -113,17 +116,13 @@ public class AdminOrderController {
 
 	@GetMapping("/date")
 	public ResponseEntity<ListEntityStatusResponse> findListOrderByDateStartAndDateEnd(@RequestParam String start, @RequestParam String end){
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-	        Date dateStart = null;
-	        Date dateEnd = null;
-	        try {
+			LocalDate dateStart = null;
+	        LocalDate dateEnd = null;	       
 	            // Parsing a String to Date
-	            dateStart = dateFormatter.parse(start);
-	            dateEnd = dateFormatter.parse(end);
-	        } catch (ParseException e) {
-	            e.printStackTrace();
-	        }
+	            dateStart = LocalDate.parse(start);
+	            dateEnd = LocalDate.parse(end);        
 			List<Orders> listOrder = orderService.findOrderByDate(dateStart, dateEnd);
+			//List<Orders> listOrder = null;
 			ListEntityStatusResponse res = new ListEntityStatusResponse<>();
 			HttpStatus http = null;
 			if(listOrder != null){
