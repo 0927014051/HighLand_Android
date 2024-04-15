@@ -135,16 +135,18 @@ public class CartServiceImpl implements CartService {
 	public void autoUpdateCart(Long cart_id) throws UserException {
 		// TODO Auto-generated method stub
 		Cart cart = findById(cart_id);
-		int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
-		int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
-		cart.setTotal_price(totalPrice);
-		cart.setTotal_quantity(totalQuantity);
-		cartRepo.save(cart);	
+			
 		List<CartDetail> cartDetail = cartDetailService.findCartDetailByCartId(cart_id);
 		if(cartDetail.isEmpty()){
 			cart.setTotal_price(0);
 			cart.setTotal_quantity(0);
 			cartRepo.save(cart);	
+		}else{
+			int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
+		int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
+		cart.setTotal_price(totalPrice);
+		cart.setTotal_quantity(totalQuantity);
+		cartRepo.save(cart);
 		}
 	}
 
