@@ -21,40 +21,41 @@ import com.javaweb.service.UserService;
 import jakarta.validation.constraints.Email;
 
 @Service
-public class UserServiceImpl implements UserService{
-	
+public class UserServiceImpl implements UserService {
+
 	private UserRepo userRepo;
 	private JwtTokenProvider jwtTokenProvider;
 	private CustomerService customerService;
 	private CustomerRepo customerRepo;
-	
-	public UserServiceImpl(UserRepo userRepo, JwtTokenProvider jwtTokenProvider,CustomerService customerService,CustomerRepo customerRepo) {
+
+	public UserServiceImpl(UserRepo userRepo, JwtTokenProvider jwtTokenProvider, CustomerService customerService,
+			CustomerRepo customerRepo) {
 		this.userRepo = userRepo;
 		this.jwtTokenProvider = jwtTokenProvider;
 		this.customerService = customerService;
 		this.customerRepo = customerRepo;
 	}
-	
+
 	@Override
-	public User findUserById(Long userId) throws UserException{
-		
+	public User findUserById(Long userId) throws UserException {
+
 		Optional<User> userOptional = userRepo.findById(userId);
-		
-		if(userOptional.isPresent()) {
+
+		if (userOptional.isPresent()) {
 			System.err.println("find user by user id success");
 			return userOptional.get();
 		}
 		throw new UserException("user not found with user id " + userId);
 	}
-	
+
 	@Override
-	public ProfileUserRequest findUserProfileByJwt(String jwt) throws UserException{
-		
+	public ProfileUserRequest findUserProfileByJwt(String jwt) throws UserException {
+
 		System.err.println("user service");
 		String username = jwtTokenProvider.getUsernameFromJwtToken(jwt);
 		System.err.println("username " + username);
 		User user = userRepo.findByUsername(username);
-		System.err.println("user_id: " +user.getUser_id());
+		System.err.println("user_id: " + user.getUser_id());
 		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
 		ProfileUserRequest profile = new ProfileUserRequest();
 		profile.setAccessToken(user.getAccessToken());
@@ -75,8 +76,8 @@ public class UserServiceImpl implements UserService{
 		profile.setTax_id(customer.getTax_id());
 		profile.setUsername(username);
 		profile.setUser_id(user.getUser_id());
-		if(user == null) {
-			throw new UserException("user not exist with username " + username );
+		if (user == null) {
+			throw new UserException("user not exist with username " + username);
 		}
 		System.err.println("username " + user.getUsername());
 		return profile;
@@ -84,85 +85,74 @@ public class UserServiceImpl implements UserService{
 
 	@SuppressWarnings("unused")
 	@Override
-	public ProfileUserAndCustomerResponse updateUserAndCustomerProfileByJwt(String jwt, ProfileUserRequest updateCustomer) throws UserException{
+	public ProfileUserAndCustomerResponse updateUserAndCustomerProfileByJwt(String jwt,
+			ProfileUserRequest updateCustomer) throws UserException {
 		String username = jwtTokenProvider.getUsernameFromJwtToken(jwt);
 		User user = userRepo.findByUsername(username);
 		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
-		if(user == null) {
+		if (user == null) {
 			throw new UserException("User not exist with username " + username);
 		}
-		if(!updateCustomer.getAddress().equals(null)) {
-			customer.setAddress(updateCustomer.getAddress());
-		}
-		if(updateCustomer.getBirthday() != null) {
-			customer.setBirthday(updateCustomer.getBirthday());
-		}
-		if(!updateCustomer.getCccd().equals(null)) {
-			customer.setCccd(updateCustomer.getCccd());
-		}
-		if(!updateCustomer.getEmail().equals(null)) {
+		customer.setAddress(updateCustomer.getAddress());
+		customer.setBirthday(updateCustomer.getBirthday());
+		customer.setCccd(updateCustomer.getCccd());
+		if (!updateCustomer.getEmail().equals(null)) {
 			Customer existingCustomerWithEmail = customerService.findCustomerByEmail(updateCustomer.getEmail());
-			if(existingCustomerWithEmail != null && !existingCustomerWithEmail.getEmail().equals(customer.getEmail()) ) {
+			if (existingCustomerWithEmail != null
+					&& !existingCustomerWithEmail.getEmail().equals(customer.getEmail())) {
 				throw new UserException("Email exist");
 			}
-			if(updateCustomer.getEmail() != null) {
+			if (updateCustomer.getEmail() != null) {
 				customer.setEmail(updateCustomer.getEmail());
 			}
 		}
-		if(!updateCustomer.getFirstname().equals(null)) {
-			customer.setFirstname(updateCustomer.getFirstname());
-		}
-		if(!updateCustomer.getLastname().equals(null)) {
-			customer.setLastname(updateCustomer.getLastname());
-		}
-		if(!updateCustomer.getPhone().equals(null)) {
-			customer.setPhone(updateCustomer.getPhone());
-		}
-		if(updateCustomer.getPoints() != 0) {
+		customer.setFirstname(updateCustomer.getFirstname());
+		customer.setLastname(updateCustomer.getLastname());
+		customer.setPhone(updateCustomer.getPhone());
+		if (updateCustomer.getPoints() != 0) {
 			user.setPoints(updateCustomer.getPoints());
 		}
-		if(!updateCustomer.getTax_id().equals(null)) {
-			customer.setTax_id(updateCustomer.getTax_id());
-		}
+		customer.setTax_id(updateCustomer.getTax_id());
 		userRepo.save(user);
 		customerRepo.save(customer);
-		ProfileUserAndCustomerResponse response = new ProfileUserAndCustomerResponse(user,customer);
-        return response;
+		ProfileUserAndCustomerResponse response = new ProfileUserAndCustomerResponse(user, customer);
+		return response;
 	}
-	
+
 	@Override
-	public List<User> getAllUsers(){
+	public List<User> getAllUsers() {
 		return userRepo.findAll();
 	}
-	
+
 	@Override
-	public User findUserByJwt(String jwt) throws UserException{
+	public User findUserByJwt(String jwt) throws UserException {
 		String username = jwtTokenProvider.getUsernameFromJwtToken(jwt);
 		User user = userRepo.findByUsername(username);
-		if(user == null) {
+		if (user == null) {
 			throw new UserException("user not exist with username " + username);
 		}
 		return user;
 	}
-	
+
 	@Override
 	public User findUserByUserName(String username) {
 		return userRepo.findByUsername(username);
 	}
-	
+
 	@Override
-	public User updateStatusByUsername(String username,Long staff_id) throws UserException{
+	public User updateStatusByUsername(String username, Long staff_id) throws UserException {
 		User user = new User();
 		user.setStatus("Unactive");
 		user.setUpdated_at(LocalDateTime.now());
 		user.setUpdated_by(staff_id);
-		User savedUser =  userRepo.save(user);
+		User savedUser = userRepo.save(user);
 		return savedUser;
 	}
+
 	@Override
-	public User changePassword(String username,String password) {
+	public User changePassword(String username, String password) {
 		User findUser = userRepo.findByUsername(username);
-		if( password != null ) {
+		if (password != null) {
 			findUser.setPassword(password);
 			findUser.setUpdated_at(LocalDateTime.now());
 		}

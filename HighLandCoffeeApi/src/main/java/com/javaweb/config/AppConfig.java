@@ -34,6 +34,7 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
+            .antMatchers("/api/admin/product/find/{productId}").hasAnyAuthority("CUSTOMER")
                 .antMatchers("/api/admin/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/api/admin/**").hasAnyAuthority("STAFF")
                 .antMatchers("/api/users/**").hasAnyAuthority("STAFF")
