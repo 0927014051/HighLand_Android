@@ -34,7 +34,7 @@ public class Category_Size {
 	@JoinColumn(name = "size_id",updatable = false, insertable = false)
 	private Size size;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "category_id",insertable = false, updatable = false)
 	private Category category;
