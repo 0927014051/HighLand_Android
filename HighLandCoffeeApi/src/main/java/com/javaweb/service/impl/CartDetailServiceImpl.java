@@ -30,16 +30,14 @@ public class CartDetailServiceImpl implements CartDetailService {
 	private CartRepo cartRepo;
 	private CustomerService customerService;
 	private PriceUpdateService priceUpdateService;
-	private CartService cartService;
 
 	public CartDetailServiceImpl(CartDetailRepo cartDetailRepo, CartRepo cartRepo, CustomerService customerService,
-			PriceUpdateService priceUpdateService, CartService cartService) {
+			PriceUpdateService priceUpdateService) {
 		super();
 		this.cartDetailRepo = cartDetailRepo;
 		this.cartRepo = cartRepo;
 		this.customerService = customerService;
 		this.priceUpdateService = priceUpdateService;
-		this.cartService = cartService;
 	}
 
 	@Override
@@ -118,13 +116,7 @@ public class CartDetailServiceImpl implements CartDetailService {
 
 	@Override
 	public void deleteItemCartDetail(String product_id, String size, Long cart_id) throws UserException {
-		cartDetailRepo.deleteItemCartDetail(product_id, size, cart_id);
-		Cart cart = cartService.findById(cart_id);
-		int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
-		int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
-		cart.setTotal_price(totalPrice);
-		cart.setTotal_quantity(totalQuantity);
-		cartRepo.save(cart);
+		cartDetailRepo.deleteItemCartDetail(product_id, size, cart_id);	
 	}
 
 	@Override

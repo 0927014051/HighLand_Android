@@ -127,6 +127,17 @@ public class CartServiceImpl implements CartService {
 		}
 		throw new UserException("Cart not found with id " + cart);
 
+	
 	}
+
+	@Override
+	public void autoUpdateCart(Long cart_id) throws UserException {
+		// TODO Auto-generated method stub
+		Cart cart = findById(cart_id);
+		int totalPrice = cartDetailRepo.totalPriceByCartId(cart.getCart_id());
+		int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
+		cart.setTotal_price(totalPrice);
+		cart.setTotal_quantity(totalQuantity);
+		cartRepo.save(cart);	}
 
 }

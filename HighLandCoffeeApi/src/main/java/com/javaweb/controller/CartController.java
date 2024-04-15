@@ -71,6 +71,7 @@ public class CartController {
 		Cart cart = cartService.findCartBCustomerId(customer.getCustomer_id());
 		cartDetailService.deleteItemCartDetail(item.getProduct_id(), item.getSize(),cart.getCart_id());
 		System.err.println("product_id" + item.getProduct_id() + "   " + item.getSize());
+		cartService.autoUpdateCart(cart.getCart_id());
 		ApiResponse res = new ApiResponse("delete item success", true, HttpStatus.OK.value());
 		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
 	}

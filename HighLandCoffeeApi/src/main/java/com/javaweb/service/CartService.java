@@ -19,4 +19,6 @@ public interface CartService {
 	public void clearCart(Long customerId);
 	
 	public Cart findById(Long cart_id) throws UserException;
+
+	public void autoUpdateCart(Long cart_id) throws UserException;
 }

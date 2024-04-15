@@ -61,7 +61,7 @@ public class Category {
 	private List<Product> product;
 
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "category")
 	private List<Category_Size> category_size;
 
