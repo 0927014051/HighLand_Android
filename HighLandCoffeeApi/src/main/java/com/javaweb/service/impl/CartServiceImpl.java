@@ -1,6 +1,7 @@
 package com.javaweb.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import javax.management.loading.PrivateClassLoader;
@@ -138,6 +139,13 @@ public class CartServiceImpl implements CartService {
 		int totalQuantity = cartDetailRepo.totalQuantityByCartId(cart.getCart_id());
 		cart.setTotal_price(totalPrice);
 		cart.setTotal_quantity(totalQuantity);
-		cartRepo.save(cart);	}
+		cartRepo.save(cart);	
+		List<CartDetail> cartDetail = cartDetailService.findCartDetailByCartId(cart_id);
+		if(cartDetail.isEmpty()){
+			cart.setTotal_price(0);
+			cart.setTotal_quantity(0);
+			cartRepo.save(cart);	
+		}
+	}
 
 }
