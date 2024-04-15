@@ -25,7 +25,7 @@ public CartDetail createCartDetail(CartDetail cartItem);
 	
 	public void deleteCartDetail(Long cart_id);
 	
-	public void deleteItemCartDetail(String product_id, String size);
+	public void deleteItemCartDetail(String product_id, String size,Long cart_id) throws UserException;
 	
 	public void incrementQuantity(Long cart_id, String product_id, String size );
 

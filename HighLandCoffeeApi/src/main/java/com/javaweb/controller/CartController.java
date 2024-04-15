@@ -65,12 +65,14 @@ public class CartController {
 	}
 	
 	@PostMapping("/delete/item")
-	public ResponseEntity<ApiResponse> deleeteCartDetailItem(@RequestHeader("Authorization") String jwt,@RequestBody CartDetail item){
-		cartDetailService.deleteItemCartDetail(item.getProduct_id(), item.getSize());
+	public ResponseEntity<ApiResponse> deleeteCartDetailItem(@RequestHeader("Authorization") String jwt,@RequestBody CartDetail item) throws UserException{
+		User user = userService.findUserByJwt(jwt);
+		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
+		Cart cart = cartService.findCartBCustomerId(customer.getCustomer_id());
+		cartDetailService.deleteItemCartDetail(item.getProduct_id(), item.getSize(),cart.getCart_id());
 		System.err.println("product_id" + item.getProduct_id() + "   " + item.getSize());
 		ApiResponse res = new ApiResponse("delete item success", true, HttpStatus.OK.value());
 		return new ResponseEntity<ApiResponse>(res,HttpStatus.OK);
-		
 	}
 	
 	@PutMapping("/increment/quantity")

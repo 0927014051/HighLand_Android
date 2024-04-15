@@ -1,6 +1,7 @@
 package com.javaweb.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import com.javaweb.entity.User;
 import com.javaweb.exception.ProductException;
 import com.javaweb.exception.UserException;
 import com.javaweb.response.ApiResponse;
+import com.javaweb.response.ListEntityStatusResponse;
 import com.javaweb.service.CouponService;
 import com.javaweb.service.IImageService;
 import com.javaweb.service.StaffService;
@@ -101,6 +103,24 @@ public class AdminCouponController {
             res.setCode(HttpStatus.CONFLICT.value());
             res.setMessage("fail");
             res.setStatus(false);
+            http = HttpStatus.CONFLICT;
+        }
+        return new ResponseEntity<>(res,http);
+    }
+    @RequestMapping("/all")
+    public ResponseEntity<ListEntityStatusResponse> getAllCoupon(){
+        List<Coupon> listCoupon = couponService.findAll();
+        ListEntityStatusResponse res = new ListEntityStatusResponse<>();
+        HttpStatus http = null;
+        if(listCoupon != null){
+            res.setData(listCoupon);
+            res.setMessage("successs");
+            res.setStatus(HttpStatus.OK.value());
+            http = HttpStatus.OK;
+        }else{
+            res.setData(null);
+            res.setMessage("fail");
+            res.setStatus(HttpStatus.CONFLICT.value());
             http = HttpStatus.CONFLICT;
         }
         return new ResponseEntity<>(res,http);
