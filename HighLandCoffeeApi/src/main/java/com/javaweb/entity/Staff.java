@@ -93,7 +93,6 @@ public class Staff {
 	@OneToMany(mappedBy = "staff")
 	private List<PriceUpdateDetail> price_update_detail;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private User user;
