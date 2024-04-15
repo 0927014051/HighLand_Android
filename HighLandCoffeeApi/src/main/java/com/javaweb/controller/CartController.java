@@ -49,7 +49,7 @@ public class CartController {
 		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
 		Cart cart = cartService.findCartBCustomerId(customer.getCustomer_id());
 		System.err.println("cart - " + cart.getCustomer().getEmail());
-
+		cartService.autoUpdateCart(cart.getCart_id());
 		EntityStatusResponse<Cart> responseData = new EntityStatusResponse<>(cart,HttpStatus.OK.value(),"The request was successfully completed");
 		return ResponseEntity.status(HttpStatus.OK).body(responseData);
 	}
