@@ -37,6 +37,7 @@ public class AppConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/admin/product/find/{productId}").hasAnyAuthority("CUSTOMER")
                 .antMatchers("/api/admin/**").hasAnyAuthority("ADMIN","STAFF")
                 .antMatchers("/api/users/find").hasAnyAuthority("STAFF","ADMIN","CUSTOMER")
+                .antMatchers("/api/users/all").hasAnyAuthority("STAFF","ADMIN","CUSTOMER")
                 .antMatchers("/api/**").hasAnyAuthority("CUSTOMER")
                 .anyRequest().permitAll()
             .and()
