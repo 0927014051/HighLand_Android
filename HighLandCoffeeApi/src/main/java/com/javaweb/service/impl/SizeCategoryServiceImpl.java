@@ -10,25 +10,29 @@ import com.javaweb.request.AddCategorySizeRequest;
 import com.javaweb.service.SizeCategoryService;
 
 @Service
-public class SizeCategoryServiceImpl implements SizeCategoryService{
-	
+public class SizeCategoryServiceImpl implements SizeCategoryService {
+
 	private SizeCategoryRepo sizeCategoryRepo;
 
 	public SizeCategoryServiceImpl(SizeCategoryRepo sizeCategoryRepo) {
 		super();
 		this.sizeCategoryRepo = sizeCategoryRepo;
 	}
-	
+
 	@Override
-	public List<Category_Size> getAllCategorySize(){
+	public List<Category_Size> getAllCategorySize() {
 		return sizeCategoryRepo.findAll();
 	}
 
 	@Override
-	public Category_Size findCategory_SizeBySizeId(Long id,Long category_id) {
-		return sizeCategoryRepo.findCategory_SizeBySizeId(id,category_id);
+	public Category_Size findCategory_SizeBySizeId(Long id, Long category_id) {
+		return sizeCategoryRepo.findCategory_SizeBySizeId(id, category_id);
 	}
 
-	
+	@Override
+	public List<Category_Size> findCategory_SizeByCategoryId(Long category_id) {
+		// TODO Auto-generated method stub
+		return sizeCategoryRepo.findCategory_SizeByCategoryId(category_id);
+	}
 
 }

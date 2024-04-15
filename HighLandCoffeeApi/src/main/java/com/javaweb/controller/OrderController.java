@@ -2,6 +2,8 @@ package com.javaweb.controller;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javaweb.entity.Category;
 import com.javaweb.entity.Category_Size;
 import com.javaweb.entity.Customer;
 import com.javaweb.entity.Orders;
@@ -133,6 +136,16 @@ public class OrderController {
 			http = HttpStatus.CONFLICT;
 		}
 		return new ResponseEntity<ListEntityStatusResponse>(res,http);
+	}
+
+	@GetMapping("/size/category")
+	public ResponseEntity<ListEntityStatusResponse> getCategorySize(@RequestBody Category category){
+		List<Category_Size> getAll = sizeCategoryService.findCategory_SizeByCategoryId(category.getCategory_id());
+		ListEntityStatusResponse res = new ListEntityStatusResponse<>();
+		res.setData(getAll);
+		res.setMessage("success");
+		res.setStatus(HttpStatus.OK.value());
+		return new ResponseEntity<>(res,HttpStatus.OK);
 	}
 	
 
