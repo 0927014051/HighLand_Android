@@ -5,6 +5,6 @@ import com.javaweb.request.ReviewRequest;
 
 public interface ReviewService {
 
-    Review createReview(ReviewRequest rq);
+    Review createReview(ReviewRequest rq,Long staff_id);
 
 }
