@@ -22,7 +22,7 @@ public class CouponDetailServiceImpl implements CouponDetailService{
     @Override
     public CouponDetail customerGetCoupon(Long customer_id,Long coupon_id) {
        CouponDetail detail = findCouponDetailByCouponId(coupon_id);
-       detail.setCoupon_id(customer_id);
+       detail.setCustomer_id(customer_id);
        return couponDetailRepo.save(detail);
     }
 

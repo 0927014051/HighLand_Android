@@ -29,6 +29,9 @@ public class Review {
 	
 	@Column
 	private String content;
+
+	@Column
+	private String status;
 	
 	@Column
 	private LocalDateTime created_at;
@@ -148,13 +151,13 @@ public class Review {
 		this.created_by = created_by;
 	}
 
-	public Review(Long review_id, int star, String content, LocalDateTime created_at, LocalDateTime updated_at,
-			Long order_detail_id, String product_id, Long created_by, OrderDetail order_detail, Product product,
-			Customer customer) {
-		super();
+	public Review(Long review_id, int star, String content, String status, LocalDateTime created_at,
+			LocalDateTime updated_at, Long order_detail_id, String product_id, Long created_by,
+			OrderDetail order_detail, Product product, Customer customer) {
 		this.review_id = review_id;
 		this.star = star;
 		this.content = content;
+		this.status = status;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 		this.order_detail_id = order_detail_id;
@@ -168,6 +171,14 @@ public class Review {
 	public Review() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	
