@@ -78,4 +78,16 @@ public class CouponController {
         }
         return new ResponseEntity<>(res,http);
     }
+
+    @RequestMapping("/mycoupon")
+    public ResponseEntity<ListEntityStatusResponse> allCouponByCustomer(@RequestHeader("Authorization") String jwt) throws UserException{
+        User user = userService.findUserByJwt(jwt);
+        Customer customer = customerService.findCustomerByUserId(user.getUser_id());
+        List<CouponDetail> allCouponCustomer = couponDetailService.findCouponDetailByCustomerId(customer.getCustomer_id());
+        ListEntityStatusResponse res = new ListEntityStatusResponse<>();
+        res.setData(allCouponCustomer);
+        res.setMessage("success");
+        res.setStatus(HttpStatus.OK.value());
+        return new ResponseEntity<>(res,HttpStatus.OK);
+    }
 }

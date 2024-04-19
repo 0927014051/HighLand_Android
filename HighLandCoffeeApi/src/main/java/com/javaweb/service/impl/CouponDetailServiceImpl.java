@@ -1,5 +1,6 @@
 package com.javaweb.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -30,5 +31,15 @@ public class CouponDetailServiceImpl implements CouponDetailService{
     public CouponDetail findCouponDetailByCouponId(Long id) {
         return couponDetailRepo.findCouponDetailByCouponId(id);
     }
+
+    @Override
+    public List<CouponDetail> findCouponDetailByCustomerId(Long id) {
+        // TODO Auto-generated method stub
+        return couponDetailRepo.findCouponDetailByCustomerId(id);
+    }
+
+
+
+
 
 }
