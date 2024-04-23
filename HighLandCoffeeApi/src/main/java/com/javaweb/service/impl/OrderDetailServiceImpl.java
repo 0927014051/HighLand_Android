@@ -24,4 +24,10 @@ public class OrderDetailServiceImpl implements OrderDetailService{
         return orderDetailRepo.findOrderDetailByOrderIdAndProductId(order_id, product_id);
     }
 
+    @Override
+    public OrderDetail findFirstByProductProductIdOrderByOrderDetailIdAsc(String product_id) {
+        // TODO Auto-generated method stub
+return orderDetailRepo.findFirstByProductProductIdOrderByOrderDetailIdAsc(product_id) ;
+   }
+
 }
