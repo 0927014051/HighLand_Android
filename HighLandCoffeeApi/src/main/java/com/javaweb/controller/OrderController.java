@@ -54,28 +54,28 @@ public class OrderController {
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<ApiResponse> createOrderHandler( @RequestHeader("Authorization") String jwt) throws UserException{		 
+	public ResponseEntity<EntityStatusResponse> createOrderHandler( @RequestHeader("Authorization") String jwt) throws UserException{		 
 		User user = userService.findUserByJwt(jwt);
-		ApiResponse res = new ApiResponse();
+		EntityStatusResponse res = new EntityStatusResponse();
 		HttpStatus http = null;
 		if(user != null) {
 			Customer customer = customerService.findCustomerByUserId(user.getUser_id());
 			if(customer != null) {
 				Orders orders = orderService.createOrder(customer);
 				if(orders != null) {
-					res.setCode(HttpStatus.CREATED.value());
+					res.setData(orders);
 					res.setMessage("create order success");
-					res.setStatus(true);
+					res.setStatus(HttpStatus.CREATED.value());
 					http = HttpStatus.CREATED;
 				}else {
-					res.setCode(HttpStatus.BAD_REQUEST.value());
+					res.setData(orders);
 					res.setMessage("create order fail");
-					res.setStatus(false);
+					res.setStatus(HttpStatus.BAD_REQUEST.value());
 					http = HttpStatus.BAD_REQUEST;
 				}
 			}
 		}
-		return new ResponseEntity<ApiResponse>(res,http);
+		return new ResponseEntity<EntityStatusResponse>(res,http);
 	}
 	
 	@PostMapping("/buynow")
