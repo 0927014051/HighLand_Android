@@ -5,19 +5,21 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.javaweb.entity.Coupon;
 import com.javaweb.entity.CouponDetail;
 import com.javaweb.reponsitory.CouponDetailRepo;
 import com.javaweb.service.CouponDetailService;
+import com.javaweb.service.CouponService;
 
 @Service
 public class CouponDetailServiceImpl implements CouponDetailService{
 
     private CouponDetailRepo couponDetailRepo;
+    private CouponService couponService;
 
-    
-
-    public CouponDetailServiceImpl(CouponDetailRepo couponDetailRepo) {
+    public CouponDetailServiceImpl(CouponDetailRepo couponDetailRepo,CouponService couponService) {
         this.couponDetailRepo = couponDetailRepo;
+        this.couponService = couponService;
     }
 
     @Override

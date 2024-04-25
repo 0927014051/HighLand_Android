@@ -76,4 +76,16 @@ public class CouponServiceImpl implements CouponService{
         return couponRepo.findAll();
     }
 
+    @Override
+    public Coupon changeQuantityCouponById(Long coupon_id) throws ProductException {
+        Coupon coupon = findById(coupon_id);
+        coupon.setQuantity(coupon.getRemaining_amount() - 1 );
+        if(coupon.getRemaining_amount() == 0){
+            coupon.setStatus("Over");
+            couponRepo.save(coupon);
+        }
+        return couponRepo.save(coupon);
+        
+    }
+
 }

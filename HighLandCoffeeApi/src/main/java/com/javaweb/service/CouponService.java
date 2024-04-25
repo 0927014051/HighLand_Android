@@ -15,4 +15,6 @@ public interface CouponService {
 
     public List<Coupon> findAll();
 
+    public Coupon changeQuantityCouponById(Long coupon_id) throws ProductException;
+
 }

@@ -49,18 +49,25 @@ public class ReviewServiceImpl implements ReviewService {
     @Transactional
     public Review createReview(ReviewRequest rq, Long customer_id) throws ProductException, UserException {
         OrderDetail od = new OrderDetail();
+        List<OrderDetail> listOd = new ArrayList<>();
         Review rv = new Review();
         Review savedReview = new Review();
         float point = 0;
+        int price = 0;
         if (rq.getOrder_id() != null && !rq.getProduct_id().equals("")) {
             od = orderDetailService.findFirstByProductProductIdOrderByOrderDetailIdAsc(rq.getProduct_id());
+            listOd = orderDetailService.findOrderDetailByOrderIdAndProductId(rq.getOrder_id(), rq.getProduct_id());
         }
-        if (od != null) {
+        if (od != null && listOd != null) {
            Orders order = orderService.findOrderByOrderId(od.getOrder_id());
             Customer customer = customerService.findCustomerById(customer_id);
             User user = userService.findUserById(customer.getUser_id());
-            point = (float) (order.getTotal_price()*0.08)/order.getTotal_quantity();
-            System.out.print("order_id" + order.getOrder_id() + "  " + point);
+            for(OrderDetail item : listOd){
+                System.err.println("pir = " + item.getPrice());
+                price = price + item.getPrice();
+            }
+            point = (float) (price*0.08);
+            System.out.print("price " + price + "    " + "point" + point);
             user.setPoints( (int)point + user.getPoints());
             if (!rq.getContent().equals("")) {
                 rv.setContent(rq.getContent());
