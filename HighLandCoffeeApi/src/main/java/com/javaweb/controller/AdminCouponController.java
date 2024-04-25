@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.Response;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -21,6 +24,7 @@ import com.javaweb.entity.User;
 import com.javaweb.exception.ProductException;
 import com.javaweb.exception.UserException;
 import com.javaweb.response.ApiResponse;
+import com.javaweb.response.EntityStatusResponse;
 import com.javaweb.response.ListEntityStatusResponse;
 import com.javaweb.service.CouponService;
 import com.javaweb.service.IImageService;
@@ -124,6 +128,16 @@ public class AdminCouponController {
             http = HttpStatus.CONFLICT;
         }
         return new ResponseEntity<>(res,http);
+    }
+
+    @GetMapping("/{coupon_id}/find")
+    public ResponseEntity<EntityStatusResponse> findCouponByIf(@PathVariable Long coupon_id) throws ProductException{
+        Coupon coupon = couponService.findById(coupon_id);
+        EntityStatusResponse res = new EntityStatusResponse<>();
+        res.setData(coupon);
+        res.setMessage("success");
+        res.setStatus(HttpStatus.OK.value());
+        return new ResponseEntity<>(res,HttpStatus.OK);
     }
     
 }

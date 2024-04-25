@@ -56,10 +56,10 @@ public class ReviewServiceImpl implements ReviewService {
             od = orderDetailService.findFirstByProductProductIdOrderByOrderDetailIdAsc(rq.getProduct_id());
         }
         if (od != null) {
-            Orders order = orderService.findOrderByOrderId(od.getOrder_id());
+           Orders order = orderService.findOrderByOrderId(od.getOrder_id());
             Customer customer = customerService.findCustomerById(customer_id);
             User user = userService.findUserById(customer.getUser_id());
-            point = (float) (order.getTotal_price()*0.08);
+            point = (float) (order.getTotal_price()*0.08)/order.getTotal_quantity();
             System.out.print("order_id" + order.getOrder_id() + "  " + point);
             user.setPoints( (int)point + user.getPoints());
             if (!rq.getContent().equals("")) {
