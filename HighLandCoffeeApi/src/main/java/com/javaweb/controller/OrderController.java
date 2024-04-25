@@ -23,6 +23,7 @@ import com.javaweb.exception.UserException;
 import com.javaweb.reponsitory.OrderRepo;
 import com.javaweb.request.BuyNowRequest;
 import com.javaweb.response.ApiResponse;
+import com.javaweb.response.EntityStatusResponse;
 import com.javaweb.response.ListEntityStatusResponse;
 import com.javaweb.service.CustomerService;
 import com.javaweb.service.OrderService;
@@ -78,24 +79,24 @@ public class OrderController {
 	}
 	
 	@PostMapping("/buynow")
-	public ResponseEntity<ApiResponse> buynowOrderHandler(@RequestHeader("Authorization") String jwt, @RequestBody BuyNowRequest rq) throws UserException{
+	public ResponseEntity<EntityStatusResponse> buynowOrderHandler(@RequestHeader("Authorization") String jwt, @RequestBody BuyNowRequest rq) throws UserException{
 		User user = userService.findUserByJwt(jwt);
 		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
 		Orders orders = orderService.orderBuyNow(rq,customer.getCustomer_id());
-		ApiResponse response = new ApiResponse();
+		EntityStatusResponse response = new EntityStatusResponse();
 		HttpStatus http = null;
 		if(orders != null) {
-			response.setCode(HttpStatus.CREATED.value());
+			response.setData(orders);
 			response.setMessage("created order success");
-			response.setStatus(true);	
-			http = HttpStatus.OK;
+			response.setStatus(HttpStatus.CREATED.value());	
+			http = HttpStatus.CREATED;
 		}else {
-			response.setCode(HttpStatus.BAD_REQUEST.value());
+			response.setData(null);
 			response.setMessage("created order fail");
-			response.setStatus(false);
+			response.setStatus(HttpStatus.CONFLICT.value());	
 			http = HttpStatus.CONFLICT;
 		}
-		return new ResponseEntity<ApiResponse>(response,http);
+		return new ResponseEntity<EntityStatusResponse>(response,http);
 	}
 	
 	@GetMapping("/size/all")
