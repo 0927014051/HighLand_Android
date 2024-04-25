@@ -50,6 +50,9 @@ public class Coupon {
 	private int minimum_value;
 
 	@Column
+	private int use_value;
+
+	@Column
 	private String status;
 
 	@Column
@@ -214,10 +217,12 @@ public class Coupon {
 		this.staff_updated = staff_updated;
 	}
 
+
+
 	public Coupon(Long coupon_id, String image, Date start_date, Date end_date, String type, String content,
-			int quantity, int remaining_amount, int minimum_value, String status, LocalDateTime created_at,
-			LocalDateTime updated_at, Long created_by, Long updated_by, List<CouponDetail> coupon_detail,
-			Staff staff_created, Staff staff_updated) {
+			int quantity, int remaining_amount, int minimum_value, int use_value, String status,
+			LocalDateTime created_at, LocalDateTime updated_at, Long created_by, Long updated_by,
+			List<CouponDetail> coupon_detail, Staff staff_created, Staff staff_updated) {
 		this.coupon_id = coupon_id;
 		this.image = image;
 		this.start_date = start_date;
@@ -227,6 +232,7 @@ public class Coupon {
 		this.quantity = quantity;
 		this.remaining_amount = remaining_amount;
 		this.minimum_value = minimum_value;
+		this.use_value = use_value;
 		this.status = status;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
@@ -238,6 +244,14 @@ public class Coupon {
 	}
 
 	public Coupon() {
+	}
+
+	public int getUse_value() {
+		return use_value;
+	}
+
+	public void setUse_value(int use_value) {
+		this.use_value = use_value;
 	}
 
 
