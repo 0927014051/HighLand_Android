@@ -29,12 +29,10 @@ public class CouponDetail {
 	@Column
 	private String status;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "customer_id", updatable = false, insertable = false)
 	private Customer customer;
 	
-	@JsonIgnore
 	@ManyToOne 
 	@JoinColumn(name = "coupon_id",insertable =  false, updatable = false)
 	private Coupon coupon;
