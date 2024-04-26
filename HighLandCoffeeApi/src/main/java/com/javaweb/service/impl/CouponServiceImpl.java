@@ -34,7 +34,8 @@ public class CouponServiceImpl implements CouponService{
        createCoupon.setEnd_date(coupon.getEnd_date());
        createCoupon.setMinimum_value(coupon.getMinimum_value());
        createCoupon.setQuantity(coupon.getQuantity());
-       createCoupon.setRemaining_amount(coupon.getRemaining_amount());
+       createCoupon.setRemaining_amount(coupon.getQuantity());
+       createCoupon.setUse_value(coupon.getUse_value());
        createCoupon.setStart_date(coupon.getStart_date());
        createCoupon.setStatus(coupon.getStatus());
        createCoupon.setImage(coupon.getImage());
