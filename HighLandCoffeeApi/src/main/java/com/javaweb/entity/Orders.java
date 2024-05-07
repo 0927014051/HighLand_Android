@@ -1,5 +1,7 @@
 package com.javaweb.entity;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +49,9 @@ public class Orders {
 	
 	@Column
 	private Long customer_id;
-	
+
+	@Column
+	private Long staff_id;
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id",updatable = false, insertable = false)
@@ -60,7 +64,10 @@ public class Orders {
 	@OneToMany(mappedBy = "order")
 	private List<OrderDetail> order_detail;
 
-	
+	@ManyToOne
+	@JoinColumn(name = "staff_id",updatable = false, insertable = false)
+	private Staff staff;
+
 	public Long getOrder_id() {
 		return order_id;
 	}
@@ -143,21 +150,20 @@ public class Orders {
 		this.create_at = create_at;
 	}
 
-	
+	public Long getStaff_id() {
+		return staff_id;
+	}
 
-	public Orders(Long order_id, int total_price, int total_quantity, LocalDateTime update_at, int status, String note,
-			LocalDateTime create_at, Long customer_id, Customer customer, Bill bill, List<OrderDetail> order_detail) {
-		this.order_id = order_id;
-		this.total_price = total_price;
-		this.total_quantity = total_quantity;
-		this.update_at = update_at;
-		this.status = status;
-		this.note = note;
-		this.create_at = create_at;
-		this.customer_id = customer_id;
-		this.customer = customer;
-		this.bill = bill;
-		this.order_detail = order_detail;
+	public void setStaff_id(Long staff_id) {
+		this.staff_id = staff_id;
+	}
+
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
 	}
 
 	public String getNote() {
@@ -171,6 +177,24 @@ public class Orders {
 	public Orders() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public Orders(Long order_id, int total_price, int total_quantity, LocalDateTime update_at, int status, String note,
+			LocalDateTime create_at, Long customer_id, Long staff_id, Customer customer, Bill bill,
+			List<OrderDetail> order_detail, Staff staff) {
+		this.order_id = order_id;
+		this.total_price = total_price;
+		this.total_quantity = total_quantity;
+		this.update_at = update_at;
+		this.status = status;
+		this.note = note;
+		this.create_at = create_at;
+		this.customer_id = customer_id;
+		this.staff_id = staff_id;
+		this.customer = customer;
+		this.bill = bill;
+		this.order_detail = order_detail;
+		this.staff = staff;
 	}
 
 	

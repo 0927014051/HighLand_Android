@@ -105,6 +105,9 @@ public class Staff {
 	@OneToMany(mappedBy = "staff_updated")
 	private List<Coupon> coupon_updated;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "staff")
+	private List<Orders> orders;
 	
 	public Long getStaff_id() {
 		return staff_id;
@@ -308,14 +311,13 @@ public class Staff {
 		this.coupon_updated = coupon_updated;
 	}
 
+	
 	public Staff(Long staff_id, String firstname, String lastname, Date birthday, String email, String phone,
 			String address, LocalDateTime created_at, LocalDateTime updated_at, String cccd, String tax_id, long salary,
-			Long user_id, List<Bill> bill,
-			List<Size> size_created, List<Size> size_updated, List<Category> category_updated,
-			List<Category> category_created, List<Product> product_updated, List<Product> product_created,
-			List<PriceUpdateDetail> price_update_detail, User user, List<Coupon> coupon_created,
-			List<Coupon> coupon_updated) {
-		super();
+			Long user_id, List<Bill> bill, List<Size> size_created, List<Size> size_updated,
+			List<Category> category_updated, List<Category> category_created, List<Product> product_updated,
+			List<Product> product_created, List<PriceUpdateDetail> price_update_detail, User user,
+			List<Coupon> coupon_created, List<Coupon> coupon_updated, List<Orders> orders) {
 		this.staff_id = staff_id;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -340,11 +342,20 @@ public class Staff {
 		this.user = user;
 		this.coupon_created = coupon_created;
 		this.coupon_updated = coupon_updated;
+		this.orders = orders;
 	}
 
 	public Staff() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public List<Orders> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Orders> orders) {
+		this.orders = orders;
 	}
 
 	

@@ -70,7 +70,7 @@ public class OrderController {
 				}else {
 					res.setData(orders);
 					res.setMessage("create order fail");
-					res.setStatus(HttpStatus.BAD_REQUEST.value());
+					res.setStatus(HttpStatus.BAD_REQUEST .value());
 					http = HttpStatus.BAD_REQUEST;
 				}
 			}

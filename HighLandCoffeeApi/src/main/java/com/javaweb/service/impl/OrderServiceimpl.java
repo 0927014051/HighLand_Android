@@ -152,9 +152,9 @@ public class OrderServiceimpl implements OrderService {
 
 			} else {
 				update.setStatus(status);
-
 			}
 		}
+		update.setStaff_id(staff_id);
 		return orderRepo.save(update);
 	}
 	@Override
