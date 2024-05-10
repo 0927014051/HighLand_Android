@@ -3,6 +3,8 @@ package com.javaweb.controller;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+
+import org.apache.tomcat.jni.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,6 +58,8 @@ public class AuthController {
 	private StaffService staffService;
 	private RoleService roleService;
 	private UserService userService;
+	private String usernameLogout = "";
+	private String passwordLogout = "";
 
 	public AuthController(UserRepo userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider,
 			CustomerUserDetails customUserDetails, CartService cartService, CustomerService customerService,
@@ -147,6 +152,8 @@ public class AuthController {
 	public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest) {
 		String username = loginRequest.getUsername();
 		String password = loginRequest.getPassword();
+		usernameLogout = username;
+		passwordLogout = password;
 		Authentication authentication = authenticate(username, password);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String tokenSevenday = jwtTokenProvider.generateAccessToken(authentication);
@@ -172,6 +179,20 @@ public class AuthController {
 		return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
 	}
 	
+	@PostMapping("/logout")
+	public ResponseEntity<AuthResponse> logout(@RequestHeader("Authorization") String jwt) throws UserException {
+		String newtoken = jwtTokenProvider.invalidateToken(jwt);
+		User user = userService.findUserByJwt(jwt);
+		user.setAccessToken(newtoken);
+		user.setRefreshToken(newtoken);
+		user.setExpiredAccessToken(Timestamp.valueOf(LocalDateTime.now()));
+		user.setExpiredRefreshToken(Timestamp.valueOf(LocalDateTime.now()));
+		userRepository.save(user);
+		AuthResponse res = new AuthResponse();
+		res.setStatus(true);
+		res.setToken(newtoken);
+		return new ResponseEntity<AuthResponse>(res, HttpStatus.OK);
+	}
 	@PutMapping("/change/{username}")
 	public ResponseEntity<ApiResponse> changePasswordUser(@PathVariable String username, @RequestBody User user){
 		ApiResponse res = new ApiResponse();

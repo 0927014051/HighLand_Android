@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -43,6 +44,29 @@ public class JwtTokenProvider {
     .signWith(key)
     .compact();
 		return jwt;
+	}
+
+	public String invalidateToken(String token) {
+			// Lấy thông tin từ token
+			Jws<Claims> claimsJws = Jwts.parserBuilder()
+					.setSigningKey(key)
+					.build()
+					.parseClaimsJws("eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTUzMTU3NzMsImV4cCI6MTcxNTkyMDU3MywidXNlcm5hbWUiOiIrODQ4NDUwMDI0MDUiLCJhdXRob3JpdGllcyI6IkNVU1RPTUVSIn0.bgOgTwi9kJKYf8FBdzrpgRB_vSuo-XGyeqsYKZjyz9LDQ_UDE0OBg-pm2jFiF0SR");
+	
+			// // Lấy thời điểm hết hạn từ thông tin của token
+			// Date expiration = claimsJws.getBody().getExpiration();
+	
+			// // Đặt thời gian hết hạn của token là thời điểm hiện tại
+			claimsJws.getBody().setExpiration(new Date());
+	
+			// // Tạo token mới với thời gian hết hạn đã hết
+			String newToken = Jwts.builder()
+					.setClaims(claimsJws.getBody())
+					.signWith(key)
+					.compact();
+	return newToken;
+			//return newToken;
+		
 	}
 
 	// public String generateRefreshToken(Authentication auth) {
