@@ -35,24 +35,4 @@ public interface OrderService {
 
 	List<Orders> findOrderByStatus(String status);
 	List<Orders> findOrderByDate(LocalDate dateStart, LocalDate dateEnd);
-//	public Orders findOrdersById(Long orderId) throws OrdersException;
-//	
-//	public List<Orders> usersOrdersHistory(Long userId);
-//	
-//	public Orders placedOrders(Long orderId) throws OrdersException;
-//	
-//	public Orders confirmedOrders(Long orderId)throws OrdersException;
-//	
-//	public Orders shippedOrders(Long orderId) throws OrdersException;
-	
-//	public Orders deliveredOrders(Long orderId) throws OrdersException;
-//	
-//	public Orders cancledOrders(Long orderId) throws OrdersException;
-//	
-//	public List<Orders>getAllOrderss();
-//	
-//	public Orders deleteOrders(Long orderId) throws OrdersException;
-//
-//	public Orders updateOrders (Long orderId) throws OrdersException;
-//	public Orders successOrders (Long orderId) throws OrdersException;
 }
