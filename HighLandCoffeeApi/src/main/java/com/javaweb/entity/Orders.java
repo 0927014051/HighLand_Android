@@ -1,7 +1,5 @@
 package com.javaweb.entity;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
