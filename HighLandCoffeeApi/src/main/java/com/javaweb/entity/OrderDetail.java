@@ -34,7 +34,10 @@ public class OrderDetail {
 	
 	@Column
 	private String topping;
-	
+
+	@Column
+	private String review_status;
+
 	@Column
 	private Long order_id;
 
@@ -139,20 +142,26 @@ public class OrderDetail {
 		this.topping = topping;
 	}
 
-	
-	public OrderDetail(Long order_detail_id, int quantity, int price, String size, String topping, Long order_id,
-			String product_id, Orders order, Product product, Review review) {
-		super();
+	public OrderDetail(Long order_detail_id, int quantity, int price, String size, String topping, String review_status, Long order_id, String product_id, Orders order, Product product, Review review) {
 		this.order_detail_id = order_detail_id;
 		this.quantity = quantity;
 		this.price = price;
 		this.size = size;
 		this.topping = topping;
+		this.review_status = review_status;
 		this.order_id = order_id;
 		this.product_id = product_id;
 		this.order = order;
 		this.product = product;
 		this.review = review;
+	}
+
+	public String getReview_status() {
+		return review_status;
+	}
+
+	public void setReview_status(String review_status) {
+		this.review_status = review_status;
 	}
 
 	public OrderDetail() {

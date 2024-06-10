@@ -21,6 +21,8 @@ public interface OrderDetailRepo extends JpaRepository<OrderDetail, Long>{
 
     @Query("SELECT DISTINCT o FROM OrderDetail o WHERE o.order_detail_id = (SELECT MIN(od.order_detail_id) FROM OrderDetail od WHERE od.product.product_id = :product_id) ORDER BY o.order_detail_id ASC")
     OrderDetail findFirstByProductProductIdOrderByOrderDetailIdAsc(String product_id);
+
+	
 }
 
 

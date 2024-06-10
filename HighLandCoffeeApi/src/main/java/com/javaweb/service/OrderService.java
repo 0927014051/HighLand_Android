@@ -22,7 +22,7 @@ public interface OrderService {
 	
 	public Orders findOrderByOrderId(Long orderId) throws ProductException;
 	
-	public Orders orderBuyNow(BuyNowRequest rq,Long customer_id);
+	public Orders orderBuyNow(BuyNowRequest rq,Long customer_id, String address);
 	
     public List<StatisticRequest> getTotalAmountByMonth(int year);
     

@@ -99,7 +99,7 @@ public class OrderServiceimpl implements OrderService {
 	}
 
 	@Override
-	public Orders orderBuyNow(BuyNowRequest rq,Long customer_id) {
+	public Orders orderBuyNow(BuyNowRequest rq,Long customer_id, String address) {
 
 		Orders orders = new Orders();
 		orders.setCreate_at(LocalDateTime.now());
@@ -108,6 +108,7 @@ public class OrderServiceimpl implements OrderService {
 		orders.setTotal_price(0);
 		orders.setTotal_quantity(0);
 		orders.setUpdate_at(LocalDateTime.now());
+		orders.setAddress(address);
 		Orders createdOrders = orderRepo.save(orders);
 		if (createdOrders != null) {
 			OrderDetail orderDetail = new OrderDetail();

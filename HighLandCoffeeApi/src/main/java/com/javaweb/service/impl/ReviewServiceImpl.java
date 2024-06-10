@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import com.javaweb.reponsitory.OrderDetailRepo;
 import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
@@ -32,18 +33,17 @@ public class ReviewServiceImpl implements ReviewService {
     private OrderService orderService;
     private UserService userService;
     private CustomerService customerService;
+    private OrderDetailRepo orderDetailRepo;
 
-    
 
-    public ReviewServiceImpl(OrderDetailService orderDetailService, ReviewRepo reviewRepo,OrderService orderService,UserService userService,CustomerService customerService) {
+    public ReviewServiceImpl(OrderDetailService orderDetailService, ReviewRepo reviewRepo, OrderService orderService, UserService userService, CustomerService customerService, OrderDetailRepo orderDetailRepo) {
         this.orderDetailService = orderDetailService;
         this.reviewRepo = reviewRepo;
         this.orderService = orderService;
         this.userService = userService;
         this.customerService = customerService;
+        this.orderDetailRepo = orderDetailRepo;
     }
-
-
 
     @Override
     @Transactional
@@ -65,6 +65,8 @@ public class ReviewServiceImpl implements ReviewService {
             for(OrderDetail item : listOd){
                 System.err.println("pir = " + item.getPrice());
                 price = price + item.getPrice();
+                item.setReview_status("Active");
+                orderDetailRepo.save(item);
             }
             point = (float) (price*0.08);
             System.out.print("price " + price + "    " + "point" + point);

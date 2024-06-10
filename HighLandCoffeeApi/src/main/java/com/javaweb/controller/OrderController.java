@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+import com.javaweb.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javaweb.entity.Category;
-import com.javaweb.entity.Category_Size;
-import com.javaweb.entity.Customer;
-import com.javaweb.entity.Orders;
-import com.javaweb.entity.User;
 import com.javaweb.exception.UserException;
 import com.javaweb.reponsitory.OrderRepo;
 import com.javaweb.request.BuyNowRequest;
@@ -83,7 +79,7 @@ public class OrderController {
 	public ResponseEntity<EntityStatusResponse> buynowOrderHandler(@RequestHeader("Authorization") String jwt, @RequestBody BuyNowRequest rq) throws UserException{
 		User user = userService.findUserByJwt(jwt);
 		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
-		Orders orders = orderService.orderBuyNow(rq,customer.getCustomer_id());
+		Orders orders = orderService.orderBuyNow(rq,customer.getCustomer_id(),customer.getAddress());
 		EntityStatusResponse response = new EntityStatusResponse();
 		HttpStatus http = null;
 		if(orders != null) {
@@ -122,9 +118,7 @@ public class OrderController {
 	@GetMapping("/all")
 	public ResponseEntity<ListEntityStatusResponse> getAllOrderByJwt(@RequestHeader("Authorization") String jwt) throws UserException{
 		User user = userService.findUserByJwt(jwt);
-		System.out.println(user.getUser_id());
 		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
-		System.out.println(customer.getCustomer_id());
 		List<Orders> allOrder = orderRepo.findOrderByCustomerId(customer.getCustomer_id());
 		ListEntityStatusResponse res = new ListEntityStatusResponse();
 		HttpStatus http = null;
@@ -153,7 +147,6 @@ public class OrderController {
 		res.setStatus(HttpStatus.OK.value());
 		return new ResponseEntity<>(res,HttpStatus.OK);
 	}
-	
 
 }
 
