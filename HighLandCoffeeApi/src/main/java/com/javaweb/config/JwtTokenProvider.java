@@ -48,10 +48,11 @@ public class JwtTokenProvider {
 
 	public String invalidateToken(String token) {
 			// Lấy thông tin từ token
+		String token1 = token.substring(7);
 			Jws<Claims> claimsJws = Jwts.parserBuilder()
 					.setSigningKey(key)
 					.build()
-					.parseClaimsJws("eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTUzMTU3NzMsImV4cCI6MTcxNTkyMDU3MywidXNlcm5hbWUiOiIrODQ4NDUwMDI0MDUiLCJhdXRob3JpdGllcyI6IkNVU1RPTUVSIn0.bgOgTwi9kJKYf8FBdzrpgRB_vSuo-XGyeqsYKZjyz9LDQ_UDE0OBg-pm2jFiF0SR");
+					.parseClaimsJws(token1);
 	
 			// // Lấy thời điểm hết hạn từ thông tin của token
 			// Date expiration = claimsJws.getBody().getExpiration();
