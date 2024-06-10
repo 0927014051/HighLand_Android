@@ -47,6 +47,9 @@ public class Review {
 	
 	@Column
 	private Long created_by;
+
+	@Column
+	private float point_review;
 	
 	@JsonIgnore
 	@OneToOne
@@ -151,9 +154,15 @@ public class Review {
 		this.created_by = created_by;
 	}
 
-	public Review(Long review_id, int star, String content, String status, LocalDateTime created_at,
-			LocalDateTime updated_at, Long order_detail_id, String product_id, Long created_by,
-			OrderDetail order_detail, Product product, Customer customer) {
+	public float getPoint_review() {
+		return point_review;
+	}
+
+	public void setPoint_review(float point_review) {
+		this.point_review = point_review;
+	}
+
+	public Review(Long review_id, int star, String content, String status, LocalDateTime created_at, LocalDateTime updated_at, Long order_detail_id, String product_id, Long created_by, float point_review, OrderDetail order_detail, Product product, Customer customer) {
 		this.review_id = review_id;
 		this.star = star;
 		this.content = content;
@@ -163,6 +172,7 @@ public class Review {
 		this.order_detail_id = order_detail_id;
 		this.product_id = product_id;
 		this.created_by = created_by;
+		this.point_review = point_review;
 		this.order_detail = order_detail;
 		this.product = product;
 		this.customer = customer;

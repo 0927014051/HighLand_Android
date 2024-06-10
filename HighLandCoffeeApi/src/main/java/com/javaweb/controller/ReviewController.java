@@ -1,5 +1,6 @@
 package com.javaweb.controller;
 
+import com.javaweb.response.EntityStatusResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,21 +41,21 @@ public class ReviewController {
 
 
     @RequestMapping("/add")
-    public ResponseEntity<ApiResponse> createReviewCustomer(@RequestHeader("Authorization") String jwt, @RequestBody ReviewRequest rq) throws UserException{
+    public ResponseEntity<EntityStatusResponse> createReviewCustomer(@RequestHeader("Authorization") String jwt, @RequestBody ReviewRequest rq) throws UserException{
         User user = userService.findUserByJwt(jwt);
         Customer customer = customerService.findCustomerByUserId(user.getUser_id());
-        ApiResponse res = new ApiResponse();
+        EntityStatusResponse res = new EntityStatusResponse();
         HttpStatus http = null;
         try {
             Review createReview = reviewService.createReview(rq, customer.getCustomer_id());
-             res.setCode(HttpStatus.CREATED.value());
+             res.setData(createReview);
              res.setMessage("success");
-             res.setStatus(true);
+             res.setStatus(HttpStatus.CREATED.value());
             http = HttpStatus.CREATED;
         } catch (Exception e) {
-            res.setCode(HttpStatus.CONFLICT.value());
+            res.setData(null);
             res.setMessage(e.getMessage());
-            res.setStatus(false);
+            res.setStatus(HttpStatus.CONFLICT.value());
             http = HttpStatus.CONFLICT;
         }
         return new ResponseEntity<>(res,http);

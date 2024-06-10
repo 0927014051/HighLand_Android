@@ -69,6 +69,7 @@ public class ReviewServiceImpl implements ReviewService {
             point = (float) (price*0.08);
             System.out.print("price " + price + "    " + "point" + point);
             user.setPoints( (int)point + user.getPoints());
+            rv.setPoint_review((int)point );
             if (!rq.getContent().equals("")) {
                 rv.setContent(rq.getContent());
             }

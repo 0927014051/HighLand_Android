@@ -122,7 +122,9 @@ public class OrderController {
 	@GetMapping("/all")
 	public ResponseEntity<ListEntityStatusResponse> getAllOrderByJwt(@RequestHeader("Authorization") String jwt) throws UserException{
 		User user = userService.findUserByJwt(jwt);
+		System.out.println(user.getUser_id());
 		Customer customer = customerService.findCustomerByUserId(user.getUser_id());
+		System.out.println(customer.getCustomer_id());
 		List<Orders> allOrder = orderRepo.findOrderByCustomerId(customer.getCustomer_id());
 		ListEntityStatusResponse res = new ListEntityStatusResponse();
 		HttpStatus http = null;
@@ -134,10 +136,12 @@ public class OrderController {
 		}else {
 			res.setData(null);
 			res.setMessage("not found ");
+
+
 			res.setStatus(HttpStatus.CONFLICT.value());
 			http = HttpStatus.CONFLICT;
 		}
-		return new ResponseEntity<ListEntityStatusResponse>(res,http);
+		return new ResponseEntity<ListEntityStatusResponse>( res,HttpStatus.OK);
 	}
 
 	@GetMapping("/size/category")

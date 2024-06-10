@@ -49,6 +49,9 @@ public class Orders {
 	private Long customer_id;
 
 	@Column
+	private String address;
+
+	@Column
 	private Long staff_id;
 	
 	@ManyToOne
@@ -177,9 +180,15 @@ public class Orders {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Orders(Long order_id, int total_price, int total_quantity, LocalDateTime update_at, int status, String note,
-			LocalDateTime create_at, Long customer_id, Long staff_id, Customer customer, Bill bill,
-			List<OrderDetail> order_detail, Staff staff) {
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Orders(Long order_id, int total_price, int total_quantity, LocalDateTime update_at, int status, String note, LocalDateTime create_at, Long customer_id, String address, Long staff_id, Customer customer, Bill bill, List<OrderDetail> order_detail, Staff staff) {
 		this.order_id = order_id;
 		this.total_price = total_price;
 		this.total_quantity = total_quantity;
@@ -188,14 +197,11 @@ public class Orders {
 		this.note = note;
 		this.create_at = create_at;
 		this.customer_id = customer_id;
+		this.address = address;
 		this.staff_id = staff_id;
 		this.customer = customer;
 		this.bill = bill;
 		this.order_detail = order_detail;
 		this.staff = staff;
 	}
-
-	
-
-
 }
