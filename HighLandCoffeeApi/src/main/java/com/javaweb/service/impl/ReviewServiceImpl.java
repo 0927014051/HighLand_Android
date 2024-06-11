@@ -1,13 +1,17 @@
 package com.javaweb.service.impl;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import com.javaweb.reponsitory.OrderDetailRepo;
-import org.apache.tomcat.jni.Local;
+import com.javaweb.request.AvgReviewRequest;
+import com.javaweb.request.ReviewProductRequest;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.entity.Customer;
@@ -88,5 +92,36 @@ public class ReviewServiceImpl implements ReviewService {
         savedReview = reviewRepo.save(rv);
         return savedReview;
     }
+
+    @Override
+    public List<ReviewProductRequest> findReviewByProductIdAndCustomer(String productId) {
+        List<Object[]> results = reviewRepo.findReviewByProductIdAndCustomer(productId);
+        return results.stream()
+                .map(this::mapToReviewProductRequest)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AvgReviewRequest> findAverageStarAndCountByProductId(String productId) {
+        List<Object[]> results = reviewRepo.findAverageStarAndCountByProductId(productId);
+        return results.stream()
+                .map(this::mapToAvgReviewRequest)
+                .collect(Collectors.toList());
+    }
+
+    private ReviewProductRequest mapToReviewProductRequest(Object[] result) {
+        String product_id = (String) result[0];
+        BigDecimal star = (BigDecimal) result[1];
+        String content = (String)result[2];
+        String customer_name = (String) result[3];
+        return new ReviewProductRequest(product_id,star,content,customer_name);
+    }
+
+    private  AvgReviewRequest mapToAvgReviewRequest(Object[] result){
+        BigDecimal star = (BigDecimal) result[0];
+        BigInteger count = (BigInteger) result[1];
+        return new AvgReviewRequest(star,count);
+    }
+
 
 }
