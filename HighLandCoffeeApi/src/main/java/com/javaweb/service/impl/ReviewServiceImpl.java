@@ -2,8 +2,10 @@ package com.javaweb.service.impl;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -114,7 +116,8 @@ public class ReviewServiceImpl implements ReviewService {
         BigDecimal star = (BigDecimal) result[1];
         String content = (String)result[2];
         String customer_name = (String) result[3];
-        return new ReviewProductRequest(product_id,star,content,customer_name);
+        Timestamp date = (Timestamp ) result[4];
+        return new ReviewProductRequest(product_id,star,content,customer_name,date);
     }
 
     private  AvgReviewRequest mapToAvgReviewRequest(Object[] result){

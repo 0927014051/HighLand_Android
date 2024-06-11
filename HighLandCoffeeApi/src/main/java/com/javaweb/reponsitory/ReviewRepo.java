@@ -12,17 +12,18 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepo extends JpaRepository<Review,Long>{
-    @Query(value = "SELECT r.product_id as product_id, " +
+    @Query(value = "SELECT r.product_id AS product_id, " +
             "AVG(r.star) AS star, " +
-            "r.content as content, " +
-            "CONCAT(c.firstname, ' ', c.lastname) AS customer_name " +
+            "r.content AS content, " +
+            "CONCAT(c.firstname, ' ', c.lastname) AS customer_name, " +
+            "r.created_at AS date " +
             "FROM review r " +
             "JOIN customer c ON r.created_by = c.customer_id " +
-            "WHERE r.product_id = :product_id " +
-            "GROUP BY r.product_id, customer_name, r.content " +
+            "WHERE r.product_id = :productId " +
+            "GROUP BY r.product_id, customer_name, content, product_id, date " +
             "ORDER BY r.product_id DESC",
             nativeQuery = true)
-    List<Object[]> findReviewByProductIdAndCustomer(@Param("product_id") String product_id);
+    List<Object[]> findReviewByProductIdAndCustomer(@Param("productId") String productId);
 
     @Query(value = "SELECT AVG(r.star), COUNT(r.product_id) " +
             "FROM review r " +
