@@ -55,9 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
 			throws UserException, java.text.ParseException {
 		Customer findCustomer = findCustomerById(customer_id);
 		findCustomer.setAddress(customer.getAddress());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = sdf.parse(customer.getBirthday()); // Chuyển đổi từ String sang Date
-		findCustomer.setBirthday(date);
+
 		findCustomer.setCccd(customer.getCccd());
 		findCustomer.setEmail(customer.getEmail());
 		findCustomer.setFirstname(customer.getFirstname());
