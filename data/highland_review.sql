@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: localhost    Database: highland
+-- Host: 127.0.0.1    Database: highland
 -- ------------------------------------------------------
--- Server version	8.0.33
+-- Server version	8.4.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,6 +31,8 @@ CREATE TABLE `review` (
   `product_id` varchar(255) DEFAULT NULL,
   `star` int DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `point_review` float DEFAULT NULL,
   PRIMARY KEY (`review_id`),
   KEY `FKcssmlbw56qtna19798dsddo3t` (`created_by`),
   KEY `FKdoybou6u8c3hfn0bi5veayppo` (`order_detail_id`),
@@ -38,7 +40,7 @@ CREATE TABLE `review` (
   CONSTRAINT `FK8ldiblkvx92d9i5yn9qqeuk8j` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `FKcssmlbw56qtna19798dsddo3t` FOREIGN KEY (`created_by`) REFERENCES `customer` (`customer_id`),
   CONSTRAINT `FKdoybou6u8c3hfn0bi5veayppo` FOREIGN KEY (`order_detail_id`) REFERENCES `order_detail` (`order_detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,6 +49,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
+INSERT INTO `review` VALUES (4,'Ngon, chất lượng tốt','2024-06-11 15:35:08',1,1,'A40XV7',4,'2024-06-11 15:35:08','Active',4160);
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:36:36
+-- Dump completed on 2024-06-11 22:48:24

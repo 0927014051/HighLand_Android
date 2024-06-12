@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: localhost    Database: highland
+-- Host: 127.0.0.1    Database: highland
 -- ------------------------------------------------------
--- Server version	8.0.33
+-- Server version	8.4.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,7 +32,7 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`cart_id`),
   KEY `FKjkl19yyf10l5tb7j5npdhgy3b` (`customer_id`),
   CONSTRAINT `FKjkl19yyf10l5tb7j5npdhgy3b` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (1,'2024-04-07 10:46:22',1,81900,2,'2024-04-07 10:46:22'),(2,'2024-04-07 12:44:31',2,0,0,'2024-04-07 12:44:31'),(3,'2024-04-08 08:32:46',3,0,0,'2024-04-08 08:32:46');
+INSERT INTO `cart` VALUES (1,'2024-06-10 16:06:52',1,0,0,'2024-06-10 16:06:52');
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:36:36
+-- Dump completed on 2024-06-11 22:48:26

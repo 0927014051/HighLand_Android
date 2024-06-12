@@ -16,39 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `customer`
+-- Table structure for table `topping_category`
 --
 
-DROP TABLE IF EXISTS `customer`;
+DROP TABLE IF EXISTS `topping_category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `customer` (
-  `customer_id` bigint NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) DEFAULT NULL,
-  `birthday` datetime DEFAULT NULL,
-  `cccd` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `firstname` varchar(255) DEFAULT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `tax_id` varchar(255) DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `user_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`customer_id`),
-  KEY `FKf02v450jft6pirig8rrs40o4` (`user_id`),
-  CONSTRAINT `FKf02v450jft6pirig8rrs40o4` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `topping_category` (
+  `topping_category_id` bigint NOT NULL AUTO_INCREMENT,
+  `category_id` bigint DEFAULT NULL,
+  `topping_id` bigint DEFAULT NULL,
+  `topping_price` int DEFAULT NULL,
+  PRIMARY KEY (`topping_category_id`),
+  KEY `FKklju5qltno3hxsuvgu91q321` (`category_id`),
+  KEY `FK8bd02cehbg6lgs26pb879ayla` (`topping_id`),
+  CONSTRAINT `FK8bd02cehbg6lgs26pb879ayla` FOREIGN KEY (`topping_id`) REFERENCES `topping` (`topping_id`),
+  CONSTRAINT `FKklju5qltno3hxsuvgu91q321` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `customer`
+-- Dumping data for table `topping_category`
 --
 
-LOCK TABLES `customer` WRITE;
-/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'19/7A hem 360. Long Truong, Tp Thu Duc, Tp HCM','2002-07-25 00:00:00',NULL,'2024-06-10 16:06:52','thanhson12a12002@gmail.com','Trinh Thanh','Son','+84363000451',NULL,'2024-06-10 16:06:52',11);
-/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
+LOCK TABLES `topping_category` WRITE;
+/*!40000 ALTER TABLE `topping_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topping_category` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -60,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-11 22:48:23
+-- Dump completed on 2024-06-11 22:48:26

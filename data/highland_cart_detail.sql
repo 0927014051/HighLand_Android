@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: localhost    Database: highland
+-- Host: 127.0.0.1    Database: highland
 -- ------------------------------------------------------
--- Server version	8.0.33
+-- Server version	8.4.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -35,7 +35,7 @@ CREATE TABLE `cart_detail` (
   KEY `FKcbuccx6hveumo5fd7rsl1knq5` (`product_id`),
   CONSTRAINT `FKcbuccx6hveumo5fd7rsl1knq5` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `FKnkmyjg78fg6va4qmlqbhhjbm6` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,6 @@ CREATE TABLE `cart_detail` (
 
 LOCK TABLES `cart_detail` WRITE;
 /*!40000 ALTER TABLE `cart_detail` DISABLE KEYS */;
-INSERT INTO `cart_detail` VALUES (16,1,42900,'FCDMHT',1,'L',NULL),(17,1,39000,'FCDMHT',1,'M',NULL);
 /*!40000 ALTER TABLE `cart_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:36:36
+-- Dump completed on 2024-06-11 22:48:23

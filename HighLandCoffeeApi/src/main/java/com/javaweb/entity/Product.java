@@ -86,8 +86,7 @@ public class Product {
 
 	@OneToMany(mappedBy = "product")
 	private List<PriceUpdateDetail> price_update_detail;
-
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "product")
 	private List<Review> review;
 

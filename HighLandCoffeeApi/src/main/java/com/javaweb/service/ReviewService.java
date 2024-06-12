@@ -3,6 +3,7 @@ package com.javaweb.service;
 import com.javaweb.entity.Review;
 import com.javaweb.exception.ProductException;
 import com.javaweb.exception.UserException;
+import com.javaweb.request.AllAvgStarReview;
 import com.javaweb.request.AvgReviewRequest;
 import com.javaweb.request.ReviewRequest;
 import com.javaweb.request.ReviewProductRequest;
@@ -17,5 +18,7 @@ public interface ReviewService {
     List<ReviewProductRequest> findReviewByProductIdAndCustomer(@Param("product_id") String productId);
 
     List<AvgReviewRequest> findAverageStarAndCountByProductId(@Param("productId") String productId);
+
+    List<AllAvgStarReview> findAverageStar();
 
 }

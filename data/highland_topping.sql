@@ -16,39 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `customer`
+-- Table structure for table `topping`
 --
 
-DROP TABLE IF EXISTS `customer`;
+DROP TABLE IF EXISTS `topping`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `customer` (
-  `customer_id` bigint NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) DEFAULT NULL,
-  `birthday` datetime DEFAULT NULL,
-  `cccd` varchar(255) DEFAULT NULL,
+CREATE TABLE `topping` (
+  `topping_id` bigint NOT NULL AUTO_INCREMENT,
   `created_at` datetime DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `firstname` varchar(255) DEFAULT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `tax_id` varchar(255) DEFAULT NULL,
+  `created_by` bigint DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `topping_name` varchar(255) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `user_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`customer_id`),
-  KEY `FKf02v450jft6pirig8rrs40o4` (`user_id`),
-  CONSTRAINT `FKf02v450jft6pirig8rrs40o4` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `updated_by` bigint DEFAULT NULL,
+  PRIMARY KEY (`topping_id`),
+  KEY `FKc4avldtbntvug3qoth5tqpvvb` (`created_by`),
+  KEY `FK9wm4dw2vjtt5ynn2nrfwjqc2n` (`updated_by`),
+  CONSTRAINT `FK9wm4dw2vjtt5ynn2nrfwjqc2n` FOREIGN KEY (`updated_by`) REFERENCES `staff` (`staff_id`),
+  CONSTRAINT `FKc4avldtbntvug3qoth5tqpvvb` FOREIGN KEY (`created_by`) REFERENCES `staff` (`staff_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `customer`
+-- Dumping data for table `topping`
 --
 
-LOCK TABLES `customer` WRITE;
-/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'19/7A hem 360. Long Truong, Tp Thu Duc, Tp HCM','2002-07-25 00:00:00',NULL,'2024-06-10 16:06:52','thanhson12a12002@gmail.com','Trinh Thanh','Son','+84363000451',NULL,'2024-06-10 16:06:52',11);
-/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
+LOCK TABLES `topping` WRITE;
+/*!40000 ALTER TABLE `topping` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topping` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

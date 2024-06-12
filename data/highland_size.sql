@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: localhost    Database: highland
+-- Host: 127.0.0.1    Database: highland
 -- ------------------------------------------------------
--- Server version	8.0.33
+-- Server version	8.4.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -35,7 +35,7 @@ CREATE TABLE `size` (
   KEY `FKrcpvu0ncr1tdyyk7m3dluuukr` (`updated_by`),
   CONSTRAINT `FKrcpvu0ncr1tdyyk7m3dluuukr` FOREIGN KEY (`updated_by`) REFERENCES `staff` (`staff_id`),
   CONSTRAINT `FKtfks25gqd0so8i4iynmb9pl` FOREIGN KEY (`created_by`) REFERENCES `staff` (`staff_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `size` (
 
 LOCK TABLES `size` WRITE;
 /*!40000 ALTER TABLE `size` DISABLE KEYS */;
-INSERT INTO `size` VALUES (5,'2024-04-08 05:58:13',1,'L',1,'2024-04-08 05:58:13',NULL),(6,'2024-04-08 05:59:26',1,'M',1,'2024-04-08 05:59:26',NULL);
+INSERT INTO `size` VALUES (1,NULL,NULL,'S',NULL,NULL,NULL),(2,NULL,NULL,'M',NULL,NULL,NULL),(3,NULL,NULL,'L',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `size` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:36:36
+-- Dump completed on 2024-06-11 22:48:23

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: localhost    Database: highland
+-- Host: 127.0.0.1    Database: highland
 -- ------------------------------------------------------
--- Server version	8.0.33
+-- Server version	8.4.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,7 +39,7 @@ CREATE TABLE `staff` (
   PRIMARY KEY (`staff_id`),
   KEY `FKsh01rx13s8dvl567sqipoxb04` (`user_id`),
   CONSTRAINT `FKsh01rx13s8dvl567sqipoxb04` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,7 +48,7 @@ CREATE TABLE `staff` (
 
 LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (1,'Viet Nam','2002-07-24 17:00:00','12334443','2024-04-07 12:48:46','son@gmail.com','Trinh Thanh','Son','+84979345190',0,'1312312','2024-04-08 06:59:52',3);
+INSERT INTO `staff` VALUES (1,NULL,NULL,NULL,'2024-04-08 03:33:50',NULL,NULL,NULL,'+8462221035',0,NULL,'2024-04-08 03:33:50',1),(2,NULL,NULL,NULL,'2024-04-25 04:52:57',NULL,NULL,NULL,'033854601',0,NULL,'2024-04-25 04:52:57',9);
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:36:36
+-- Dump completed on 2024-06-11 22:48:26

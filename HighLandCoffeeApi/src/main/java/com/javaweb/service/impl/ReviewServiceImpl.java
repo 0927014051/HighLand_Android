@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import com.javaweb.reponsitory.OrderDetailRepo;
+import com.javaweb.request.AllAvgStarReview;
 import com.javaweb.request.AvgReviewRequest;
 import com.javaweb.request.ReviewProductRequest;
 import org.springframework.stereotype.Service;
@@ -124,6 +125,20 @@ public class ReviewServiceImpl implements ReviewService {
         BigDecimal star = (BigDecimal) result[0];
         BigInteger count = (BigInteger) result[1];
         return new AvgReviewRequest(star,count);
+    }
+
+    private AllAvgStarReview maptOAllAvgStarReview(Object[] result){
+        String product_id = (String) result[0];
+        BigDecimal star = (BigDecimal) result[1];
+        return new AllAvgStarReview(product_id, star);
+    }
+
+    @Override
+    public List<AllAvgStarReview> findAverageStar() {
+        List<Object[]> results = reviewRepo.findAverageStar();
+        return results.stream()
+                .map(this::maptOAllAvgStarReview)
+                .collect(Collectors.toList());
     }
 
 

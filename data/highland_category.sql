@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: localhost    Database: highland
+-- Host: 127.0.0.1    Database: highland
 -- ------------------------------------------------------
--- Server version	8.0.33
+-- Server version	8.4.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -36,7 +36,7 @@ CREATE TABLE `category` (
   KEY `FKb9guwg9hy298s7cw76rnn2y9u` (`updated_by`),
   CONSTRAINT `FKb9guwg9hy298s7cw76rnn2y9u` FOREIGN KEY (`updated_by`) REFERENCES `staff` (`staff_id`),
   CONSTRAINT `FKdi2qqxyownqhwb5hjencf10bj` FOREIGN KEY (`created_by`) REFERENCES `staff` (`staff_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'Trà',NULL,NULL,'tra','Active',NULL,NULL),(2,'Cà Phê',NULL,NULL,'ca-phe','Active',NULL,NULL),(3,'Freeze',NULL,NULL,'freeze','Active',NULL,NULL);
+INSERT INTO `category` VALUES (1,'Phindi',NULL,NULL,'phindi','Active',NULL,NULL),(2,'Cà phê','2024-04-08 03:41:50',1,'ca-phe','Active','2024-04-08 03:41:50',1),(3,'Trà','2024-04-08 03:42:24',1,'tra','Active','2024-04-08 03:42:24',1),(4,'Freeze','2024-04-08 03:42:34',1,'freeze','Active','2024-04-08 03:42:34',1),(5,'Bánh','2024-04-23 06:02:50',1,'banh','Active','2024-04-23 06:02:50',1);
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-13  2:36:37
+-- Dump completed on 2024-06-11 22:48:26

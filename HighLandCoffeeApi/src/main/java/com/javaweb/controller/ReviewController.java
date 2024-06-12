@@ -1,5 +1,6 @@
 package com.javaweb.controller;
 
+import com.javaweb.request.AllAvgStarReview;
 import com.javaweb.request.AvgReviewRequest;
 import com.javaweb.response.EntityStatusResponse;
 import com.javaweb.response.ListEntityStatusResponse;
@@ -73,6 +74,16 @@ public class ReviewController {
     public ResponseEntity<ListEntityStatusResponse> getReviewProductAvg(@PathVariable("product_id") String product_id){
         ListEntityStatusResponse res = new ListEntityStatusResponse();
         List<AvgReviewRequest> rv = reviewService.findAverageStarAndCountByProductId(product_id);
+        res.setData(rv);
+        res.setMessage("success");
+        res.setStatus(HttpStatus.OK.value());
+        return new ResponseEntity<>(res,HttpStatus.OK);
+    }
+
+    @GetMapping("/avg/all")
+    public ResponseEntity<ListEntityStatusResponse> getAllAvgReview(){
+        ListEntityStatusResponse res = new ListEntityStatusResponse();
+        List<AllAvgStarReview> rv = reviewService.findAverageStar();
         res.setData(rv);
         res.setMessage("success");
         res.setStatus(HttpStatus.OK.value());

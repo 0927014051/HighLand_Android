@@ -32,4 +32,8 @@ public interface ReviewRepo extends JpaRepository<Review,Long>{
             "ORDER BY r.product_id DESC",
             nativeQuery = true)
     List<Object[]> findAverageStarAndCountByProductId(@Param("productId") String productId);
+
+    @Query(value = "SELECT r.product_id ,Avg(star) FROM review r group by r.product_id",nativeQuery = true)
+    List<Object[]> findAverageStar();
+
 }
