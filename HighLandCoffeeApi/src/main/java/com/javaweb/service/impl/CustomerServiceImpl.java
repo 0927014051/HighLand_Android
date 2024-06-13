@@ -55,7 +55,6 @@ public class CustomerServiceImpl implements CustomerService {
 			throws UserException, java.text.ParseException {
 		Customer findCustomer = findCustomerById(customer_id);
 		findCustomer.setAddress(customer.getAddress());
-
 		findCustomer.setCccd(customer.getCccd());
 		findCustomer.setEmail(customer.getEmail());
 		findCustomer.setFirstname(customer.getFirstname());

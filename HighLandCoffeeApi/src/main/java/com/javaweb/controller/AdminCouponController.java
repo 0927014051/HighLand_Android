@@ -66,6 +66,7 @@ public class AdminCouponController {
         rq.put( String.valueOf(coupon.getMinimum_value()), coupon);
         rq.put(String.valueOf(coupon.getQuantity()), coupon);
         rq.put(String.valueOf(coupon.getRemaining_amount()), coupon);
+        rq.put(String.valueOf(coupon.getUse_value()),coupon);
         rq.put(coupon.getStart_date().toString(), coupon);
         for(MultipartFile file : files){
             String fileName = iImageService.save(file);

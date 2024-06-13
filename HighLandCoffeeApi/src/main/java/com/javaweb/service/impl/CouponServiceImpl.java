@@ -41,6 +41,7 @@ public class CouponServiceImpl implements CouponService{
        createCoupon.setImage(coupon.getImage());
        createCoupon.setType(coupon.getType());
        createCoupon.setUpdated_by(staff_id);
+       createCoupon.setUse_value(coupon.getUse_value());
        createCoupon.setUpdated_at(LocalDateTime.now());
        Coupon savedCoupon = couponRepo.save(createCoupon);
        if(savedCoupon != null) {
