@@ -12,5 +12,7 @@ public interface CouponDetailService {
 
     List<CouponDetail> findCouponDetailByCustomerId(Long id);
 
+    CouponDetail updateCouponDetail(Long coupon_id,Long customer_id);
+
     
 } 

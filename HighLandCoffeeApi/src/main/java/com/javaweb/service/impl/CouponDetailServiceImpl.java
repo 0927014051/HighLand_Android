@@ -1,11 +1,7 @@
 package com.javaweb.service.impl;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
-import com.javaweb.entity.Coupon;
 import com.javaweb.entity.CouponDetail;
 import com.javaweb.reponsitory.CouponDetailRepo;
 import com.javaweb.service.CouponDetailService;
@@ -16,6 +12,15 @@ public class CouponDetailServiceImpl implements CouponDetailService{
 
     private CouponDetailRepo couponDetailRepo;
     private CouponService couponService;
+
+    @Override
+    public CouponDetail updateCouponDetail(Long coupon_id, Long customer_id) {
+        CouponDetail couponDetail = couponDetailRepo.findCouponDetailByCouponIdAndCustomerId(coupon_id,customer_id);
+        couponDetail.setStatus("Unactive");
+        return couponDetailRepo.save(couponDetail);
+
+    }
+
 
     public CouponDetailServiceImpl(CouponDetailRepo couponDetailRepo,CouponService couponService) {
         this.couponDetailRepo = couponDetailRepo;

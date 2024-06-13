@@ -17,5 +17,8 @@ public interface CouponDetailRepo extends JpaRepository<CouponDetail,Long> {
     @Query(value = "SELECT * FROM coupon_detail WHERE customer_id = ?1  ", nativeQuery = true)
     List<CouponDetail> findCouponDetailByCustomerId(Long id);
 
+    @Query(value = "SELECT * FROM coupon_detail WHERE coupon_id = ?1 and customer_id = ?2  ", nativeQuery = true)
+    CouponDetail findCouponDetailByCouponIdAndCustomerId(Long coupon_id, Long customer_id);
+
 
 }

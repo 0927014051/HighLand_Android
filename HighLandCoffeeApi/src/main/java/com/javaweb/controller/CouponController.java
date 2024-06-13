@@ -4,10 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.javaweb.entity.Coupon;
 import com.javaweb.entity.CouponDetail;
@@ -91,6 +88,18 @@ public class CouponController {
         return new ResponseEntity<>(res,HttpStatus.OK);
     }
 
+    @PutMapping("/update/detail")
+    public ResponseEntity<ApiResponse> updateCouponDetial(@RequestHeader("Authorization") String jwt,@RequestParam("coupon_id") Long coupon_id) throws UserException {
+        User user = userService.findUserByJwt(jwt);
+        Customer customer = customerService.findCustomerByUserId(user.getUser_id());
+        CouponDetail detail = couponDetailService.updateCouponDetail(coupon_id,customer.getCustomer_id());
+        ApiResponse res = new ApiResponse();
+        res.setCode(HttpStatus.OK.value());
+        res.setMessage("success");
+        res.setStatus(true);
+
+        return new ResponseEntity<>(res,HttpStatus.OK);
+    }
 
 
 }
