@@ -85,7 +85,7 @@ public class AdminCouponController {
 
        } catch (Exception e) {
         res.setCode(HttpStatus.CONFLICT.value());
-        res.setMessage("fail");
+        res.setMessage(e.getMessage());
         res.setStatus(false);
         http = HttpStatus.CONFLICT;
        }
